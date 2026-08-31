@@ -4,13 +4,13 @@
 
 ---
 
-**Operational bookkeeping exemption.** Active Projects updates, Scheduled Tasks updates, and entries to an archive or changelog file are not subject to the "memory writes require approval" rule. These are operational bookkeeping, not personal memories, so write them as part of the natural workflow when the triggering event happens.
+**Operational bookkeeping exemption.** Active Projects updates, Scheduled Tasks updates, and entries to ARCHIVE.md are not subject to the "memory writes require approval" rule. These are operational bookkeeping, not personal memories, so write them as part of the natural workflow when the triggering event happens.
 
 ---
 
-## Archive or Changelog (optional)
+## Archive or Changelog
 
-If you keep an archive file, treat it as a permanent, append-only log of structural milestones and completed work, organized by month and week with the most recent first, and read on demand rather than at session start. Active Projects in root MEMORY.md gives session-start orientation; the archive is where a completed project's entry moves once it is done.
+ARCHIVE.md is a permanent, append-only log of structural milestones and completed work, organized by month and week with the most recent first, and read on demand rather than at session start. Active Projects in root MEMORY.md gives session-start orientation; ARCHIVE.md is where a completed project's entry moves once it is done.
 
 **Format:** one entry per completed item, following the two-sentence cap: first sentence states what was delivered or changed, optional second sentence states why it matters. Older entries are not rewritten retroactively once the cap changes, since an archive is not loaded every session and its length costs nothing at rest.
 
@@ -43,7 +43,7 @@ Propose a memory entry when:
 
 Root MEMORY.md holds two living sections that need upkeep: Active Projects and Scheduled Tasks. They give session-start orientation without needing to read every workstation.
 
-**Active Projects:** track project name, which workstation it belongs to, current status in one or two sentences, and the date it was last active. Remove an entry once the project completes, moving it to an archive file if you keep one.
+**Active Projects:** track project name, which workstation it belongs to, current status in one or two sentences, and the date it was last active. Remove an entry once the project completes, moving it to ARCHIVE.md.
 
 **Scheduled Tasks:** track task name, workstation, schedule or cadence, what it does, and the date it was created. Mark it paused or retired rather than deleting it outright if it stops running.
 
@@ -57,6 +57,6 @@ MEMORY.md files grow silently, and without a limit they degrade performance by c
 
 **Workstation MEMORY.md: 200-line ceiling.** Loaded on routing to that workstation, so bloat is scoped but still costly for a frequently visited one.
 
-**Archive files: no ceiling.** Reference-only, loaded on demand.
+**ARCHIVE.md: no ceiling.** Reference-only, loaded on demand.
 
 When a ceiling is breached: compress verbose entries to the two-sentence cap first, then archive entries that are no longer current-state. If still over the ceiling after both steps, flag it for a manual decision rather than raising the limit.

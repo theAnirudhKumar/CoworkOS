@@ -8,11 +8,11 @@
 
 Where different types of content belong:
 
-1. **Root level:** CLAUDE.md, MEMORY.md, and an archive file if you keep one. No other files at root.
+1. **Root level:** CLAUDE.md, MEMORY.md, and ARCHIVE.md. No other files at root.
 2. **00_Reference/:** permanent governance and mechanics files, using stable title-case names without date prefixes (for example, `Memory System.md`). These are pointed to by name from CLAUDE.md and should not be renamed casually.
 3. **00_Resources/:** supporting resource files loaded on demand, such as templates and setup guides. Stable descriptive names, no date prefixes.
 4. **Workstation folders:** each contains a CLAUDE.md and a MEMORY.md. Domain-specific reference or project files live inside the workstation folder, not at root.
-5. **Historical records:** if you keep an archive file, all completed work and structural history goes there rather than in separate archive folders scattered around the workspace.
+5. **Historical records:** all completed work and structural history goes in ARCHIVE.md rather than in separate archive folders scattered around the workspace.
 
 ---
 
@@ -39,7 +39,7 @@ Where different types of content belong:
 
 15. **Every markdown file opens with an H1 title.** The first line is `# Title`, or the H1 sits immediately below a YAML frontmatter block if the file has one. Never start with body text or a lower-level heading.
 16. **Proper heading hierarchy.** H1 for the file title, H2 for major sections, H3 for subsections. Never skip a level, and never write flat, unstructured notes.
-17. **Two-sentence cap for memory entries.** Any entry written to MEMORY.md, or to an archive file, follows the cap: one sentence for the fact or what was done, an optional second sentence for why it matters.
+17. **Two-sentence cap for memory entries.** Any entry written to MEMORY.md or ARCHIVE.md follows the cap: one sentence for the fact or what was done, an optional second sentence for why it matters.
 18. **No duplicate content.** Before creating a new file, check whether an existing file already covers the same content. If one does, update it instead of creating a new one.
 
 ---

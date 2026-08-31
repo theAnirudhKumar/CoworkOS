@@ -59,6 +59,8 @@ All instructions, rules, and context in this workspace should be mutually exclus
 - **00_Resources/** owns: supporting material loaded on demand, such as setup guides and templates.
 - **Workstation CLAUDE.md files** own: domain-specific identity and workflow. They layer on top of this file and never restate it.
 - **Workstation MEMORY.md files** own: domain-specific facts and decisions.
+- **ARCHIVE.md** owns: the permanent historical record of completed work, the Workspace Changelog. Never read at session start, only pulled up on demand.
+- **00_Skills/** owns: the record of what skills exist on your Claude account, and the archived source of the custom ones. It is a register and a recovery path, never a live skill directory; invoking a skill always uses the account copy.
 
 When adding a new rule, decide where it belongs using the two tests in the Memory System section. If unsure, ask.
 
@@ -70,6 +72,7 @@ When adding a new rule, decide where it belongs using the two tests in the Memor
 
 | Workstation | Route here when the user... |
 | :--- | :--- |
+| Example Workstation | *Sample row for the sample workstation shipped with this template.* Asks about budgeting, spending, subscriptions, or personal finances. Replace this row once you rename or remove the example. |
 
 ---
 
@@ -81,4 +84,4 @@ When adding a new rule, decide where it belongs using the two tests in the Memor
 | 00_Reference/File Creation Rules.md | Creating any new file in the workspace |
 | 00_Reference/Memory System.md | Writing a memory entry, running an archive pass, or handling a contradiction |
 | 00_Resources/Workstation Setup Guide.md | Creating a new workstation |
-| skills/session-audit/SKILL.md | Closing out a session: capturing uncaptured learnings and syncing the workspace |
+| 00_Skills/Skills Inventory.md | Closing out a session (points to the session-audit skill), or understanding how account skills are archived in this workspace |
