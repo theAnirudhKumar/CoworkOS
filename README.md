@@ -1,15 +1,15 @@
 # CoworkOS
 
-A minimal, installable framework for running Claude as a persistent, structured assistant across every area of your life or work.
+A minimal, installable framework for running an AI agent as a persistent, structured assistant across every area of your life or work.
 
-Instead of one long system prompt, CoworkOS gives Claude a small set of markdown files that work together: a routing protocol that sends each task to the right context, a memory system that persists across sessions, and one governance rule that keeps every fact and every instruction in exactly one place. It ships with a worked example so you can see the pattern filled in, not just described.
+Instead of one long system prompt, CoworkOS gives your AI tool a small set of markdown files that work together: a routing protocol that sends each task to the right context, a memory system that persists across sessions, and one governance rule that keeps every fact and every instruction in exactly one place. It was designed and tested against Claude Cowork, but the files themselves are plain markdown, not anything Claude-specific, so it works with other AI tools too. It ships with a worked example so you can see the pattern filled in, not just described.
 
 ## What this is
 
 - `CLAUDE.md`, `MEMORY.md`, `ARCHIVE.md` - the three root files. The constitution, the notepad, and the historical record.
 - `00_Reference/` - the mechanics behind the rules in `CLAUDE.md`, loaded on demand rather than every session.
-- `00_Resources/` - supporting material, such as the guide for creating a new workstation and a starter voice-principles file.
-- `00_Skills/` - a register of the skills your Claude account actually has, and a recovery copy of the ones you build yourself. See "Skills live on your account, not in this folder" below.
+- `00_Resources/` - supporting material: the workstation setup guide, a starter voice-principles file, notes on using other AI tools, and the optional GitHub sync guide.
+- `00_Skills/` - a register of the skills your AI tool's account actually has, and a recovery copy of the ones you build yourself. See "Skills live on your account, not in this folder" below.
 - `Example Workstation/` - a filled-in sample so you can see what a real workstation looks like, not just read a description of one. Rename or delete it once the pattern clicks.
 - `.gitignore` and `.githooks/pre-commit` - optional, if you put this workspace under version control. See "Protecting what goes in here" below.
 
@@ -17,15 +17,34 @@ A "workstation" is a folder for one area of life or work: a job, a side project,
 
 ## How it works
 
-At the start of a session, Claude reads root `MEMORY.md` for orientation, then routes the task to the right workstation using the Routing Map in `CLAUDE.md`. It reads that workstation's own `CLAUDE.md` and `MEMORY.md`, does the work, and proposes any new memory entries for approval before writing them. Every rule about where a new file or a new fact belongs comes down to one test, spelled out in the Governance section of `CLAUDE.md`: does it prescribe behavior, or does it describe a fact about the world that could change.
+At the start of a session, your AI tool reads root `MEMORY.md` for orientation, then routes the task to the right workstation using the Routing Map in `CLAUDE.md`. It reads that workstation's own `CLAUDE.md` and `MEMORY.md`, does the work, and proposes any new memory entries for approval before writing them. Every rule about where a new file or a new fact belongs comes down to one test, spelled out in the Governance section of `CLAUDE.md`: does it prescribe behavior, or does it describe a fact about the world that could change.
 
 ## Getting started
 
-1. Copy this repository's files into a folder Claude can read and write to.
+The easiest way to install this is to copy one block of text into whichever AI tool you use (Claude Cowork, ChatGPT Work Mode, or another tool with file access) and let it do the rest:
+
+```
+I want to set up a CoworkOS workspace for myself. Please get the files from
+this repository: https://github.com/theAnirudhKumar/CoworkOS
+
+Save them into a new local folder you can read and write to. Once the files
+are saved, read CLAUDE.md first, at the root of that folder, and follow its
+instructions from there, including the first-run setup section. Ask me what
+areas of my life or work I want to track before creating anything, and do
+not create a workstation I did not ask for.
+```
+
+What happens next depends on the tool, but the shape is the same everywhere: it fetches the repository, saves the files locally, reads `CLAUDE.md`, and starts asking you what to set up rather than assuming anything. See `00_Resources/Using CoworkOS with Other AI Tools.md` if your tool is not Claude Cowork, for what to expect and what to check first.
+
+If you would rather do this by hand:
+
+1. Download or clone this repository's files into a folder your AI tool can read and write to.
 2. Look at `Example Workstation/` first. It is the fastest way to understand what "a workstation" actually means in practice, before you build your own.
-3. Start a session and say what you want to track. `CLAUDE.md` includes a first-run setup flow: Claude suggests common areas (work, personal finances, health, relationships, projects, and so on) and only creates the workstations you actually pick.
+3. Start a session and say what you want to track. `CLAUDE.md` includes the same first-run setup flow: your AI tool suggests common areas (work, personal finances, health, relationships, projects, and so on) and only creates the workstations you actually pick.
 4. Rename or delete `Example Workstation/` once you have created your own, and remove its row from the Routing Map.
-5. Work normally. Correct Claude when it gets something wrong, and it will propose a memory entry so the correction sticks.
+5. Work normally. Correct your AI tool when it gets something wrong, and it will propose a memory entry so the correction sticks.
+
+First-run setup also asks, once, whether you want this workspace synced to a GitHub repository you own. This is optional and off by default: see "Working away from your primary computer" below for what it is for.
 
 ## Closing out a session properly
 
@@ -35,7 +54,13 @@ The memory system above only works if `MEMORY.md` and `CLAUDE.md` stay current, 
 
 ## Skills live on your account, not in this folder
 
-A skill runs from your Claude account. Nothing in `00_Skills/` is read as a live skill; invoking one always uses the account copy. So this folder is not where skills execute from, it is where you keep a copy of them so they are not lost if the account version is ever edited by accident or you switch machines. `00_Skills/Skills Inventory.md` is the index, `Custom/` holds skills you wrote yourself, and `Third-Party/` holds someone else's, kept with their original license. The rule is simple: when you build or change a skill on your account, archive it here in the same session.
+A skill runs from your AI tool's account, on tools that have this concept at all (Claude Cowork does; see `00_Resources/Using CoworkOS with Other AI Tools.md` for others). Nothing in `00_Skills/` is read as a live skill; invoking one always uses the account copy. So this folder is not where skills execute from, it is where you keep a copy of them so they are not lost if the account version is ever edited by accident or you switch machines. `00_Skills/Skills Inventory.md` is the index, `Custom/` holds skills you wrote yourself, and `Third-Party/` holds someone else's, kept with their original license. The rule is simple: when you build or change a skill on your account, archive it here in the same session.
+
+## Working away from your primary computer
+
+If you agreed to the optional GitHub sync during first-run setup, this workspace lives in a private GitHub repository you own, not only on the computer where you first set it up. `00_Resources/GitHub Sync Guide.md` covers what that involves and how to set it up if you skipped it initially.
+
+The main reason to do this is reaching your workspace from somewhere else, most commonly your phone, when your AI tool has a way to work from a synced copy while you are away from your desktop. `00_Skills/Custom/travel-mode/SKILL.md` documents one way to do this: it clones just the workspace's markdown files, works from that copy, and pushes everything back so your next session on your primary computer can pull it down.
 
 ## Protecting what goes in here
 
@@ -48,7 +73,7 @@ git config core.hooksPath .githooks
 chmod +x .githooks/pre-commit
 ```
 
-Both are optional. If you never put this workspace under git, neither file does anything, and you can delete them.
+Both are optional, and only relevant at all if you use git. If you never put this workspace under version control, neither file does anything, and you can delete them. This is the same activation step the optional GitHub sync in first-run setup walks you through.
 
 ## Structure
 
@@ -62,11 +87,19 @@ Both are optional. If you never put this workspace under git, neither file does 
 | `00_Reference/Memory System.md` | Full mechanics: capture triggers, entry format, archiving |
 | `00_Resources/Workstation Setup Guide.md` | How to create a new workstation |
 | `00_Resources/voice-principles.md` | Starter file for how written output should sound; fills in through use |
+| `00_Resources/Using CoworkOS with Other AI Tools.md` | Running this on ChatGPT Work Mode, Kimi Work, OpenClaw, Hermes Agent, or anything else |
+| `00_Resources/GitHub Sync Guide.md` | Setting up the optional GitHub sync |
 | `00_Skills/Skills Inventory.md` | Index of skills archived from your account |
 | `00_Skills/Custom/session-audit/SKILL.md` | The session-audit skill itself, and the worked example of the registry pattern |
+| `00_Skills/Custom/travel-mode/SKILL.md` | Working from the GitHub copy when your primary computer is unreachable |
 | `00_Skills/Third-Party/` | Where someone else's archived skill goes |
 | `Example Workstation/` | A filled-in sample workstation: `CLAUDE.md` and `MEMORY.md` with realistic content |
 | `.gitignore`, `.githooks/pre-commit` | Optional protection if you version-control this workspace |
+| `CONTRIBUTING.md` | How to propose a change to this repository itself |
+
+## Contributing
+
+This is a template meant for a stranger to adapt, so changes go through an issue and a pull request rather than a direct push, and the bar includes staying generic. See `CONTRIBUTING.md`.
 
 ## Credits
 

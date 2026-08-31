@@ -1,6 +1,6 @@
 # Skills Inventory
 
-A register of the skills your Claude account actually has, plus an archived recovery copy of the ones you built yourself.
+A register of the skills your AI tool's account actually has, plus an archived recovery copy of the ones you built yourself. The "skill" concept as a named, invokable, account-level file is specific to a handful of tools, Claude Cowork among them (see 00_Resources/Using CoworkOS with Other AI Tools.md); if your tool has no equivalent, treat the files in Custom/ as plain reference documentation instead.
 
 ## Why this folder exists, and what it is not
 
@@ -13,6 +13,7 @@ A skill runs from your Claude account, not from a file in this workspace. Nothin
 | Skill | Type | Archived at | Notes |
 | :--- | :--- | :--- | :--- |
 | session-audit | Custom | `Custom/session-audit/SKILL.md` | End-of-session capture and sync. See its own file for what it does. |
+| travel-mode | Custom | `Custom/travel-mode/SKILL.md` | Working from the GitHub copy when the primary computer is unreachable. Requires the optional GitHub sync (00_Resources/GitHub Sync Guide.md). |
 
 Add a row here every time you archive a skill, so this table stays a true index rather than a folder someone has to browse to understand.
 

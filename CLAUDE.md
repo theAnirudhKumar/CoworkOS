@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-This is a Claude Cowork workspace built on a workstation-based architecture: each folder under the root represents one area of life or work, with its own identity, workflow, and accumulated context. Read this file at the start of every session.
+This is a workstation-based AI workspace: each folder under the root represents one area of life or work, with its own identity, workflow, and accumulated context. It was designed and tested against Claude Cowork, but nothing about this file's format is Claude-specific; read this file at the start of every session, whichever AI tool is reading it. See 00_Resources/Using CoworkOS with Other AI Tools.md for notes on other tools.
 
 ---
 
@@ -16,7 +16,7 @@ Flag contradictions. If a new instruction conflicts with an existing memory entr
 
 Full mechanics (capture triggers, entry format, archiving) are in 00_Reference/Memory System.md.
 
-At the end of a session, run the session-audit skill (skills/session-audit/SKILL.md) rather than relying on memory writes caught mid-conversation. It scans the whole session for corrections, preferences, and decisions that were never written down, proposes where each belongs, and applies only what is approved. This is what keeps this file and MEMORY.md actually current instead of slowly drifting stale.
+At the end of a session, run the session-audit skill (00_Skills/Custom/session-audit/SKILL.md) rather than relying on memory writes caught mid-conversation. It scans the whole session for corrections, preferences, and decisions that were never written down, proposes where each belongs, and applies only what is approved. This is what keeps this file and MEMORY.md actually current instead of slowly drifting stale.
 
 **Where things go.** Apply two tests when deciding where to save something. Test 1: does it prescribe behavior (look for "always," "never," "before doing X, do Y")? If so, it belongs in this file, under the right section. Test 2: does it describe a fact about the world that could change (status, a decision, a preference, something the user asked to be remembered)? If so, it belongs in MEMORY.md. When neither test clearly applies, say which file seems right and ask for confirmation before writing.
 
@@ -34,6 +34,7 @@ Run this the first time this workspace is used, or whenever the Routing Map belo
 2. For each area the user picks, create a workstation following 00_Resources/Workstation Setup Guide.md: a folder with a CLAUDE.md and a MEMORY.md, nothing else until it is needed.
 3. Add a row to the Routing Map for each new workstation, describing when to route there in the user's own words.
 4. Do not create a workstation the user did not ask for, and do not pre-populate content inside one. Start empty and let it fill in through use.
+5. Ask whether the user wants this workspace synced to a GitHub repository they own. This is optional and off by default; explain the reason briefly, mainly reaching the workspace from a phone or another device while away from the primary computer, and point to 00_Resources/GitHub Sync Guide.md if they say yes. Do not set this up without an explicit yes.
 
 ---
 
@@ -56,11 +57,11 @@ All instructions, rules, and context in this workspace should be mutually exclus
 - **This file (CLAUDE.md)** owns: workspace identity, routing, and behavior rules.
 - **MEMORY.md** owns: cross-cutting facts that accumulate over time (decisions, preferences, status).
 - **00_Reference/** owns: detailed, stable reference material and governance mechanics, loaded on demand.
-- **00_Resources/** owns: supporting material loaded on demand, such as setup guides and templates.
+- **00_Resources/** owns: supporting material loaded on demand, such as setup guides, templates, the tool-compatibility notes, and the GitHub sync guide.
 - **Workstation CLAUDE.md files** own: domain-specific identity and workflow. They layer on top of this file and never restate it.
 - **Workstation MEMORY.md files** own: domain-specific facts and decisions.
 - **ARCHIVE.md** owns: the permanent historical record of completed work, the Workspace Changelog. Never read at session start, only pulled up on demand.
-- **00_Skills/** owns: the record of what skills exist on your Claude account, and the archived source of the custom ones. It is a register and a recovery path, never a live skill directory; invoking a skill always uses the account copy.
+- **00_Skills/** owns: the record of what skills exist on your AI tool's account, and the archived source of the custom ones. It is a register and a recovery path, never a live skill directory; invoking a skill always uses the account copy.
 
 When adding a new rule, decide where it belongs using the two tests in the Memory System section. If unsure, ask.
 
@@ -68,7 +69,7 @@ When adding a new rule, decide where it belongs using the two tests in the Memor
 
 ## Routing Map
 
-*Add a row here for every workstation you create. Cowork checks this table to decide which workstation folder to load for a given task.*
+*Add a row here for every workstation you create. Your AI tool checks this table to decide which workstation folder to load for a given task.*
 
 | Workstation | Route here when the user... |
 | :--- | :--- |
@@ -85,3 +86,5 @@ When adding a new rule, decide where it belongs using the two tests in the Memor
 | 00_Reference/Memory System.md | Writing a memory entry, running an archive pass, or handling a contradiction |
 | 00_Resources/Workstation Setup Guide.md | Creating a new workstation |
 | 00_Skills/Skills Inventory.md | Closing out a session (points to the session-audit skill), or understanding how account skills are archived in this workspace |
+| 00_Resources/Using CoworkOS with Other AI Tools.md | Running this workspace on an AI tool other than Claude Cowork |
+| 00_Resources/GitHub Sync Guide.md | Setting up the optional GitHub sync, or understanding what it involves before agreeing to it |

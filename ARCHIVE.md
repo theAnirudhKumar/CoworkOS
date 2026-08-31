@@ -1,6 +1,6 @@
 # ARCHIVE.md
 
-A permanent, append-only log of structural milestones and completed work: the Workspace Changelog. Unlike CLAUDE.md and MEMORY.md, this file is never read at session start. It gets pulled up on demand, when you or Claude need to check something historical.
+A permanent, append-only log of structural milestones and completed work: the Workspace Changelog. Unlike CLAUDE.md and MEMORY.md, this file is never read at session start. It gets pulled up on demand, when you or your AI tool need to check something historical.
 
 Root MEMORY.md holds current-state orientation (what is active right now). This file holds the record of what used to be active and is now finished. When a project in MEMORY.md's Active Projects list completes, move its entry here rather than deleting it.
 
