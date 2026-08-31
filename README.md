@@ -27,6 +27,12 @@ At the start of a session, Claude reads root `MEMORY.md` for orientation, then r
 
 Nothing is pre-populated. The Routing Map starts empty and fills in as you create workstations.
 
+## Session audit: closing out a session properly
+
+The memory system above only works if MEMORY.md and CLAUDE.md stay current, and that depends on something noticing, mid-conversation, that a correction or a decision is worth saving. Plenty of what should be captured is not that explicit: a small correction that got fixed and moved past, a preference mentioned in passing, a decision buried inside an unrelated task. Nothing surfaces those unless something deliberately looks back over the whole conversation before it ends.
+
+`skills/session-audit/SKILL.md` is that deliberate look back. Run it, or a skill like it, at the end of a session: it scans the conversation for uncaptured corrections, preferences, decisions, and new context, proposes exactly where each one belongs, writes only what you approve, and, if the workspace is a git repository, syncs everything to the remote as the last step. Install it as a skill in your Claude account, or reference it directly if your setup loads skills from a folder, and trigger it with "audit this session," "session audit," "what did we miss," "end of session check," or "close out the session." Without a habit like this, the memory system slowly drifts out of date instead of actually staying current.
+
 ## Structure
 
 | Path | Purpose |
@@ -37,6 +43,7 @@ Nothing is pre-populated. The Routing Map starts empty and fills in as you creat
 | `00_Reference/File Creation Rules.md` | Naming, placement, and approval rules for new files |
 | `00_Reference/Memory System.md` | Full mechanics: capture triggers, entry format, archiving |
 | `00_Resources/Workstation Setup Guide.md` | How to create a new workstation |
+| `skills/session-audit/SKILL.md` | End-of-session audit: capture what was learned, sync the workspace |
 
 ## Credits
 
