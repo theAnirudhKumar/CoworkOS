@@ -28,7 +28,7 @@ Before starting any task, identify the relevant workstation from the Routing Map
 
 ### First-time setup
 
-Run this the first time this workspace is used, or whenever the Routing Map below is still empty.
+Run this the first time this workspace is used. On a fresh copy of this template the Routing Map below already has one row in it, the shipped Example Workstation sample: treat that as empty for this purpose, since no real workstation exists yet. Bootstrapping the workspace this way does not need a workstation identified first the way the Routing Protocol above otherwise requires, since none exists yet; that requirement applies once at least one real workstation has been created.
 
 1. Ask what areas of life or work should be tracked here. Offer a short list of common starting points as suggestions, not a fixed menu: work or career, personal finances, health, relationships, home and admin, learning, side projects, communications. Make clear these are only examples.
 2. For each area the user picks, create a workstation following 00_Resources/Workstation Setup Guide.md: a folder with a CLAUDE.md and a MEMORY.md, nothing else until it is needed.
@@ -88,3 +88,4 @@ When adding a new rule, decide where it belongs using the two tests in the Memor
 | 00_Skills/Skills Inventory.md | Closing out a session (points to the session-audit skill), or understanding how account skills are archived in this workspace |
 | 00_Resources/Using CoworkOS with Other AI Tools.md | Running this workspace on an AI tool other than Claude Cowork |
 | 00_Resources/GitHub Sync Guide.md | Setting up the optional GitHub sync, or understanding what it involves before agreeing to it |
+| 00_Resources/Troubleshooting.md | Setup or installation isn't going the way this file describes |

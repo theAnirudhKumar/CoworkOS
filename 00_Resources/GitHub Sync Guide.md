@@ -12,7 +12,7 @@ Neither reason requires anyone but you to have access to the repository. Keep it
 
 ## What this involves
 
-You do not need to know git to follow these steps, but you should understand what you are agreeing to: your workspace's content, including whatever you end up tracking in it (notes, decisions, plans), will live in a GitHub repository under your account. Treat that the same way you would treat any other place you store personal information, private by default, and be deliberate about what you choose to track there in the first place.
+The easiest way through steps 3 and 4 below: once you have created the account and repository (steps 1 and 2), give your AI tool this whole guide and ask it to run those steps for you. That is the tested path, and it is what "you do not need to know git" actually means here: your tool runs the commands, not you. You should still understand what you are agreeing to, though: your workspace's content, including whatever you end up tracking in it (notes, decisions, plans), will live in a GitHub repository under your account. Treat that the same way you would treat any other place you store personal information, private by default, and be deliberate about what you choose to track there in the first place.
 
 ### 1. Create a GitHub account, if you do not have one
 
@@ -24,7 +24,7 @@ From your GitHub account, create a new repository. Give it a name that means som
 
 ### 3. Connect this workspace to it
 
-From inside the folder where this workspace lives, on the computer where you first set it up:
+If your AI tool is doing this for you, skip ahead, it just needs this repository's URL from step 2 and the rest is the same commands below. If you are typing this yourself: open a terminal (on Mac, it's in Applications > Utilities > Terminal; on Windows, search for Command Prompt or PowerShell; on Linux, whatever terminal your desktop provides), navigate to the folder where this workspace lives with `cd path/to/that/folder`, then run:
 
 ```bash
 git init
@@ -39,7 +39,7 @@ If you have never used git from this computer before, it will ask you to authent
 
 ### 4. Turn on the identity guard
 
-This step matters more once your workspace is going to a remote server, not just staying on your own disk. From the same folder:
+This step matters more once your workspace is going to a remote server, not just staying on your own disk. Same terminal, same folder, whether your AI tool is running this or you are typing it:
 
 ```bash
 git config core.hooksPath .githooks
