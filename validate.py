@@ -28,7 +28,10 @@ PUNCT = {
     '“': 'curly quote',
     '”': 'curly quote',
 }
-OPENAI = re.compile(r'Open\s*AI')
+# No "Open"+"AI" collision check here, unlike some sibling repos: this
+# template's own compatibility doc has to name real third-party AI companies
+# (OpenAI included) to be useful, so that pattern would flag correct content
+# rather than a mistake.
 
 
 def rel(path):
@@ -49,8 +52,6 @@ def check_punctuation(path, text, bad):
         n = text.count(ch)
         if n:
             bad.append(f'{rel(path)}: {n} {name}{"s" if n > 1 else ""}')
-    if OPENAI.search(text):
-        bad.append(f'{rel(path)}: "Open" immediately before "AI"')
 
 
 def check_skill(path, text, bad):

@@ -5,6 +5,19 @@ All notable changes to this template are documented here. Format follows [Keep a
 ## [Unreleased]
 
 ### Fixed
+- The install prompt in README never asked where to save the workspace, so a session-scoped AI tool could bury it somewhere the user could not find again. It now asks explicitly and confirms the exact path back before creating anything.
+- `session-audit`'s description and its sync step read as if GitHub sync was expected or required. Found by a real user hitting exactly this confusion. Reworded so the local save is stated as always happening, and syncing is explicitly a bonus step that only runs if a git remote already exists.
+- First-run setup in `CLAUDE.md` used to stop after the GitHub-sync question. It now also reads the multi-tool doc first on a non-Claude tool, offers to clean up `Example Workstation` immediately instead of leaving it for later, proactively offers to set up skills rather than waiting to be asked, and offers a short, skippable round of questions for `00_Resources/voice-principles.md`.
+- `validate.py`'s "Open"+"AI" collision check flagged its own new, correct content: this template's compatibility doc has to name real AI companies, OpenAI included, to be useful. Removed; the other checks still run.
+
+### Added
+- An Open Items section in root `MEMORY.md` (and documented in `00_Reference/Memory System.md`) for anything deliberately deferred: a skipped setup step, a local fix an AI tool made to a shipped file that should be reported upstream. First-run setup now logs to it instead of silently dropping a skipped step.
+- A real Codex section in `00_Resources/Using CoworkOS with Other AI Tools.md`, distinguishing Codex CLI (persistent folder, auto-reads its own `AGENTS.md`, real local skills via `.agents/skills/` and `$skill-installer`) from Codex in the ChatGPT web app (per-task cloud sandbox, undocumented persistence, the surface that actually surfaced the folder-placement bug above). Also a general "session-scoped sandbox" category and a one-time check for any tool that might be one, not just a Codex-specific note.
+- A line in `CONTRIBUTING.md` asking users to report it as an issue when their AI tool patches a shipped file locally to work around confusing wording, rather than only fixing their own copy.
+
+## [0.5.0] - 2026-08-31
+
+### Fixed
 - `CLAUDE.md`'s first-run setup trigger no longer implies the Routing Map must be empty before bootstrapping can start; it now says plainly to treat the shipped `Example Workstation` row as empty for that purpose.
 - README's manual "by hand" install path now covers getting the files without git (GitHub's Download ZIP) and points to your AI tool for connecting a local folder, instead of assuming git and prior tool setup.
 - `00_Resources/GitHub Sync Guide.md` no longer tells people they don't need to know git and then hands them six raw shell commands with no terminal instructions. The tested path (handing the guide to your AI tool) is now primary; typing the commands yourself is secondary, with a pointer to where a terminal actually is on Mac, Windows, and Linux.

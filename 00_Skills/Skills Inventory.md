@@ -8,7 +8,9 @@ A skill runs from your Claude account, not from a file in this workspace. Nothin
 
 **The rule:** when you create or meaningfully change a custom skill on your account, copy its source into `Custom/` in the same session. If you are archiving someone else's skill rather than one you wrote, it goes in `Third-Party/` instead, with its original LICENSE and README kept alongside it.
 
-**Turning one of these files into an actual, invokable skill is a separate step from having the file**, and the exact mechanics vary by tool and change over time, so this file will not try to keep pace with a specific tool's UI. The reliable move: ask your AI tool directly, in your own words, to read the file and set it up as a skill. It knows its own current steps better than any doc can.
+**Turning one of these files into an actual, invokable skill is a separate step from having the file**, and the exact mechanics vary by tool and change over time, so this file will not try to keep pace with a specific tool's UI. The reliable move: ask your AI tool directly, in your own words, to read the file and set it up as a skill. It knows its own current steps better than any doc can. This is also not a step to leave until you happen to think of it; first-run setup in root CLAUDE.md offers it proactively, and it should actually be attempted then, not only described.
+
+Codex CLI specifically has a documented, literal answer rather than only "ask your tool": skills load from `.agents/skills/` in the repository or `~/.agents/skills/` for your account, and `$skill-installer` can fetch curated ones. See the Codex row in 00_Resources/Using CoworkOS with Other AI Tools.md.
 
 ## Inventory
 

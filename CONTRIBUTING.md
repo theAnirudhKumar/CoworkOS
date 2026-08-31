@@ -41,6 +41,10 @@ These are the same rules the template teaches an installer to follow inside thei
 
 If you want to document how CoworkOS works with a tool not already covered in `00_Resources/Using CoworkOS with Other AI Tools.md`, verify the behavior you are describing rather than assuming it matches another tool's pattern. Link to the tool's own documentation for anything specific to how it reads files or handles memory, and say plainly where you were not able to verify a detail.
 
+## If your AI tool fixes something in a shipped file for you
+
+Sometimes the fastest path through confusing wording in this template is your own AI tool patching its local copy of a file to make sense of it, and that is a completely reasonable thing for it to do in the moment. But a fix that only exists on your machine is a fix nobody else benefits from, and the next person hits the exact same confusion. If this happens to you, open an issue describing what was confusing and what your AI tool changed to work around it, using the "Something is wrong" template. That local patch is often most of a real fix already; someone still has to bring it back here.
+
 ## Questions
 
 Open an issue. That is also where a change starts, so there is nowhere else this needs to go.

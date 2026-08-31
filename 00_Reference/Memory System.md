@@ -41,11 +41,13 @@ Propose a memory entry when:
 
 ## Root MEMORY.md: Active Tracking
 
-Root MEMORY.md holds two living sections that need upkeep: Active Projects and Scheduled Tasks. They give session-start orientation without needing to read every workstation.
+Root MEMORY.md holds three living sections that need upkeep: Active Projects, Scheduled Tasks, and Open Items. They give session-start orientation without needing to read every workstation.
 
 **Active Projects:** track project name, which workstation it belongs to, current status in one or two sentences, and the date it was last active. Remove an entry once the project completes, moving it to ARCHIVE.md.
 
 **Scheduled Tasks:** track task name, workstation, schedule or cadence, what it does, and the date it was created. Mark it paused or retired rather than deleting it outright if it stops running.
+
+**Open Items:** track anything deliberately deferred, not forgotten: a first-run setup step skipped for now, a decision put off, a local fix made to a shipped template file that should be reported as an issue rather than kept as private drift. State what was deferred, why, and what is lost by leaving it that way, so it stays visible instead of silently disappearing. This is where first-run setup should log a step the user chose to skip. Remove an entry once it is resolved, either by acting on it or by deciding on purpose to leave it.
 
 ---
 
