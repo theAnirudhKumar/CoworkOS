@@ -38,7 +38,7 @@ What happens next depends on the tool, but the shape is the same everywhere: it 
 
 If you would rather do this by hand:
 
-1. Download or clone this repository's files into a folder your AI tool can read and write to.
+1. Get the files onto your computer. If you don't use git: on this repository's GitHub page, click the green **Code** button, choose **Download ZIP**, then unzip it. If you do use git: `git clone https://github.com/theAnirudhKumar/CoworkOS.git`. Either way, end up with a folder your AI tool can read and write to. If you're not sure how to give your AI tool access to that folder, ask it directly, most tools have their own way to connect a local folder, and yours can walk you through its own steps better than a doc written to cover several tools at once.
 2. Look at `Example Workstation/` first. It is the fastest way to understand what "a workstation" actually means in practice, before you build your own.
 3. Start a session and say what you want to track. `CLAUDE.md` includes the same first-run setup flow: your AI tool suggests common areas (work, personal finances, health, relationships, projects, and so on) and only creates the workstations you actually pick.
 4. Rename or delete `Example Workstation/` once you have created your own, and remove its row from the Routing Map.
@@ -55,6 +55,8 @@ The memory system above only works if `MEMORY.md` and `CLAUDE.md` stay current, 
 ## Skills live on your account, not in this folder
 
 A skill runs from your AI tool's account, on tools that have this concept at all (Claude Cowork does; see `00_Resources/Using CoworkOS with Other AI Tools.md` for others). Nothing in `00_Skills/` is read as a live skill; invoking one always uses the account copy. So this folder is not where skills execute from, it is where you keep a copy of them so they are not lost if the account version is ever edited by accident or you switch machines. `00_Skills/Skills Inventory.md` is the index, `Custom/` holds skills you wrote yourself, and `Third-Party/` holds someone else's, kept with their original license. The rule is simple: when you build or change a skill on your account, archive it here in the same session.
+
+Turning a file in this folder into an actual skill you can invoke is a separate step from having the file. The mechanics vary by tool, so rather than guess at yours, ask your AI tool directly: something like "read 00_Skills/Custom/session-audit/SKILL.md and set this up as a skill I can invoke going forward" works on tools that support the concept at all.
 
 ## Working away from your primary computer
 
@@ -89,6 +91,7 @@ Both are optional, and only relevant at all if you use git. If you never put thi
 | `00_Resources/voice-principles.md` | Starter file for how written output should sound; fills in through use |
 | `00_Resources/Using CoworkOS with Other AI Tools.md` | Running this on ChatGPT Work Mode, Kimi Work, OpenClaw, Hermes Agent, or anything else |
 | `00_Resources/GitHub Sync Guide.md` | Setting up the optional GitHub sync |
+| `00_Resources/Troubleshooting.md` | Fixing common install and setup problems |
 | `00_Skills/Skills Inventory.md` | Index of skills archived from your account |
 | `00_Skills/Custom/session-audit/SKILL.md` | The session-audit skill itself, and the worked example of the registry pattern |
 | `00_Skills/Custom/travel-mode/SKILL.md` | Working from the GitHub copy when your primary computer is unreachable |
@@ -96,6 +99,8 @@ Both are optional, and only relevant at all if you use git. If you never put thi
 | `Example Workstation/` | A filled-in sample workstation: `CLAUDE.md` and `MEMORY.md` with realistic content |
 | `.gitignore`, `.githooks/pre-commit` | Optional protection if you version-control this workspace |
 | `CONTRIBUTING.md` | How to propose a change to this repository itself |
+| `CHANGELOG.md` | What changed in this template, release by release |
+| `validate.py`, `.github/workflows/validate.yml` | Structural checks run on every pull request |
 
 ## Contributing
 

@@ -8,6 +8,8 @@ A skill runs from your Claude account, not from a file in this workspace. Nothin
 
 **The rule:** when you create or meaningfully change a custom skill on your account, copy its source into `Custom/` in the same session. If you are archiving someone else's skill rather than one you wrote, it goes in `Third-Party/` instead, with its original LICENSE and README kept alongside it.
 
+**Turning one of these files into an actual, invokable skill is a separate step from having the file**, and the exact mechanics vary by tool and change over time, so this file will not try to keep pace with a specific tool's UI. The reliable move: ask your AI tool directly, in your own words, to read the file and set it up as a skill. It knows its own current steps better than any doc can.
+
 ## Inventory
 
 | Skill | Type | Archived at | Notes |

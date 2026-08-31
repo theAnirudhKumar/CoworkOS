@@ -4,7 +4,7 @@ This repository is a template, so the bar for a change is different from a norma
 
 ## Before you write anything
 
-Open an issue first, describing what you want to change and why. Nothing gets edited here without one. This gives a place to agree on scope before any time goes into a draft, and it is the same discipline this repository was built under.
+Open an issue first, describing what you want to change and why: use the "Something is wrong" template if a documented step failed, or "Propose a change" for a gap or an addition. Nothing gets edited here without one. This gives a place to agree on scope before any time goes into a draft, and it is the same discipline this repository was built under.
 
 ## Workflow
 
@@ -26,6 +26,8 @@ This repository is the skeleton, not anyone's real workspace. A pull request sho
 - An identity guard pattern, filename pattern, or example tuned to one country's document formats without saying which country it covers. `.githooks/pre-commit` and `.gitignore` are explicit about this already; keep new patterns the same way.
 
 ## Style, since it is enforced
+
+Run `python3 validate.py` before opening a pull request; continuous integration runs the same script. It checks:
 
 - No em dashes or en dashes. Use a comma, a period, or a parenthetical instead.
 - Straight quotes and apostrophes, not curly ones.
