@@ -1,7 +1,7 @@
 ---
 name: session-audit
 description: >
-  End-of-session audit that scans the conversation for corrections, stated preferences, and decisions that were never written down, proposes exactly where each one belongs in the workspace, and writes only what you approve. If the workspace is a git repository, it finishes by syncing everything to the remote so local and remote end the session in sync. Use this whenever you say "audit this session," "session audit," "what did we miss," "end of session check," or "close out the session." Works with any CoworkOS-style workspace that has a CLAUDE.md and MEMORY.md at its root.
+  End-of-session audit that scans the conversation for corrections, stated preferences, and decisions that were never written down, proposes exactly where each one belongs in the workspace, and writes only what you approve to local files. That local save always happens. If, and only if, the workspace is already a git repository with a remote configured, it then also syncs everything to that remote as a last step; if it is not, or GitHub sync was never set up, the audit simply ends once local files are updated and confirmed, nothing about that is a failure or an incomplete run. Use this whenever you say "audit this session," "session audit," "what did we miss," "end of session check," or "close out the session." Works with any CoworkOS-style workspace that has a CLAUDE.md and MEMORY.md at its root.
 ---
 
 # Session Audit
@@ -47,9 +47,13 @@ Drop anything already written into a file loaded in Step 1. Only genuinely new f
 
 For each finding, state the fact or rule in the exact wording to save, name the file and section it belongs in, and say in one sentence why it matters. Group findings into ones the right action is obvious for, and ones that need a judgment call. If there is nothing to report, say so plainly rather than manufacturing a finding: a clean session still runs Step 5.
 
-### Step 5: Apply, then sync
+### Step 5: Apply, then sync if there is somewhere to sync to
 
-Write only what was approved, and confirm what landed where. If the workspace is a git repository: fetch first and stop if the remote has moved ahead of local, otherwise stage everything, not just what this step wrote, since anything else left uncommitted belongs in the same sync. Commit with a message naming the session's theme, push, then verify with a status check that local and remote actually match. Never force-push, never resolve a conflict by guessing which side is right, and never bypass a pre-commit guard without an explicit, confirmed false positive.
+Write only what was approved, and confirm what landed where. This save to local files is the audit's real job, and it happens every time, regardless of git.
+
+Syncing is a bonus step, not a requirement: only attempt it if the workspace is already a git repository with a remote configured (set up via `00_Resources/GitHub Sync Guide.md`). If it is not, say plainly that the audit is done, local files are saved, and stop there; do not treat the absence of GitHub sync as something to apologize for or work around.
+
+When there is a remote to sync to: fetch first and stop if the remote has moved ahead of local, otherwise stage everything, not just what this step wrote, since anything else left uncommitted belongs in the same sync. Commit with a message naming the session's theme, push, then verify with a status check that local and remote actually match. Never force-push, never resolve a conflict by guessing which side is right, and never bypass a pre-commit guard without an explicit, confirmed false positive.
 
 ## What this deliberately does not do
 

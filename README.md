@@ -27,14 +27,17 @@ The easiest way to install this is to copy one block of text into whichever AI t
 I want to set up a CoworkOS workspace for myself. Please get the files from
 this repository: https://github.com/theAnirudhKumar/CoworkOS
 
-Save them into a new local folder you can read and write to. Once the files
-are saved, read CLAUDE.md first, at the root of that folder, and follow its
-instructions from there, including the first-run setup section. Ask me what
-areas of my life or work I want to track before creating anything, and do
-not create a workstation I did not ask for.
+Before saving anything, ask me exactly where I want this workspace saved,
+and confirm the full path back to me once you have it, so I have a real
+answer to point back to later, not a temporary or session-specific location
+you picked for me. Save the files there. Once the files are saved, read
+CLAUDE.md first, at the root of that folder, and follow its instructions
+from there, including the first-run setup section. Ask me what areas of my
+life or work I want to track before creating anything, and do not create a
+workstation I did not ask for.
 ```
 
-What happens next depends on the tool, but the shape is the same everywhere: it fetches the repository, saves the files locally, reads `CLAUDE.md`, and starts asking you what to set up rather than assuming anything. See `00_Resources/Using CoworkOS with Other AI Tools.md` if your tool is not Claude Cowork, for what to expect and what to check first.
+What happens next depends on the tool, but the shape is the same everywhere: it fetches the repository, asks where to save it, saves the files there, reads `CLAUDE.md`, and starts asking you what to set up rather than assuming anything. The "where to save it" question matters more than it looks: some tools default to a temporary or per-session folder you cannot easily find again, so make sure you get a real, memorable answer before moving on. See `00_Resources/Using CoworkOS with Other AI Tools.md` if your tool is not Claude Cowork, for what to expect and what to check first, including whether your tool works from a stable folder at all.
 
 If you would rather do this by hand:
 
