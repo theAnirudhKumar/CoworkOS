@@ -16,6 +16,8 @@ Flag contradictions. If a new instruction conflicts with an existing memory entr
 
 Full mechanics (capture triggers, entry format, archiving) are in 00_Reference/Memory System.md.
 
+At the end of a session, run the session-audit skill (skills/session-audit/SKILL.md) rather than relying on memory writes caught mid-conversation. It scans the whole session for corrections, preferences, and decisions that were never written down, proposes where each belongs, and applies only what is approved. This is what keeps this file and MEMORY.md actually current instead of slowly drifting stale.
+
 **Where things go.** Apply two tests when deciding where to save something. Test 1: does it prescribe behavior (look for "always," "never," "before doing X, do Y")? If so, it belongs in this file, under the right section. Test 2: does it describe a fact about the world that could change (status, a decision, a preference, something the user asked to be remembered)? If so, it belongs in MEMORY.md. When neither test clearly applies, say which file seems right and ask for confirmation before writing.
 
 ---
@@ -79,3 +81,4 @@ When adding a new rule, decide where it belongs using the two tests in the Memor
 | 00_Reference/File Creation Rules.md | Creating any new file in the workspace |
 | 00_Reference/Memory System.md | Writing a memory entry, running an archive pass, or handling a contradiction |
 | 00_Resources/Workstation Setup Guide.md | Creating a new workstation |
+| skills/session-audit/SKILL.md | Closing out a session: capturing uncaptured learnings and syncing the workspace |
