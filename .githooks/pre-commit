@@ -1,0 +1,161 @@
+#!/usr/bin/env python3
+"""
+Identity-data guard.
+
+Blocks a commit when a government ID number, a bank identifier, or a
+financial-account number appears in newly added content, or when a file
+staged for commit has a name that suggests it is an identity document.
+
+Why this exists: a workspace built on this template tends to accumulate real
+personal and financial information over time (see Personal Finances, Health,
+or any workstation you create for that kind of tracking). Git history is
+permanent, so this runs before the commit lands rather than trying to clean
+up after.
+
+The example patterns below are Indian government ID formats (Aadhaar, PAN,
+IFSC) plus a US Social Security Number, since those are two the author knew
+well enough to write correctly. They will not catch anything relevant if you
+live somewhere else. Replace or extend them with the ID and banking formats
+that actually apply to you; the mechanism (STRICT patterns that stand alone,
+NEAR patterns that only fire next to a corroborating keyword, and a filename
+check) is the reusable part, not the specific regular expressions.
+
+Modes:
+  (no args)  pre-commit hook. Scans only ADDED lines in the staged diff.
+  --full     scans every tracked file in the workspace. Reports, never blocks.
+
+Override: git commit --no-verify   (use only on a confirmed false positive)
+"""
+import re, subprocess, sys, io, os
+
+# --- Patterns that stand on their own -----------------------------------
+STRICT = [
+    ("Aadhaar number (India)",
+     re.compile(r'(?<![\dA-Za-z])[2-9]\d{3}[ -]\d{4}[ -]\d{4}(?![\dA-Za-z])')),
+    # Indian PAN 4th character encodes the holder type: P is an individual.
+    # Company, HUF, firm, AOP and trust PANs (C/H/F/A/T) are business records,
+    # not personal ones, so they are deliberately not matched here.
+    ("Personal PAN, India (4th character P)",
+     re.compile(r'(?<![A-Z0-9])[A-Z]{3}P[A-Z]\d{4}[A-Z](?![A-Z0-9])')),
+    ("Bank IFSC code (India)",
+     re.compile(r'(?<![A-Z0-9])[A-Z]{4}0[A-Z0-9]{6}(?![A-Z0-9])')),
+    ("Social Security Number (US)",
+     re.compile(r'(?<![\dA-Za-z])(?!000|666|9\d\d)\d{3}-(?!00)\d{2}-(?!0000)\d{4}(?![\dA-Za-z])')),
+    # A leaked API token or credential is not personal data, but it is exactly
+    # the kind of thing that should never sit in version-controlled history.
+    ("GitHub personal access token",
+     re.compile(r'gh[pousr]_[A-Za-z0-9]{16,}|github_pat_[A-Za-z0-9_]{20,}')),
+]
+
+# --- Patterns that only fire near a corroborating keyword ---------------
+NEAR = [
+    ("Bare 12-digit Aadhaar (India)",
+     re.compile(r'(?<![\dA-Za-z])[2-9]\d{11}(?![\dA-Za-z])'),
+     re.compile(r'aadhaar|aadhar|uidai', re.I)),
+    ("Passport number",
+     re.compile(r'(?<![A-Z0-9])[A-Z]\d{7}(?![A-Z0-9])'),
+     re.compile(r'passport', re.I)),
+    ("Bank account number",
+     re.compile(r'(?<![\dA-Za-z])\d{9,18}(?![\dA-Za-z])'),
+     re.compile(r'account\s*(no|number|#)|a/c|bank\s*acc|routing\s*number', re.I)),
+]
+
+# --- Filenames that should never be committed as documents --------------
+BAD_NAME = re.compile(
+    r'aadhaar|aadhar|passport|ssn|social[-_ ]?security|bank[-_ ]?statement|cheque|check[-_ ]?image|'
+    r'pay[-_ ]?slip|salary[-_ ]?slip|specimen[-_ ]?signature|personal[-_ ]?pan',
+    re.I)
+
+mask = lambda s: re.sub(r'\d', 'X', s)
+
+
+def scan_text(text, path, findings):
+    lines = text.splitlines()
+    joined = "\n".join(lines)
+    for label, rx in STRICT:
+        for i, line in enumerate(lines, 1):
+            if rx.search(line):
+                findings.append((path, i, label, mask(line.strip())[:110]))
+    for label, rx, kw in NEAR:
+        if not kw.search(joined):
+            continue
+        for i, line in enumerate(lines, 1):
+            if rx.search(line):
+                lo, hi = max(0, i - 3), min(len(lines), i + 2)
+                if kw.search("\n".join(lines[lo:hi])):
+                    findings.append((path, i, label, mask(line.strip())[:110]))
+
+
+def staged_added_lines():
+    """Return {path: added-text} for the staged diff."""
+    out = subprocess.run(['git', 'diff', '--cached', '-U0'],
+                         capture_output=True, text=True, errors='ignore').stdout
+    blocks, path = {}, None
+    for line in out.splitlines():
+        if line.startswith('+++ b/'):
+            path = line[6:]
+            blocks.setdefault(path, [])
+        elif line.startswith('+') and not line.startswith('+++') and path:
+            blocks[path].append(line[1:])
+    return {p: "\n".join(v) for p, v in blocks.items() if v}
+
+
+def main():
+    full = '--full' in sys.argv
+    findings, name_hits = [], []
+
+    if full:
+        files = subprocess.run(['git', 'ls-files'],
+                               capture_output=True, text=True).stdout.splitlines()
+        for f in files:
+            if not os.path.exists(f):
+                continue
+            try:
+                txt = io.open(f, encoding='utf-8', errors='ignore').read()
+            except Exception:
+                continue
+            if '\0' in txt[:2000]:
+                continue
+            scan_text(txt, f, findings)
+            if BAD_NAME.search(os.path.basename(f)):
+                name_hits.append(f)
+    else:
+        for path, text in staged_added_lines().items():
+            scan_text(text, path, findings)
+        staged = subprocess.run(['git', 'diff', '--cached', '--name-only',
+                                 '--diff-filter=A'],
+                                capture_output=True, text=True).stdout.splitlines()
+        name_hits = [f for f in staged if BAD_NAME.search(os.path.basename(f))]
+
+    if not findings and not name_hits:
+        print("identity-data guard: clean" if full else "", end="")
+        return 0
+
+    print("\n" + "=" * 68)
+    print(" IDENTITY-DATA GUARD" + ("  (full scan, report only)" if full else "  COMMIT BLOCKED"))
+    print("=" * 68)
+    if findings:
+        print("\nIdentifiers found (all digits masked as X):\n")
+        for p, i, label, prev in findings[:40]:
+            print("  %s:%s\n    %s\n    %s\n" % (p, i, label, prev))
+        if len(findings) > 40:
+            print("  ...and %d more not shown\n" % (len(findings) - 40))
+    if name_hits:
+        print("\nIdentity-shaped filenames staged:\n")
+        for f in name_hits:
+            print("  " + f)
+        print()
+    if full:
+        return 0
+    print("-" * 68)
+    print("Nothing was committed. Git history is permanent, so this stops here.")
+    print("Remove the identifier, or move the file out of the workspace and")
+    print("reference it by path instead.")
+    print("\nIf this is a false positive, and only then:")
+    print("  git commit --no-verify")
+    print("=" * 68 + "\n")
+    return 1
+
+
+if __name__ == '__main__':
+    sys.exit(main())

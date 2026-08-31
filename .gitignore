@@ -1,0 +1,27 @@
+# macOS clutter
+.DS_Store
+**/.DS_Store
+
+# Obsidian workspace state, if you browse this folder with Obsidian.
+# Vault settings, plugins, themes and snippets are worth keeping tracked;
+# only the pane-layout scratch state gets rewritten on every window move.
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+
+# Identity and financial documents. These should not live in this workspace
+# at all (reference them by path from wherever they actually live instead),
+# but this is a backstop in case one lands here anyway. Adjust the patterns
+# below for whatever document types apply where you live.
+*passport*
+*aadhaar*
+*aadhar*
+*ssn*
+*social-security*
+*bank-statement*
+*paystub*
+*pay-slip*
+*salary-slip*
+*specimen-signature*
+
+# Local backups, if you keep a .backups/ folder before bulk edits
+.backups/

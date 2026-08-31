@@ -36,6 +36,8 @@ Use a skill when it provides a specialized, reusable workflow that improves the 
 
 Only invoke skills that are actually available in the current session.
 
+When you build or meaningfully change a custom skill, archive its source into 00_Skills/Custom/ (or 00_Skills/Third-Party/ for someone else's work, keeping the original LICENSE and README) in the same session, and add a row to 00_Skills/Skills Inventory.md. The account is the only place the live skill exists; this is the recovery copy.
+
 ---
 
 ## Size Cap
@@ -70,7 +72,7 @@ Apply this decision tree when deciding where new content belongs:
 2. Does it describe a fact about the world that could change (status, a decision, a preference, something the user asked to be remembered)? Goes in MEMORY.md.
 3. Is it detailed reference material or reusable mechanics? Goes in 00_Reference/, under a stable file name.
 4. Is it a supporting resource loaded on demand? Goes in 00_Resources/.
-5. Is it a historical record of completed work? Goes in an archive file, if you keep one, not scattered through the active files.
+5. Is it a historical record of completed work? Goes in ARCHIVE.md, not scattered through the active files.
 
 When unsure, say which file seems right and ask for confirmation before writing.
 
@@ -98,7 +100,7 @@ Publication and delivery status in particular is a fact to verify, never somethi
 
 For multi-step tasks: outline the plan first, wait for approval, then execute step by step, summarizing what was done and what is next after each major step.
 
-For structural changes to the workspace (a new workstation, renamed files, changed routing): if you keep an archive or changelog file, log the change there. If the change affects root CLAUDE.md, keep a record of what changed and why.
+For structural changes to the workspace (a new workstation, renamed files, changed routing): log the change in ARCHIVE.md. If the change affects root CLAUDE.md, keep a record of what changed and why.
 
 ---
 
