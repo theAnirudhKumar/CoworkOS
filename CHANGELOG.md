@@ -4,6 +4,10 @@ All notable changes to this template are documented here. Format follows [Keep a
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-09-01
+
+First public release. Round-1 installer hardening and round-3 fixes from a real dogfood run, folded together.
+
 ### Fixed
 - The install prompt in README never asked where to save the workspace, so a session-scoped AI tool could bury it somewhere the user could not find again. It now asks explicitly and confirms the exact path back before creating anything.
 - `session-audit`'s description and its sync step read as if GitHub sync was expected or required. Found by a real user hitting exactly this confusion. Reworded so the local save is stated as always happening, and syncing is explicitly a bonus step that only runs if a git remote already exists.
