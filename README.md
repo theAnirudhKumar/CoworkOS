@@ -13,7 +13,7 @@ Instead of one long system prompt, CoworkOS gives your AI tool a small set of ma
 - `Example Workstation/` - a filled-in sample so you can see what a real workstation looks like, not just read a description of one. Rename or delete it once the pattern clicks.
 - `.gitignore` and `.githooks/pre-commit` - optional, if you put this workspace under version control. See "Protecting what goes in here" below.
 
-A "workstation" is a folder for one area of life or work: a job, a side project, health, finances, relationships, anything that deserves its own context. Each one gets its own `CLAUDE.md` and `MEMORY.md`, scoped to that domain, so the root files never have to hold everything at once.
+A "workstation" is a folder for one area of life or work: a job, a side project, health, finances, relationships, anything that deserves its own context. Each one gets its own `CLAUDE.md` and `MEMORY.md`, scoped to that domain, so the root files never have to hold everything at once. `CLAUDE.md` ships a Starter Workstations list of 15 common life areas, so first-run setup offers a real, complete menu instead of asking you to invent one from scratch.
 
 ## How it works
 
@@ -43,7 +43,7 @@ If you would rather do this by hand:
 
 1. Get the files onto your computer. If you don't use git: on this repository's GitHub page, click the green **Code** button, choose **Download ZIP**, then unzip it. If you do use git: `git clone https://github.com/theAnirudhKumar/CoworkOS.git`. Either way, end up with a folder your AI tool can read and write to. If you're not sure how to give your AI tool access to that folder, ask it directly, most tools have their own way to connect a local folder, and yours can walk you through its own steps better than a doc written to cover several tools at once.
 2. Look at `Example Workstation/` first. It is the fastest way to understand what "a workstation" actually means in practice, before you build your own.
-3. Start a session and say what you want to track. `CLAUDE.md` includes the same first-run setup flow: your AI tool suggests common areas (work, personal finances, health, relationships, projects, and so on) and only creates the workstations you actually pick.
+3. Start a session and say what you want to track. `CLAUDE.md` includes the same first-run setup flow: your AI tool offers the full Starter Workstations list, 15 common life areas, not just a handful of examples, and asks which ones to remove. You can also add an area that is not on the list. Only what is left after that gets created.
 4. Rename or delete `Example Workstation/` once you have created your own, and remove its row from the Routing Map.
 5. Work normally. Correct your AI tool when it gets something wrong, and it will propose a memory entry so the correction sticks.
 

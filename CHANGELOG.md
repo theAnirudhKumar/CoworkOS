@@ -4,6 +4,9 @@ All notable changes to this template are documented here. Format follows [Keep a
 
 ## [Unreleased]
 
+### Added
+- A Starter Workstations list of 15 common life areas built directly into root `CLAUDE.md`, each with a one-line gist and what it covers. First-run setup now offers the full list and asks what to remove, instead of asking the user to invent areas from a blank page, since most people default to two or three when asked to name their own. Sub-items are not sub-workstations; they seed the Identity paragraph of whichever areas are kept. `00_Resources/Workstation Setup Guide.md` and `README.md` updated to match. No folders are created in the repo itself, only at install time for whatever the user keeps.
+
 ## [1.0.0] - 2026-09-01
 
 First public release. Round-1 installer hardening and round-3 fixes from a real dogfood run, folded together.
