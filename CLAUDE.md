@@ -33,14 +33,34 @@ Run this the first time this workspace is used. On a fresh copy of this template
 Say up front, once, that this setup can be paused at any point and picked up again later: nothing here has to happen in one sitting. Any step answered with a clear no, such as declining GitHub sync outright, is a settled decision and needs no log. Any step put off rather than decided, "not now," "later," "skip this for now," or left alone when offered, gets logged in root MEMORY.md's Open Items section (see 00_Reference/Memory System.md) with a one-line note on what is lost by leaving it that way, so a deferred step stays visible instead of quietly disappearing. Apply this the same way to every step below, including the GitHub sync question, not only the ones that call it out by name.
 
 0. If this AI tool is not Claude Cowork, read 00_Resources/Using CoworkOS with Other AI Tools.md before anything else, including whether this tool works from a stable folder at all. If where these files were saved is at all unclear, ask now, before creating anything, and confirm the answer back so it is on record.
-1. Ask what areas of life or work should be tracked here. Offer a short list of common starting points as suggestions, not a fixed menu: work or career, personal finances, health, relationships, home and admin, learning, side projects, communications. Make clear these are only examples.
-2. For each area the user picks, create a workstation following 00_Resources/Workstation Setup Guide.md: a folder with a CLAUDE.md and a MEMORY.md, nothing else until it is needed.
+1. Offer the full Starter Workstations list below, not a short handful of examples. Show each area's name and its one-line gist, in order, and ask which ones to remove, if any, rather than asking the user to generate a list from nothing: most people default to two or three areas when asked to name their own, which undersells what this system is for. Make clear they can also add an area that is not on the list, rename any of these, or remove as many as they want, down to zero. Whatever is left after removals is what step 2 creates.
+2. For each area kept, create a workstation following 00_Resources/Workstation Setup Guide.md: a folder with a CLAUDE.md and a MEMORY.md, nothing else until it is needed. If the area is one of the Starter Workstations below, write its Identity paragraph from that area's gist and covers list, what routes here and what does not. MEMORY.md still starts genuinely empty either way, per step 4.
 3. Add a row to the Routing Map for each new workstation, describing when to route there in the user's own words.
 4. Do not create a workstation the user did not ask for, and do not pre-populate content inside one. Start empty and let it fill in through use.
 5. Offer, right here rather than leaving it to be discovered later, to rename or delete Example Workstation now that real workstations exist, and to remove its row from the Routing Map. If the user would rather leave it for now, that is fine, per the deferral rule above.
 6. Ask whether the user wants this workspace synced to a GitHub repository they own. This is optional and off by default; explain the reason briefly, mainly reaching the workspace from a phone or another device while away from the primary computer, and point to 00_Resources/GitHub Sync Guide.md if they say yes. Do not set this up without an explicit yes.
 7. Offer, do not wait to be asked, to set up the skills this template ships archived copies of (00_Skills/Skills Inventory.md), starting with session-audit since first-time setup already leaned on the memory system it maintains. What "set up" means depends on whether this AI tool has a real installable-skill mechanism at all; if it does, attempt it directly rather than only describing how; if it does not, or you are not sure, say so plainly and explain how the workspace still gets the same behavior without a formal install, by reading the SKILL.md file directly when triggered. Either way, this step actually happens now, not only when the user thinks to ask about skills.
 8. Offer a short, clearly skippable round of questions about how the user wants written output to sound (tone, formality, anything they already know they dislike), and save what they give you to 00_Resources/voice-principles.md. Three questions at most. If they would rather skip it and let this fill in through use instead, that is a completely fine answer, per the deferral rule above, not something to push further on.
+
+### Starter Workstations
+
+This is what step 1 offers. It exists so a first-time user is choosing from a real, complete list rather than inventing one from a blank page, since most people default to two or three areas when asked to name their own. It is a starting menu, not a ceiling: anyone can add an area not listed here, rename any of these, or remove as many as they want. Sub-items listed under "Covers" are what each area typically holds, not workstations of their own; use them to write the new workstation's Identity paragraph in step 2, not as a checklist to fill in.
+
+1. **Self.** Who you are, underneath every other area. Covers: identity, values, preferences, principles, vision, personal operating system.
+2. **Career.** Where your career is headed, across jobs. Covers: career direction, skills, opportunities, professional development. Does not cover the current job's day to day, that is Work.
+3. **Work.** Your current job. Covers: current company, role, team, projects, meetings, processes. Does not cover long-term career direction, that is Career.
+4. **Finances.** Money in, money out, and the recurring obligations around it. Covers: income, expenses, investments, taxes, financial goals, insurance, subscriptions, renewals.
+5. **Home.** Where you live and what it takes to run it. Covers: housing, household, purchases, renting, maintenance.
+6. **Relationships.** The people in your life. Covers: family, friends, partner, network.
+7. **Health and Wellbeing.** Body and mind. Covers: exercise, nutrition, sleep, healthcare, habits, medical. "Habits" here means health routines specifically, sleep, exercise, eating; a general productivity habit belongs in Personal Growth instead.
+8. **Learning.** What you are studying or building knowledge on. Covers: books, courses, research, notes, skills, knowledge.
+9. **Projects.** Things you are building or experimenting with outside of work. Covers: personal projects, AI projects, experiments.
+10. **Content and Personal Brand.** What you publish and how you show up publicly. Covers: LinkedIn, Instagram, writing, content ideas.
+11. **Personal Growth.** How you are actively working on yourself. Covers: self improvement, productivity, habits. "Habits" here means productivity and self-improvement routines; a health routine belongs in Health and Wellbeing instead.
+12. **Travel and Experiences.** Where you have been and where you want to go. Covers: trips, places, experiences, bucket list.
+13. **Interests.** What you follow for its own sake, not for work or growth. Covers: AI, technology, hobbies, media.
+14. **Personal Admin.** The paperwork and errands. Covers: documents, legal, personal tasks, chores.
+15. **Life Planning.** The long view. Covers: goals, long-term vision, major decisions, future plans.
 
 ---
 

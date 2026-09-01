@@ -8,7 +8,7 @@ When creating a new workstation, make a subfolder named for it and add these ins
 
 Sections, in this order:
 
-- **Identity.** One paragraph: who you are in this workstation, what routes here, what does not.
+- **Identity.** One paragraph: who you are in this workstation, what routes here, what does not. If this workstation is one of the Starter Workstations in root CLAUDE.md's first-run setup, write it from that area's gist and covers list rather than inventing one.
 - **Resources.** A table with "Resource" and "Read when..." columns. Start empty and fill it in as reference files accumulate.
 - **Workflow.** Numbered steps for the primary task this workstation handles. Start simple and refine over time.
 - **Editorial Rules** (only if this workstation produces written output). Domain-specific writing rules that layer on top of the workspace-wide voice guidance in 00_Resources/voice-principles.md.
