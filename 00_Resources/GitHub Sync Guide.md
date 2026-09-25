@@ -24,7 +24,7 @@ From your GitHub account, create a new repository. Give it a name that means som
 
 ### 3. Connect this workspace to it
 
-If your AI tool is doing this for you, skip ahead, it just needs this repository's URL from step 2 and the rest is the same commands below. If you are typing this yourself: open a terminal (on Mac, it's in Applications > Utilities > Terminal; on Windows, search for Command Prompt or PowerShell; on Linux, whatever terminal your desktop provides), navigate to the folder where this workspace lives with `cd path/to/that/folder`, then run:
+If your AI tool is doing this for you, skip ahead, it just needs this repository's URL from step 2 and the rest is the same commands below. If you are typing this yourself: open a terminal (on Mac, it's in Applications > Utilities > Terminal; on Windows, search for Command Prompt or PowerShell; on Linux, whatever terminal your desktop provides), navigate to the folder where this workspace lives with `cd path/to/that/folder`, then run the commands below. If the folder already has a `.git` folder because it arrived as a clone of the CoworkOS template rather than a download, remove any remote that points at the template first, and preferably the template's history too (delete that `.git` folder), so `git init` starts a history that is yours:
 
 ```bash
 git init
@@ -46,7 +46,7 @@ git config core.hooksPath .githooks
 chmod +x .githooks/pre-commit
 ```
 
-See `.githooks/pre-commit` itself and the "Protecting what goes in here" section of the main `README.md` for what this catches, and why the example patterns are only a starting point for wherever you live.
+See the comments at the top of `.githooks/pre-commit` for what this catches, and why the example patterns are only a starting point for wherever you live.
 
 ### 5. Connect your AI tool to the repository, if it supports it
 

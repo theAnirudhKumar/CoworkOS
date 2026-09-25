@@ -53,7 +53,7 @@ Write only what was approved, and confirm what landed where. This save to local 
 
 Syncing is a bonus step, not a requirement: only attempt it if the workspace is already a git repository with a remote configured (set up via `00_Resources/GitHub Sync Guide.md`). If it is not, say plainly that the audit is done, local files are saved, and stop there; do not treat the absence of GitHub sync as something to apologize for or work around.
 
-When there is a remote to sync to: fetch first and stop if the remote has moved ahead of local, otherwise stage everything, not just what this step wrote, since anything else left uncommitted belongs in the same sync. Commit with a message naming the session's theme, push, then verify with a status check that local and remote actually match. Never force-push, never resolve a conflict by guessing which side is right, and never bypass a pre-commit guard without an explicit, confirmed false positive.
+When there is a remote to sync to: check first that it is a repository the user owns and not the CoworkOS template repository the files were originally cloned from; if it points at the template, do not push, say so plainly, and offer to remove that remote. Otherwise fetch first and stop if the remote has moved ahead of local, otherwise stage everything, not just what this step wrote, since anything else left uncommitted belongs in the same sync. Commit with a message naming the session's theme, push, then verify with a status check that local and remote actually match. Never force-push, never resolve a conflict by guessing which side is right, and never bypass a pre-commit guard without an explicit, confirmed false positive.
 
 ## What this deliberately does not do
 
