@@ -4,6 +4,10 @@ All notable changes to this template are documented here. Format follows [Keep a
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-09-25
+
+Setup now hands over a clean workspace, and offers a full starter menu of life areas.
+
 ### Fixed
 - A workspace set up on someone else's computer still carried the template author's material after setup: the full first-run script and Starter Workstations list in `CLAUDE.md`, the template's README, CHANGELOG, CONTRIBUTING, `validate.py` and `.github/`, placeholder example entries, and, for a git clone, the template's history and a remote pointing back at this repository, which session-audit's sync step would have tried to push to. Found by testing an install on a second person's machine.
 
