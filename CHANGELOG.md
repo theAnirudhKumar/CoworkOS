@@ -4,6 +4,15 @@ All notable changes to this template are documented here. Format follows [Keep a
 
 ## [Unreleased]
 
+### Fixed
+- A workspace set up on someone else's computer still carried the template author's material after setup: the full first-run script and Starter Workstations list in `CLAUDE.md`, the template's README, CHANGELOG, CONTRIBUTING, `validate.py` and `.github/`, placeholder example entries, and, for a git clone, the template's history and a remote pointing back at this repository, which session-audit's sync step would have tried to push to. Found by testing an install on a second person's machine.
+
+### Changed
+- First-run setup moved out of `CLAUDE.md` into a new root `SETUP.md`. `CLAUDE.md` keeps only a short pointer: if `SETUP.md` exists, setup is unfinished. `SETUP.md` ends with a hand-over step that removes the template-maintainer files, clears example entries, removes a template git remote and offers to drop the template's history, then deletes itself. `LICENSE` is kept, as the license requires.
+- The Starter Workstations list moved from `CLAUDE.md` to `00_Resources/Workstation Setup Guide.md`, so it survives setup and is still there when adding an area later.
+- `session-audit` refuses to push to a remote that is the CoworkOS template repository, and the GitHub Sync Guide checks for a template clone before `git init`.
+- Docs that stay in an installed workspace (`Troubleshooting.md`, `GitHub Sync Guide.md`, `Using CoworkOS with Other AI Tools.md`) no longer point at README sections that setup now removes. `Troubleshooting.md` gains the cleanup request for workspaces set up before this change.
+
 ### Added
 - A Starter Workstations list of 15 common life areas built directly into root `CLAUDE.md`, each with a one-line gist and what it covers. First-run setup now offers the full list and asks what to remove, instead of asking the user to invent areas from a blank page, since most people default to two or three when asked to name their own. Sub-items are not sub-workstations; they seed the Identity paragraph of whichever areas are kept. `00_Resources/Workstation Setup Guide.md` and `README.md` updated to match. No folders are created in the repo itself, only at install time for whatever the user keeps.
 
