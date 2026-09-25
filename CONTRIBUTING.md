@@ -23,6 +23,7 @@ This repository is the skeleton, not anyone's real workspace. A pull request sho
 
 - A real name, employer, customer name, email address, or file path from someone's actual workspace.
 - Content specific to one person's situation dressed up as a general rule. If a rule only makes sense for a narrow case, say so explicitly rather than presenting it as universal.
+- A new file that only matters for maintaining the template (like this one, `CHANGELOG.md`, or `validate.py`) without adding it to the removal list in the "Handing over the workspace" section of `SETUP.md`. Anything not on that list stays in every installer's workspace forever.
 - An identity guard pattern, filename pattern, or example tuned to one country's document formats without saying which country it covers. `.githooks/pre-commit` and `.gitignore` are explicit about this already; keep new patterns the same way.
 
 ## Style, since it is enforced

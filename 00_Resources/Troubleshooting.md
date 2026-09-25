@@ -4,7 +4,7 @@ Problems people actually hit setting this up, in the order they tend to show up.
 
 ## My AI tool didn't ask me any setup questions, it just created folders
 
-This usually means the install prompt from the README got skipped or paraphrased. The prompt matters more than it looks: it tells your AI tool to read `CLAUDE.md` and follow the first-run setup section, which is what makes it *ask* what areas of life or work you want tracked instead of guessing. If it already created workstations you did not ask for, tell it to delete them and re-read `CLAUDE.md`'s First-time setup section before doing anything else. If you typed your own install instructions instead of using the README's block, paste the README's version instead, it is the one that has actually been tested.
+This usually means the install prompt from the README got skipped or paraphrased. The prompt matters more than it looks: it tells your AI tool to read `CLAUDE.md`, which sends it to `SETUP.md`, the first-run setup, which is what makes it *ask* what areas of life or work you want tracked instead of guessing. If it already created workstations you did not ask for, tell it to delete them and re-read `SETUP.md` before doing anything else. If you typed your own install instructions instead of using the install prompt from the CoworkOS template's README, paste that version instead, it is the one that has actually been tested.
 
 ## Nothing happens when I say "run session-audit" (or any skill name)
 
@@ -12,7 +12,7 @@ Having the file in `00_Skills/Custom/session-audit/SKILL.md` does not make it a 
 
 ## I don't use git and the setup instructions lost me at the git commands
 
-You don't need to type any git command yourself. For getting the files in the first place, use the README's **Download ZIP** option instead of `git clone`. For the optional GitHub sync in `00_Resources/GitHub Sync Guide.md`, once you've created the account and the empty repository, hand your AI tool the whole guide and ask it to run the steps for you, that's the tested path. If you do want to type the commands yourself, both guides now say exactly where to open a terminal (Applications > Utilities > Terminal on a Mac, Command Prompt or PowerShell on Windows).
+You don't need to type any git command yourself. For getting the files in the first place, use the **Download ZIP** option on the template's GitHub page instead of `git clone`. For the optional GitHub sync in `00_Resources/GitHub Sync Guide.md`, once you've created the account and the empty repository, hand your AI tool the whole guide and ask it to run the steps for you, that's the tested path. If you do want to type the commands yourself, both guides now say exactly where to open a terminal (Applications > Utilities > Terminal on a Mac, Command Prompt or PowerShell on Windows).
 
 ## I turned on the GitHub sync but the identity guard doesn't seem to do anything
 
@@ -29,6 +29,10 @@ Run that once from inside the workspace folder (your AI tool can run it for you)
 
 This happens if the repository you created on GitHub already has a commit in it, most commonly because you ticked "Add a README" while creating it. Delete that repository and recreate it empty (no README, no `.gitignore`, no license, CoworkOS brings its own), or, if you'd rather keep it, pull first with `git pull origin main --allow-unrelated-histories` before pushing. Either way, this is exactly the kind of step worth handing to your AI tool rather than working through by hand.
 
+## Setup is finished but the workspace still has the template author's files or name in it
+
+First-run setup ends by handing the workspace over: it deletes the template's own README, CHANGELOG, CONTRIBUTING, `validate.py` and `.github/` folder, clears the placeholder example entries, removes any git remote pointing back at the template repository, and finally deletes `SETUP.md` itself. If a workspace was set up before that step existed, or the step got skipped, ask your AI tool to do it now: "delete README.md, CHANGELOG.md, CONTRIBUTING.md, validate.py, and the .github folder; remove the example entries from MEMORY.md and ARCHIVE.md; and if this folder is a git repository, remove any remote that points at the CoworkOS template and ask me whether to delete the template's git history." Keep `LICENSE`, the template's license requires its copyright notice to stay with the copy. The remote matters most: until it is gone, a session-audit sync could try to push your workspace to the template's repository.
+
 ## I renamed or deleted Example Workstation and now routing seems broken
 
 Two things need to happen together, and it's easy to do the first without the second. Deleting the folder is only half the change, the Routing Map table near the bottom of root `CLAUDE.md` still has a row pointing at it. Remove that row (or update it to point at whatever replaced it) in the same pass. If your AI tool did the rename or delete for you, ask it to update the Routing Map too, that's the actual cause when routing seems to misfire right after cleaning up the example.
@@ -39,4 +43,4 @@ Check whether the fact actually made it into `MEMORY.md` or the relevant worksta
 
 ## Everything above and I'm still stuck
 
-Open an issue on this repository (`00_Reference` and the README describe how contributions work) describing what you asked for, what happened, and what your AI tool is. If it's specific to running this on a tool other than Claude Cowork, check `00_Resources/Using CoworkOS with Other AI Tools.md` first, several tool-specific quirks are already documented there.
+Open an issue on the CoworkOS template repository you downloaded this from (its CONTRIBUTING file describes how contributions work) describing what you asked for, what happened, and what your AI tool is. If it's specific to running this on a tool other than Claude Cowork, check `00_Resources/Using CoworkOS with Other AI Tools.md` first, several tool-specific quirks are already documented there.

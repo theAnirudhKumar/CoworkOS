@@ -7,13 +7,14 @@ Instead of one long system prompt, CoworkOS gives your AI tool a small set of ma
 ## What this is
 
 - `CLAUDE.md`, `MEMORY.md`, `ARCHIVE.md` - the three root files. The constitution, the notepad, and the historical record.
+- `SETUP.md` - the first-run setup. It deletes itself, along with the rest of the template's own files, once setup is finished. See "What setup leaves behind" below.
 - `00_Reference/` - the mechanics behind the rules in `CLAUDE.md`, loaded on demand rather than every session.
 - `00_Resources/` - supporting material: the workstation setup guide, a starter voice-principles file, notes on using other AI tools, and the optional GitHub sync guide.
 - `00_Skills/` - a register of the skills your AI tool's account actually has, and a recovery copy of the ones you build yourself. See "Skills live on your account, not in this folder" below.
 - `Example Workstation/` - a filled-in sample so you can see what a real workstation looks like, not just read a description of one. Rename or delete it once the pattern clicks.
 - `.gitignore` and `.githooks/pre-commit` - optional, if you put this workspace under version control. See "Protecting what goes in here" below.
 
-A "workstation" is a folder for one area of life or work: a job, a side project, health, finances, relationships, anything that deserves its own context. Each one gets its own `CLAUDE.md` and `MEMORY.md`, scoped to that domain, so the root files never have to hold everything at once. `CLAUDE.md` ships a Starter Workstations list of 15 common life areas, so first-run setup offers a real, complete menu instead of asking you to invent one from scratch.
+A "workstation" is a folder for one area of life or work: a job, a side project, health, finances, relationships, anything that deserves its own context. Each one gets its own `CLAUDE.md` and `MEMORY.md`, scoped to that domain, so the root files never have to hold everything at once. `00_Resources/Workstation Setup Guide.md` ships a Starter Workstations list of 15 common life areas, so first-run setup offers a real, complete menu instead of asking you to invent one from scratch.
 
 ## How it works
 
@@ -27,12 +28,13 @@ The easiest way to install this is to copy one block of text into whichever AI t
 I want to set up a CoworkOS workspace for myself. Please get the files from
 this repository: https://github.com/theAnirudhKumar/CoworkOS
 
-Before saving anything, ask me exactly where I want this workspace saved,
+Download the files rather than keeping a git clone, so my workspace does
+not carry this repository's history or point back at it. Before saving anything, ask me exactly where I want this workspace saved,
 and confirm the full path back to me once you have it, so I have a real
 answer to point back to later, not a temporary or session-specific location
 you picked for me. Save the files there. Once the files are saved, read
 CLAUDE.md first, at the root of that folder, and follow its instructions
-from there, including the first-run setup section. Ask me what areas of my
+from there, including the first-run setup in SETUP.md. Ask me what areas of my
 life or work I want to track before creating anything, and do not create a
 workstation I did not ask for.
 ```
@@ -43,9 +45,13 @@ If you would rather do this by hand:
 
 1. Get the files onto your computer. If you don't use git: on this repository's GitHub page, click the green **Code** button, choose **Download ZIP**, then unzip it. If you do use git: `git clone https://github.com/theAnirudhKumar/CoworkOS.git`. Either way, end up with a folder your AI tool can read and write to. If you're not sure how to give your AI tool access to that folder, ask it directly, most tools have their own way to connect a local folder, and yours can walk you through its own steps better than a doc written to cover several tools at once.
 2. Look at `Example Workstation/` first. It is the fastest way to understand what "a workstation" actually means in practice, before you build your own.
-3. Start a session and say what you want to track. `CLAUDE.md` includes the same first-run setup flow: your AI tool offers the full Starter Workstations list, 15 common life areas, not just a handful of examples, and asks which ones to remove. You can also add an area that is not on the list. Only what is left after that gets created.
-4. Rename or delete `Example Workstation/` once you have created your own, and remove its row from the Routing Map.
+3. Start a session and say what you want to track. `CLAUDE.md` sends your AI tool to `SETUP.md`, the same first-run setup flow: your AI tool offers the full Starter Workstations list, 15 common life areas, not just a handful of examples, and asks which ones to remove. You can also add an area that is not on the list. Only what is left after that gets created.
+4. Rename or delete `Example Workstation/` once you have created your own, and remove its row from the Routing Map. Setup offers to do this for you.
 5. Work normally. Correct your AI tool when it gets something wrong, and it will propose a memory entry so the correction sticks.
+
+### What setup leaves behind
+
+This repository holds two kinds of file: the workspace itself, and the material for maintaining the template (this README, `CHANGELOG.md`, `CONTRIBUTING.md`, `validate.py`, `.github/`). The last step of `SETUP.md` removes the second kind from your copy, clears the placeholder example entries, removes any git remote pointing back at this repository, offers to drop this repository's git history if you cloned it, and then deletes `SETUP.md` itself. What is left is yours alone, with no setup script in `CLAUDE.md` and nothing from the template's author except the `LICENSE` notice, which the license requires every copy to keep. If you set up a workspace before this step existed, `00_Resources/Troubleshooting.md` has the one-line request to give your AI tool to do the same cleanup now.
 
 First-run setup also asks, once, whether you want this workspace synced to a GitHub repository you own. This is optional and off by default: see "Working away from your primary computer" below for what it is for.
 
@@ -84,13 +90,14 @@ Both are optional, and only relevant at all if you use git. If you never put thi
 
 | Path | Purpose |
 | :--- | :--- |
-| `CLAUDE.md` | Memory system, routing protocol, governance, first-run setup |
+| `CLAUDE.md` | Memory system, routing protocol, governance |
+| `SETUP.md` | First-run setup; deletes itself and the template-maintainer files below when finished |
 | `MEMORY.md` | Template for persistent, cross-session facts |
 | `ARCHIVE.md` | The historical record: completed work, read only on demand |
 | `00_Reference/Governance Rules.md` | Section ordering, size caps, and the rules for where content goes |
 | `00_Reference/File Creation Rules.md` | Naming, placement, and approval rules for new files |
 | `00_Reference/Memory System.md` | Full mechanics: capture triggers, entry format, archiving |
-| `00_Resources/Workstation Setup Guide.md` | How to create a new workstation |
+| `00_Resources/Workstation Setup Guide.md` | How to create a new workstation, and the Starter Workstations menu |
 | `00_Resources/voice-principles.md` | Starter file for how written output should sound; fills in through use |
 | `00_Resources/Using CoworkOS with Other AI Tools.md` | Running this on ChatGPT Work Mode, Kimi Work, OpenClaw, Hermes Agent, or anything else |
 | `00_Resources/GitHub Sync Guide.md` | Setting up the optional GitHub sync |
@@ -101,9 +108,9 @@ Both are optional, and only relevant at all if you use git. If you never put thi
 | `00_Skills/Third-Party/` | Where someone else's archived skill goes |
 | `Example Workstation/` | A filled-in sample workstation: `CLAUDE.md` and `MEMORY.md` with realistic content |
 | `.gitignore`, `.githooks/pre-commit` | Optional protection if you version-control this workspace |
-| `CONTRIBUTING.md` | How to propose a change to this repository itself |
-| `CHANGELOG.md` | What changed in this template, release by release |
-| `validate.py`, `.github/workflows/validate.yml` | Structural checks run on every pull request |
+| `CONTRIBUTING.md` | How to propose a change to this repository itself (removed from your copy at the end of setup) |
+| `CHANGELOG.md` | What changed in this template, release by release (removed at the end of setup) |
+| `validate.py`, `.github/workflows/validate.yml` | Structural checks run on every pull request (removed at the end of setup) |
 
 ## Contributing
 

@@ -4,7 +4,7 @@ This template was built against Claude Cowork, and that is still the tool it is 
 
 ## The one idea that makes this work
 
-Claude Cowork happens to auto-read a file named `CLAUDE.md` at the start of a session, by its own convention. Most other tools do not share that convention, and do not look for a file by that specific name on their own. So the trick is not reformatting this template once per tool. It is telling whichever tool you are using, explicitly, in your first message to it: read `CLAUDE.md` and follow it. That single instruction is what the copy-paste setup prompt in the main `README.md` does. Once a tool has read `CLAUDE.md`, everything downstream, routing, memory, file creation rules, works exactly as described there, regardless of which company built the tool reading it.
+Claude Cowork happens to auto-read a file named `CLAUDE.md` at the start of a session, by its own convention. Most other tools do not share that convention, and do not look for a file by that specific name on their own. So the trick is not reformatting this template once per tool. It is telling whichever tool you are using, explicitly, in your first message to it: read `CLAUDE.md` and follow it. That single instruction is what the copy-paste install prompt in the CoworkOS template's README does. Once a tool has read `CLAUDE.md`, everything downstream, routing, memory, file creation rules, works exactly as described there, regardless of which company built the tool reading it.
 
 This is why the template does not need a separate version per platform. The instruction-based approach is the compatibility layer.
 
