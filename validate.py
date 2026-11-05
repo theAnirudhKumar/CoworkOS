@@ -117,11 +117,39 @@ def check_cross_references(bad):
                 bad.append(f'CLAUDE.md: Memory & Governance table missing {marker}')
 
 
+def check_dashboard_script(bad):
+    """Dashboard.html is one file of inline JavaScript. A single stray quote
+    makes the whole page blank, which is how a broken dashboard once shipped,
+    so parse the script with Node when Node is available."""
+    path = os.path.join(ROOT, 'Dashboard.html')
+    if not os.path.exists(path):
+        return
+    import shutil, subprocess, tempfile
+    if not shutil.which('node'):
+        print('note: node not found, Dashboard.html script not checked')
+        return
+    m = re.search(r'<script>(.*)</script>', open(path, encoding='utf-8').read(), re.S)
+    if not m:
+        bad.append('Dashboard.html: no inline script found')
+        return
+    with tempfile.NamedTemporaryFile('w', suffix='.js', delete=False, encoding='utf-8') as f:
+        f.write(m.group(1))
+        tmp = f.name
+    try:
+        r = subprocess.run(['node', '--check', tmp], capture_output=True, text=True)
+        if r.returncode != 0:
+            errors = [l for l in r.stderr.splitlines() if 'Error' in l]
+            bad.append('Dashboard.html: script does not parse: ' + (errors[0].strip() if errors else 'syntax error'))
+    finally:
+        os.unlink(tmp)
+
+
 def main():
     bad = []
 
     check_root_files(bad)
     check_cross_references(bad)
+    check_dashboard_script(bad)
 
     for path in all_markdown_files():
         text = open(path, encoding='utf-8').read()

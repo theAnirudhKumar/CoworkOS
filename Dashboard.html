@@ -375,7 +375,7 @@ function renderWelcome(){
   var supportsWrite=!!window.showDirectoryPicker;
   $("main").innerHTML='<div class="top"><div></div><div class="actions">'+themeSwitch()+'</div></div>'+
   '<div class="welcome"><h1>Your second brain, at a glance</h1>'+
-  '<p class="sub">This page reads the markdown files in your second brain's folder and shows them as a dashboard you can click through. Everything stays on your computer. Nothing is uploaded.</p>'+
+  '<p class="sub">This page reads the markdown files in your second brain\'s folder and shows them as a dashboard you can click through. Everything stays on your computer. Nothing is uploaded.</p>'+
   '<ol><li>Click <strong>Open my workspace folder</strong>.</li><li>Choose the folder that holds <code>CLAUDE.md</code> and <code>MEMORY.md</code>.</li><li>Allow the browser to view'+(supportsWrite?' and save changes to':'')+' the folder when it asks.</li></ol>'+
   '<div class="actions" style="margin-top:18px"><button class="btn p" id="openBtn">Open my workspace folder</button><span id="reopenSlot"></span></div>'+
   (supportsWrite?'':'<div class="note">This browser can show your workspace but cannot save changes to it. To edit from here, open this file in Chrome or Edge.</div>')+
