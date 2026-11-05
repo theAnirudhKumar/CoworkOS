@@ -99,6 +99,7 @@ Both are optional, and only relevant at all if you use git. If you never put thi
 | `00_Reference/Governance Rules.md` | Section ordering, size caps, and the rules for where content goes |
 | `00_Reference/File Creation Rules.md` | Naming, placement, and approval rules for new files |
 | `00_Reference/Memory System.md` | Full mechanics: capture triggers, entry format, archiving |
+| `00_Reference/Visual Standards.md` | Layout rules for steps, tables, diagrams and generated documents |
 | `00_Reference/CLAUDE.md Change Log.md` | The record of every substantive change to root `CLAUDE.md`, and what counts as one |
 | `00_Resources/Workstation Setup Guide.md` | How to create a new workstation, and the Starter Workstations menu |
 | `00_Resources/Starter Rules.md` | An optional menu of proven working rules, offered once during setup |

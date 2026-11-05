@@ -8,12 +8,18 @@ All notable changes to this template are documented here. Format follows [Keep a
 - `chat-context` skill: hands a long chat off to a fresh one through a structured handoff file in the workstation's `Chat Context/` folder, registered in `00_Resources/Chat Context Index.md`, and resumes from it in the next chat.
 - `optimize-tokens` skill: flags requests that will cost far more than they need to and suggests a leaner version, with quality gates so published output is never cut.
 
+- `00_Reference/Visual Standards.md`: rules for step-by-step instructions, tables, screenshots, diagrams and headings, and a check to render any generated PDF, Word file or deck before delivering it.
+- `validate.py` checks that a skill's description stays under 1,024 characters and its SKILL.md under 500 lines.
+- Troubleshooting covers three git traps: an ignore rule does not untrack a tracked file, a lock file must be confirmed stale before deleting it, and a finished command is not proof a push landed.
 - `00_Resources/Starter Rules.md`: an optional menu of 31 working rules that held up in daily use, plus a plain-language writing list. First-run setup offers it in a new step 9, and nothing in it applies until the user picks it. The hand-over step is now step 10.
 - `AGENTS.md` at the root, a one-line pointer to `CLAUDE.md` for AI tools that read that file. File Creation Rule 1 now allows it.
 - `98_Temp/` for files with no clear home yet, reviewed weekly, and `99_Archive/` for old files the user confirms are no longer current. They are the only exceptions to File Creation Rule 5, and neither is a workstation.
 - `00_Reference/CLAUDE.md Change Log.md`: the format and the substantive-or-mechanical test for recording changes to root `CLAUDE.md`.
 - A Core Memory section in root `MEMORY.md` for lasting facts that belong to no single workstation.
 - File Creation Rules 6a (a refreshed document keeps its filename) and 25 (strip workspace-only details before a file goes public), and an exception to rule 12 for files a skill owns.
+
+### Fixed
+- `.gitignore` matched `ssn` anywhere in a filename, so ordinary files such as `classnotes.md` were silently left out of git. It now matches only `ssn` as a separate word. Python caches, per-computer AI tool settings and agent worktrees are now ignored too.
 
 ### Changed
 - Root `CLAUDE.md`: loading context is never shortened because a task looks small; a start-of-session freshness check when GitHub sync is on; more memory trigger phrases; table rows for the change log and voice-principles.

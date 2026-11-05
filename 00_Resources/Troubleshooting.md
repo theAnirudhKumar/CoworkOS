@@ -33,6 +33,18 @@ This happens if the repository you created on GitHub already has a commit in it,
 
 First-run setup ends by handing the workspace over: it deletes the template's own README, CHANGELOG, CONTRIBUTING, `validate.py` and `.github/` folder, clears the placeholder example entries, removes any git remote pointing back at the template repository, and finally deletes `SETUP.md` itself. If a workspace was set up before that step existed, or the step got skipped, ask your AI tool to do it now: "delete README.md, CHANGELOG.md, CONTRIBUTING.md, validate.py, and the .github folder; remove the example entries from MEMORY.md and ARCHIVE.md; and if this folder is a git repository, remove any remote that points at the CoworkOS template and ask me whether to delete the template's git history." Keep `LICENSE`, the template's license requires its copyright notice to stay with the copy. The remote matters most: until it is gone, a session-audit sync could try to push your workspace to the template's repository.
 
+## I added a file to `.gitignore` but git still tracks it
+
+An ignore rule only stops git from picking up new files. A file git already tracks stays tracked until you tell git to let go of it with `git rm --cached "<path>"`, which keeps the file on disk. If you list several paths and one of them is wrong, the whole command stops and nothing is removed, so check each path with `git ls-files "<path>"` first. Then commit.
+
+## Git says another process is running, or mentions `index.lock`
+
+A file called `.git/index.lock` means git thinks another git command is still running, often a second AI session working on the same workspace. Wait a minute and try again first. Delete the lock only once you are sure it is left over: no git command is running anywhere on that computer, and the file is empty (zero bytes). Deleting a lock that another session is really using can corrupt that session's commit. The session-audit skill checks for this before it writes anything.
+
+## The AI said it pushed, but GitHub does not show the change
+
+A command finishing without an error is not proof that anything reached GitHub. Run `git status -sb` in the workspace. The first line should read like `## main...origin/main`, with no "ahead" or "behind" after it. If it says "ahead", the push did not land, and the output of the push command will say why.
+
 ## I renamed or deleted Example Workstation and now routing seems broken
 
 Two things need to happen together, and it's easy to do the first without the second. Deleting the folder is only half the change, the Routing Map table near the bottom of root `CLAUDE.md` still has a row pointing at it. Remove that row (or update it to point at whatever replaced it) in the same pass. If your AI tool did the rename or delete for you, ask it to update the Routing Map too, that's the actual cause when routing seems to misfire right after cleaning up the example.
