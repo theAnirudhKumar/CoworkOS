@@ -44,7 +44,7 @@ Give each important task a block of time on the calendar, as if it were a meetin
 
 Do the task you most want to avoid first, before email or messages. The rest of the day is easier once it is done.
 
-- **Week plan:** one "frog" a day, named in advance, placed in the first block of the morning.
+- **Week plan:** one "frog" a day where there is a real one, named in advance, placed in the first free stretch of the morning.
 - **Daily brief:** the frog comes first, on its own line.
 
 ### 1-3-5

@@ -41,9 +41,11 @@ Propose a memory entry when:
 
 ## Root MEMORY.md: Active Tracking
 
-Root MEMORY.md holds five living sections: Active Projects, This Week, Scheduled Tasks, Open Items, and Core Memory. The first four need upkeep as work moves. They give session-start orientation without needing to read every workstation.
+Root MEMORY.md holds six living sections: Active Projects, Goals, This Week, Scheduled Tasks, Open Items, and Core Memory. The first five need upkeep as work moves. They give session-start orientation without needing to read every workstation.
 
 **Active Projects:** a project is a result with an end, such as "kitchen renovated" or "10k race run", rather than an ongoing area of life, which is what a workstation is for. Track the outcome, which workstation it belongs to, the target date if there is one, current status in one or two sentences, and the date it was last active. Its individual tasks live in that workstation's Next Actions. Propose a new project, in one line, whenever work clearly spans more than one session or has several steps toward a dated result, such as a handoff being written for it or a deadline being set. Remove an entry once the project completes, moving it to ARCHIVE.md.
+
+**Goals:** a few results the user wants by a date, each with a measurable milestone for the current quarter and an optional if-then plan, in the form the set-goals skill (`00_Skills/Custom/set-goals/SKILL.md`) sets out. Three goals or fewer at a time, never more than five. Goals are written only on the user's yes, and a goal lives here rather than in Core Memory. A goal's tasks live in its workstation's Next Actions; a quarter's result is logged in ARCHIVE.md.
 
 **This Week:** the current week's plan, in the form the plan-my-week skill (`00_Skills/Custom/plan-my-week/SKILL.md`) sets out: a "Week of" date, then Focus, If-then and Block lines. The user approves the plan before it is written, and it replaces the previous week's plan rather than adding to it, so this section never grows past about fifteen lines. Planning-style and working-hours preferences go in Core Memory, not here.
 

@@ -93,6 +93,17 @@ h2 span{color:var(--muted);font-weight:500}
 .blk{font-size:12px;border-radius:6px;padding:4px 6px;margin-bottom:4px;background:var(--soft);color:var(--ink);border-left:3px solid var(--accent);overflow-wrap:anywhere}
 .blk .tm{display:block;color:var(--muted);font-size:11px}
 .blk.due{background:var(--warnsoft);border-left-color:var(--warn)}
+.blk.fixed{background:var(--chip);border-left-color:var(--muted)}
+button.blk{display:block;width:100%;text-align:left;font:inherit;font-size:12px;border:0;border-left:3px solid var(--accent);cursor:grab}
+button.blk.due{border-left-color:var(--warn)}
+button.blk.sel{outline:2px solid var(--accent)}
+.day.over{background:var(--soft)}
+.movemenu{display:flex;flex-wrap:wrap;gap:4px;margin:2px 0 6px}
+.movemenu .btn{padding:2px 7px;font-size:11px}
+.goal{padding:8px 0;border-bottom:1px solid var(--line)}
+.goal:last-child{border-bottom:0}
+.goal .t{font-weight:600;display:flex;gap:8px;justify-content:space-between;align-items:baseline}
+.goal .m{margin-top:3px}
 .ws{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}
 .wsc{border:1px solid var(--line);border-radius:10px;padding:11px;background:none;text-align:left}
 .wsc:hover{border-color:var(--muted)}
@@ -328,11 +339,11 @@ function model(){
   var temp=Object.keys(F).filter(function(p){ return /^98_Temp\//.test(p) && !/98_Temp\.md$/.test(p) && !/98_Temp\/(Phone )?Inbox\.md$/.test(p); });
   var chat=(F["00_Resources/Chat Context Index.md"]||{}).text;
   var handoffs=chat ? tableRows(chat).filter(function(r){ return /active/i.test(r[4]||""); }).map(function(r){ return {date:r[0],ws:r[1],topic:r[2],file:(r[3]||"").replace(/`/g,"")}; }) : [];
-  var tasks=[], today=todayISO();
+  var tasks=[], doneCount=0, today=todayISO();
   Object.keys(F).forEach(function(p){
     var top=p.split("/")[0]; if(p.indexOf("/")<0 || /^(00_|98_|99_)/.test(top) || !F[top+"/CLAUDE.md"]) return;
     F[p].text.split("\n").forEach(function(line,i){
-      var m=line.match(/^\s*-\s*\[([ xX])\]\s+(.*)$/); if(!m || m[1]!==" ") return;
+      var m=line.match(/^\s*-\s*\[([ xX])\]\s+(.*)$/); if(!m) return; if(m[1]!==" "){ if(!/Example task:/i.test(m[2])) doneCount++; return; }
       if(/Example task:/i.test(m[2])) return;
       var dm=m[2].match(/\(due\s+(\d{4}-\d{2}-\d{2})\)/i);
       tasks.push({ path:p, line:i, text:m[2].replace(/\s*\(due\s+\d{4}-\d{2}-\d{2}\)/i,"").replace(/\*\*|`/g,"").trim(), due:dm?dm[1]:null, ws:top });
@@ -346,20 +357,28 @@ function model(){
   }
   var inbox=captures("98_Temp/Inbox.md",false).concat(captures("98_Temp/Phone Inbox.md",true));
   inbox.sort(function(a,b){ return (a.date||"")<(b.date||"")?-1:(a.date||"")>(b.date||"")?1:0; });
-  var weekTxt=(sec["This Week"]||{}), week={start:null,focus:[],blocks:[]};
+  var weekTxt=(sec["This Week"]||{}), week={start:null,focus:[],blocks:[],fixed:[]};
   (weekTxt.lines||[]).forEach(function(o){
     var m, l=o.text;
     if((m=l.match(/Week of:\s*(\d{4}-\d{2}-\d{2})/i))) week.start=m[1];
     else if((m=l.match(/^\s*-\s*Focus:\s*(.+)$/i))) week.focus.push({text:m[1].trim(),plan:null});
     else if((m=l.match(/^\s*-\s*If-then:\s*(.+)$/i))){ if(week.focus.length && !week.focus[week.focus.length-1].plan) week.focus[week.focus.length-1].plan=m[1].trim(); }
-    else if((m=l.match(/^\s*-\s*Block:\s*(\d{4}-\d{2}-\d{2})\s+(\d{1,2}:\d{2})\s*-\s*(\d{1,2}:\d{2})\s+(.+)$/i))) week.blocks.push({date:m[1],from:m[2],to:m[3],text:m[4].trim()});
+    else if((m=l.match(/^\s*-\s*Fixed:\s*(\d{4}-\d{2}-\d{2})\s+(\d{1,2}:\d{2})\s*-\s*(\d{1,2}:\d{2})\s+(.+)$/i))) week.fixed.push({date:m[1],from:m[2],to:m[3],text:m[4].trim()});
+    else if((m=l.match(/^\s*-\s*Block:\s*(\d{4}-\d{2}-\d{2})\s+(\d{1,2}:\d{2})\s*-\s*(\d{1,2}:\d{2})\s+(.+)$/i))) week.blocks.push({date:m[1],from:m[2],to:m[3],text:m[4].trim(),line:o.index});
   });
   week.blocks.sort(function(a,b){ var x=a.date+a.from.padStart(5,"0"), y=b.date+b.from.padStart(5,"0"); return x<y?-1:x>y?1:0; });
+  var goals=[];
+  ((sec["Goals"]||{}).lines||[]).forEach(function(o){
+    var l=o.text, m, g=goals[goals.length-1];
+    if((m=l.match(/^-\s*(?:\[\d{4}-\d{2}-\d{2}\]\s*)?Goal:\s*(.+?)\s*(?:\(by\s+(\d{4}-\d{2}-\d{2})(?:\s*;\s*([^)]*))?\))?\s*$/i))) goals.push({text:m[1].replace(/\*\*/g,""),by:m[2]||null,ws:(m[3]||"").trim()||null,quarter:null,qby:null,plan:null});
+    else if(g && (m=l.match(/^\s+-\s*Quarter:\s*(.+?)\s*(?:\(by\s+(\d{4}-\d{2}-\d{2})\))?\s*$/i))){ g.quarter=m[1]; g.qby=m[2]||null; }
+    else if(g && (m=l.match(/^\s+-\s*If-then:\s*(.+)$/i))) g.plan=m[1].trim();
+  });
   var sched=entriesOf(sec["Scheduled Tasks"]);
   var wr=null, wrSetup=null; sched.forEach(function(e){ var m=e.raw.match(/weekly review.*?last run\s*\[?(\d{4}-\d{2}-\d{2})/i); if(m) wr=m[1]; var n=e.raw.match(/weekly review.*?set up\s*\[?(\d{4}-\d{2}-\d{2})/i); if(n) wrSetup=n[1]; });
   return {
     projects:entriesOf(sec["Active Projects"]), open:entriesOf(sec["Open Items"]), sched:sched, core:core,
-    tasks:tasks, today:today, weekEnd:wk, inbox:inbox, week:week,
+    tasks:tasks, done:doneCount, today:today, weekEnd:wk, inbox:inbox, week:week, goals:goals,
     memLines: mem ? mem.split("\n").length : 0, ws:ws, routed:routed, temp:temp, handoffs:handoffs, weekly:wr, weeklySetup:wrSetup,
     dashName: nameFrom(/Dashboard name:\s*(.+)$/i), userName: nameFrom(/^\s*-\s*(?:\[[^\]]*\]\s*)?Name:\s*([^.;,]+)/i), hasMemory: !!F["MEMORY.md"]
   };
@@ -433,8 +452,9 @@ function renderWelcome(){
 function isoAdd(iso,n){ var p=iso.split("-"), d=new Date(Date.UTC(+p[0],+p[1]-1,+p[2]+n)); return d.toISOString().slice(0,10); }
 function weekCard(M){
   var W=M.week, t=M.today, has=W.start||W.focus.length||W.blocks.length;
-  var current=W.start && W.start<=isoAdd(t,6) && isoAdd(W.start,7)>t;
-  var start=current?W.start:t;
+  var end=W.start?isoAdd(W.start,6):null; W.blocks.concat(W.fixed).forEach(function(b){ if(end && b.date>end) end=b.date; });
+  var current=W.start && W.start<=isoAdd(t,6) && end>=t;
+  var start=t;
   var h='<div class="card weekcard"><h2>This week <span>'+(W.start?'plan for the week of '+esc(W.start):'from MEMORY.md')+'</span></h2>';
   if(!has){
     h+='<div class="empty">No plan yet. Say "plan my week" to your AI and it proposes focus outcomes and time blocks around your calendar.</div>';
@@ -447,11 +467,48 @@ function weekCard(M){
   var days=[]; for(var i=0;i<7;i++) days.push(isoAdd(start,i));
   h+='<div class="days">'+days.map(function(d){
     var lbl; try{ var p=d.split("-"); lbl=new Date(Date.UTC(+p[0],+p[1]-1,+p[2],12)).toLocaleDateString(undefined,{weekday:"short",day:"numeric",month:"short",timeZone:"UTC"}); }catch(e){ lbl=d; }
-    var items=(current?W.blocks.filter(function(b){ return b.date===d; }):[]).map(function(b){ return '<div class="blk"><span class="tm">'+esc(b.from)+'-'+esc(b.to)+'</span>'+esc(b.text)+'</div>'; });
-    M.tasks.filter(function(x){ return x.due && ((x.due===d && d>=t) || (d===t && x.due<t)); }).forEach(function(x){ items.push('<div class="blk due"><span class="tm">'+(x.due<t?'overdue':'due')+' &middot; '+esc(x.ws)+'</span>'+esc(x.text)+'</div>'); });
-    return '<div class="day'+(d===t?' today':'')+'"><div class="dh">'+esc(d===t?'Today':lbl)+'</div>'+(items.join("")||'<div class="m">Open</div>')+'</div>';
-  }).join("")+'</div></div>';
+    var norm=function(x){ return x.toLowerCase().replace(/\([^)]*\)/g,"").replace(/[^a-z0-9 ]/g,"").replace(/\s+/g," ").trim(); };
+    var dayBlocks=current?W.blocks.filter(function(b){ return b.date===d; }):[];
+    var dayFixed=current?W.fixed.filter(function(b){ return b.date===d; }):[];
+    var items=dayFixed.map(function(f){ return '<div class="blk fixed"><span class="tm">'+esc(f.from)+'-'+esc(f.to)+' &middot; fixed</span>'+esc(f.text)+'</div>'; });
+    items=items.concat(dayBlocks.map(function(b){ return item('b|MEMORY.md|'+b.line,'','<span class="tm">'+esc(b.from)+'-'+esc(b.to)+'</span>'+esc(b.text)); }));
+    M.tasks.filter(function(x){ if(!x.due || !((x.due===d && d>=t) || (d===t && x.due<t))) return false; var n=norm(x.text); return !dayBlocks.some(function(b){ var bn=norm(b.text); return n && bn && (bn.indexOf(n)>=0 || n.indexOf(bn)>=0); }); }).forEach(function(x){ items.push(item('t|'+x.path+'|'+x.line,' due','<span class="tm">'+(x.due<t?'overdue':'due')+' &middot; '+esc(x.ws)+'</span>'+esc(x.text))); });
+    if(S.moving && items.some(function(h){ return h.indexOf('data-move="'+esc(S.moving)+'"')>=0; })) items.push(moveMenu(t));
+    return '<div class="day'+(d===t?' today':'')+'"'+(S.canWrite&&d>=t?' data-day="'+d+'"':'')+'><div class="dh">'+esc(d===t?'Today':lbl)+'</div>'+(items.join("")||'<div class="m">Open</div>')+'</div>';
+  }).join("")+'</div>'+(S.canWrite&&has?'<div class="m" style="margin-top:8px">Drag a block or a task to another day, or tap it to move it. Moving a block changes your plan, not an event already on your calendar.</div>':'')+'</div>';
   return h;
+}
+function item(ref,cls,inner){
+  if(!S.canWrite) return '<div class="blk'+cls+'">'+inner+'</div>';
+  return '<button class="blk'+cls+(S.moving===ref?' sel':'')+'" draggable="true" data-move="'+esc(ref)+'" title="Drag to another day, or tap to move">'+inner+'</button>';
+}
+function dayLabel(d){ try{ var p=d.split("-"); return new Date(Date.UTC(+p[0],+p[1]-1,+p[2],12)).toLocaleDateString(undefined,{weekday:"short",day:"numeric",month:"short",timeZone:"UTC"}); }catch(e){ return d; } }
+function moveMenu(t){
+  var h='<div class="movemenu">'; for(var i=0;i<7;i++){ var d=isoAdd(t,i); h+='<button class="btn" data-moveto="'+d+'">'+esc(i===0?"Today":i===1?"Tomorrow":dayLabel(d))+'</button>'; }
+  return h+'<button class="btn" data-movecancel="1">Cancel</button></div>';
+}
+function goalsCard(M){
+  var t=M.today;
+  return '<div class="card"><h2>Goals <span>this quarter</span></h2>'+(M.goals.length?M.goals.map(function(g){
+    var open=g.ws?M.tasks.filter(function(x){ return x.ws===g.ws; }).length:null;
+    var q=''; if(g.quarter){ var past=g.qby && g.qby<t; var left=g.qby&&!past?Math.round((Date.parse(g.qby)-Date.parse(t))/86400000):null;
+      q='<div class="m">This quarter: '+esc(g.quarter)+(g.qby?(past?' <span class="tag w">date passed: time for a quarterly review</span>':' &middot; '+left+' days left'):'')+'</div>'; }
+    else q='<div class="m">No milestone for this quarter yet. Say "set my goals" to add one.</div>';
+    var tk=g.ws?(open?'<div class="m">'+open+' open task'+(open>1?'s':'')+' in '+esc(g.ws)+'</div>':'<div class="m"><span class="tag w">No open task in '+esc(g.ws)+'</span></div>'):'';
+    return '<div class="goal"><div class="t"><span>'+esc(g.text)+'</span>'+(g.by?'<span class="tag">by '+esc(g.by)+'</span>':'')+'</div>'+q+(g.plan?'<div class="m">'+esc(g.plan)+'</div>':'')+tk+'</div>';
+  }).join(""):'<div class="empty">No goals yet. Say "set my goals" and each one gets a milestone for this quarter and a first step.</div>')+'</div>';
+}
+async function moveItem(ref,day){
+  S.moving=null;
+  var parts=ref.split("|"), kind=parts[0], idx=parseInt(parts[parts.length-1],10), path=parts.slice(1,-1).join("|"), rec=S.files[path];
+  if(!rec){ render(); return; }
+  var lines=rec.text.split("\n"), line=lines[idx]||"", nl;
+  if(kind==="b"){ if(!/^\s*-\s*Block:\s*\d{4}-\d{2}-\d{2}/i.test(line)){ toast("That block moved. Refresh and try again."); return; } nl=line.replace(/(Block:\s*)\d{4}-\d{2}-\d{2}/i,"$1"+day); }
+  else { if(!/^\s*-\s*\[ \].*\(due\s+\d{4}-\d{2}-\d{2}\)/i.test(line)){ toast("That task moved. Refresh and try again."); return; } nl=line.replace(/(\(due\s+)\d{4}-\d{2}-\d{2}/i,"$1"+day); }
+  if(nl===line){ render(); return; }
+  lines[idx]=nl;
+  try{ await writeFile(path, lines.join("\n"), rec.mtime); toast("Moved to "+dayLabel(day)+"."+(kind==="b"?" Your calendar is unchanged.":"")); render(); }
+  catch(e){ handleWriteError(e); }
 }
 
 function renderDashboard(){
@@ -467,13 +524,14 @@ function renderDashboard(){
     stat(M.tasks.filter(function(t){ return t.due && t.due<=M.weekEnd; }).length,"Tasks due in the next 7 days")+stat(M.projects.length,"Active projects")+stat(M.open.length,"Deferred open items")+stat(M.inbox.length,"Quick captures in your inbox")+'</div>';
   h+=weekCard(M);
   h+='<div class="grid">';
-  h+='<div class="card"><h2>Next actions <span>'+M.tasks.length+' open</span></h2>'+(M.tasks.length?M.tasks.slice(0,8).map(function(t){
+  h+='<div class="card"><h2>Next actions <span>'+M.tasks.length+' open'+(M.done?' &middot; '+M.done+' done':'')+'</span></h2>'+(M.tasks.length?M.tasks.slice(0,8).map(function(t){
       var over=t.due && t.due<M.today, soon=t.due && !over && t.due<=M.weekEnd;
       return '<div class="row">'+(S.canWrite?'<button class="btn sm" data-task="'+esc(t.path)+'|'+t.line+'" title="Mark done">&#10003;</button>':'')+'<div class="body"><div class="t">'+esc(t.text)+'</div><div class="m">'+esc(t.ws)+'</div></div>'+(t.due?'<span class="tag'+(over||soon?" w":"")+'">'+(over?"overdue, ":"")+esc(t.due)+'</span>':'')+'</div>';
     }).join("")+(M.tasks.length>8?'<div class="m" style="padding-top:6px">and '+(M.tasks.length-8)+' more in your workstations</div>':''):'<div class="empty">No open tasks. Tell your AI what you need to do, with a date, and it lands here.</div>')+'</div>';
   h+='<div class="card"><h2>Inbox <span>quick captures</span></h2>'+(S.canWrite?'<form id="captureForm" style="display:flex;gap:8px;margin-bottom:6px"><input class="field" id="captureInput" placeholder="Jot something down" autocomplete="off"><button class="btn p" type="submit">Add</button></form>':'')+(M.inbox.length?M.inbox.slice(-5).reverse().map(function(x){
       return '<div class="row"><div class="body"><div class="t">'+esc(x.text)+'</div>'+((x.date||x.phone)?'<div class="m">'+esc([x.date,x.phone?"from your phone":""].filter(Boolean).join(" \u00b7 "))+'</div>':'')+'</div></div>';
     }).join(""):'<div class="empty">Empty. The weekly review files every capture, so this stays short.</div>')+'</div>';
+  h+=goalsCard(M);
   h+='<div class="card"><h2>Active projects <span>from MEMORY.md</span></h2>'+(M.projects.length?M.projects.map(function(e){
       var d=daysSince(e.date), quiet=d!==null && d>14;
       return '<div class="row">'+(e.date?'<span class="tag'+(quiet?" w":"")+'">'+(quiet?d+" days quiet":esc(e.date))+'</span>':'')+'<div class="body"><div class="t">'+esc(e.title)+'</div>'+(e.detail?'<div class="m">'+esc(e.detail)+'</div>':'')+'</div></div>';
@@ -668,6 +726,9 @@ document.addEventListener("click", function(ev){
     var cand=[base+target, target].map(function(x){ return x.replace(/^\.\//,""); }); for(var i=0;i<cand.length;i++){ if(S.files[cand[i]]){ setView("file",cand[i]); return; } } toast("That file is not in this folder."); return; }
   if(t.dataset.done!==undefined){ markDone(parseInt(t.dataset.done,10)); return; }
   if(t.dataset.task){ toggleTask(t.dataset.task); return; }
+  if(t.dataset.move){ S.moving=S.moving===t.dataset.move?null:t.dataset.move; render(); return; }
+  if(t.dataset.moveto){ if(S.moving) moveItem(S.moving,t.dataset.moveto); return; }
+  if(t.dataset.movecancel){ S.moving=null; render(); return; }
   if(t.id==="editBtn"){ S.editing=true; renderFile(); return; }
   if(t.id==="cancelEdit"){ S.editing=false; renderFile(); return; }
   if(t.id==="saveEdit"){ var p=S.current, rec=S.files[p]; writeFile(p,$("editor").value,rec.mtime).then(function(){ S.editing=false; toast("Saved "+p); render(); }).catch(handleWriteError); return; }
@@ -677,6 +738,10 @@ document.addEventListener("click", function(ev){
   if(t.id==="nameSave"){ var on=document.querySelector("#nameOptions button.on"); var n=$("nameInput").value.trim()||(on&&on.dataset.name)||""; if(!n){ toast("Pick a name or type one."); return; } $("nameDialog").close(); saveName(n); return; }
   if(t.id==="brandName"||t.id==="logo"){ if(S.loadedAt) openNameDialog(); }
 });
+document.addEventListener("dragstart",function(e){ var b=e.target.closest&&e.target.closest("[data-move]"); if(!b) return; e.dataTransfer.setData("text/plain",b.dataset.move); e.dataTransfer.effectAllowed="move"; });
+document.addEventListener("dragover",function(e){ var d=e.target.closest&&e.target.closest("[data-day]"); if(!d) return; e.preventDefault(); document.querySelectorAll(".day.over").forEach(function(x){ if(x!==d) x.classList.remove("over"); }); d.classList.add("over"); });
+document.addEventListener("dragleave",function(e){ var d=e.target.closest&&e.target.closest("[data-day]"); if(d && !d.contains(e.relatedTarget)) d.classList.remove("over"); });
+document.addEventListener("drop",function(e){ var d=e.target.closest&&e.target.closest("[data-day]"); if(!d) return; e.preventDefault(); d.classList.remove("over"); var ref=e.dataTransfer.getData("text/plain"); if(ref) moveItem(ref,d.dataset.day); });
 $("logo").title="Rename this dashboard"; $("brandName").style.cursor="pointer"; $("logo").style.cursor="pointer";
 $("brandName").addEventListener("click",function(){ if(S.loadedAt) openNameDialog(); });
 $("logo").addEventListener("click",function(){ if(S.loadedAt) openNameDialog(); });
