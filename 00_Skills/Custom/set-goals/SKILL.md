@@ -40,8 +40,8 @@ Ask, in one message, what the user most wants to be true by the end of the year,
 
 For each goal, propose, and let the user change:
 
-1. **The result**, worded as something finished, with a target date.
-2. **This quarter's milestone:** the part that would put them on track by the quarter's last day. Make it measurable. If the quarter has less than four weeks left, set the milestone for the end of next quarter instead, and say so.
+1. **The result**, worded as something finished, with a target date. Turn a loose date into a real one and say so: "by April" becomes the last day of the coming April, "this year" becomes 31 December.
+2. **This quarter's milestone:** the part that would put them on track by the quarter's last day. Make it measurable. If the quarter has less than four weeks left, set the milestone for the end of next quarter instead, and say so. If the goal itself ends inside this quarter, the milestone is a checkpoint about halfway between today and the target date, such as "half the fund saved by 30 November", so the line never just repeats the goal.
 3. **The obstacle:** ask "What is most likely to get in the way?" and turn the answer into an if-then plan, such as "If work runs late on a run day, I will run before breakfast the next morning."
 4. **The next action:** the first concrete step, as a task in the workstation's Next Actions, in the task form from root CLAUDE.md, with a due date if there is a natural one.
 

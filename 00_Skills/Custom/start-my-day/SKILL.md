@@ -56,7 +56,7 @@ Every item must trace to a file or a connected source. If you cannot point to wh
 
 Each item gets one line saying what it is and why it made the list today.
 
-If This Week holds a plan for the current week, it comes first: today's Block lines go under "Today" with the calendar events, and a Focus outcome scheduled for today is a strong candidate for the top three. If the plan is from an earlier week, or This Week is empty and it is Monday, add one line offering the plan-my-week skill.
+If This Week holds a plan whose span covers today (from its "Week of" date to its last Block line), it comes first: today's Fixed and Block lines go under "Today" with the calendar events, and a Focus outcome scheduled for today is a strong candidate for the top three. If the plan's span has ended, or This Week is empty and it is Monday, add one line offering the plan-my-week skill.
 
 Shape the top three to the planning style, as its section in `00_Resources/Planning Methods.md` describes: the frog first for Eat the frog, the day as 1, 3 and 5 for 1-3-5, the four groups for Eisenhower. With no style recorded, use the order above.
 
@@ -90,7 +90,7 @@ Keep it to about twelve lines. Use this shape:
 [If the inbox is not empty:] [N] quick captures are waiting in your inbox for the weekly review.
 ```
 
-Sources are a few words each, such as "root MEMORY.md, Open Items", "Finances MEMORY.md", "calendar" or "email". Leave out "Today" when no calendar is connected, and say so in the first line.
+Sources are a few words each, such as "root MEMORY.md, Open Items", "Finances MEMORY.md", "calendar" or "email". Leave out "Today" when no calendar is connected and This Week has no Fixed or Block lines for today, and say so in the first line.
 
 Then ask one question: whether to start on the first of the top three.
 

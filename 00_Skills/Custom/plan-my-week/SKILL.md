@@ -16,9 +16,9 @@ This skill owns the week plan. `00_Resources/Planning Methods.md` owns the metho
 
 Use today's date in the user's time zone, from Core Memory in root MEMORY.md. If no time zone is recorded, ask once and propose saving it.
 
-Decide the span. "Plan my week" covers today through Sunday if it is Monday to Wednesday, and the next Monday to Sunday if it is Thursday or later, unless the user names the days. "Time block my day" covers today only, and skips Step 2 and the focus outcomes in Step 4.
+Decide the span. "Plan my week" always starts today, so no days fall through a gap. It runs to this Sunday if today is Monday to Wednesday, and to the Sunday after next if today is Thursday or later, unless the user names the days. "Time block my day" covers today only, and skips Step 2 and the focus outcomes in Step 4.
 
-Read the planning style from Core Memory ("Planning style: ..."). If none is recorded, use Big Three, and at the end offer once, in one line, to choose a style from `00_Resources/Planning Methods.md`. Read that file's section for the chosen style, and its closing principles, before going further.
+Read the planning style from Core Memory ("Planning style: ..."). If none is recorded, ask now, before drafting anything, so the plan is drafted once: show the menu table from `00_Resources/Planning Methods.md` and recommend Big Three for anyone unsure. Propose saving the choice to Core Memory in the form that file gives; writing it needs their yes. If they would rather not choose, use Big Three. Read that file's section for the chosen style, and its closing principles, before going further.
 
 ## Step 2: Look back at last week
 
@@ -37,10 +37,10 @@ Read each of these in full:
 
 1. Root MEMORY.md: Goals, especially each Quarter milestone, then Active Projects, Open Items and Core Memory.
 2. The MEMORY.md of every workstation, Next Actions first: every open task (`- [ ]`), with its due date if it has one.
-3. A connected calendar, if there is one, read-only: every event in the span, with its times. Treat these as fixed. If no calendar is connected, ask the user for their fixed commitments in one question ("Anything fixed this week, like meetings, appointments or travel?"), and say once that connecting a calendar would save this step (`00_Resources/Connectors Guide.md`).
+3. A connected calendar, if there is one, read-only: every event in the span, with its times. Treat these as fixed. If no calendar is connected, ask the user for their fixed commitments in one question ("Anything fixed this week, like meetings, appointments or travel?"), and keep their answers as Fixed lines in the plan (Step 6), so they are not lost, and say once that connecting a calendar would save this step (`00_Resources/Connectors Guide.md`).
 4. A connected task manager, if there is one, read-only: tasks due in the span.
 
-Ask in the same question, if Core Memory does not already say, what hours the user likes to work or keep free. Propose saving the answer to Core Memory, such as "Working hours: weekdays 9:00 to 17:30; evenings kept free." Writing it needs their yes.
+Ask in the same question, if Core Memory does not already say, what hours the user likes to work or keep free, and, if a goal or task needs time outside those hours, such as a run or a class, when that usually happens. Propose saving the answer to Core Memory, such as "Working hours: weekdays 9:00 to 17:30; evenings kept free." Writing it needs their yes.
 
 ## Step 4: Draft the plan
 
@@ -51,11 +51,11 @@ Ask in the same question, if Core Memory does not already say, what hours the us
 **Blocks.** Place time for the focus outcomes first, then for other tasks due in the span. Follow these rules:
 
 - **Fixed commitments first.** Never place a block over a calendar event or a commitment the user named.
-- **Only inside the hours the user works or keeps open.** If none are recorded, assume weekday working hours and say so.
+- **Only inside the hours the user works or keeps open.** If none are recorded, assume weekday working hours and say so. Personal work, such as exercise, goes in the times the user named for it, which may be evenings, early mornings or weekends.
 - **Add slack.** Make each block about half as long again as the task seems to need, and keep part of every day unplanned, so one thing running late does not break the rest. Leave at least a quarter of each working day unblocked.
-- **Protect the morning for hard work** if the style is Eat the frog, or the user has said mornings are when they focus.
+- **Protect the morning for hard work** if the style is Eat the frog, or the user has said mornings are when they focus: use the first free stretch of the morning that is long enough, after any early fixed commitment.
 - **Group small tasks** into one block, such as "Errands and admin".
-- **Shape it to the style**, as its section in `00_Resources/Planning Methods.md` describes: one main thing a day for Big Three, a frog first for Eat the frog, a big task each day for 1-3-5, important but not urgent work first for Eisenhower, sizes in sessions for Pomodoro.
+- **Shape it to the style**, as its section in `00_Resources/Planning Methods.md` describes, but never invent work to fill a pattern: a day with no real candidate for its frog or main thing simply has none. Styles: one main thing a day for Big Three, a frog first for Eat the frog, a big task each day for 1-3-5, important but not urgent work first for Eisenhower, sizes in sessions for Pomodoro.
 
 Keep the week to the blocks that matter. A plan with every hour filled is a plan that will be abandoned by Wednesday.
 
@@ -91,10 +91,13 @@ Then ask one question: what to change, or whether to save it. Revise as often as
 Week of: YYYY-MM-DD.
 - Focus: [outcome] ([workstation])
 - If-then: When [time or situation], I will [action] [where].
+- Fixed: YYYY-MM-DD HH:MM-HH:MM [commitment]
 - Block: YYYY-MM-DD HH:MM-HH:MM [what] ([workstation])
 ```
 
-The date after "Week of" is the first day of the span. Write one Focus line per outcome, each followed by its If-then line, then one Block line per block, in date order. Times are 24-hour, in the user's time zone. Replace the old plan rather than adding to it; the look back in Step 2 is the only record of last week this skill needs.
+The date after "Week of" is the first day of the span. Write one Focus line per outcome, each followed by its If-then line, then one Fixed line for each commitment the user named in Step 3, one per day it happens, then one Block line per block, in date order. Do not copy calendar events into Fixed lines; they already live in the calendar. Times are 24-hour, in the user's time zone. Replace the old plan rather than adding to it; the look back in Step 2 is the only record of last week this skill needs. For "time block my day", change only today's Fixed and Block lines and leave the rest of the week's plan as it is.
+
+**Keep tasks and blocks in step.** When a block exists for a task with a due date, the due date should be on or after the block's day. If the plan puts a task's block after its due date, say so in the draft and propose either a new due date or an earlier block.
 
 **Add tasks that are missing.** If a focus outcome has no matching task in its workstation's Next Actions, add one there in the usual form, with a due date that matches the plan.
 
@@ -110,8 +113,6 @@ If no calendar is connected, the plan in MEMORY.md and on the dashboard is the p
 ## Step 7: Close
 
 End with one line naming where the plan lives, using the dashboard's name in Core Memory ("Dashboard name: ...") if there is one, such as "Your week is on Basecamp now: double-click Dashboard.html in your workspace folder." Leave out the line if the user has said they do not want this reminder.
-
-If no planning style was recorded, add one line offering to choose one from `00_Resources/Planning Methods.md`.
 
 ## Unattended runs
 

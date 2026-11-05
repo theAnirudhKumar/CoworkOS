@@ -17,6 +17,8 @@ Organized by month, then by week within the month, most recent first. Each entry
 
 ### Week of [Month Day]
 
+*Weeks start on Monday; the heading carries that Monday's date.*
+
 - [YYYY-MM-DD] What happened, in one sentence. Optional second sentence on why it mattered.
 ```
 

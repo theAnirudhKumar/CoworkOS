@@ -93,6 +93,7 @@ h2 span{color:var(--muted);font-weight:500}
 .blk{font-size:12px;border-radius:6px;padding:4px 6px;margin-bottom:4px;background:var(--soft);color:var(--ink);border-left:3px solid var(--accent);overflow-wrap:anywhere}
 .blk .tm{display:block;color:var(--muted);font-size:11px}
 .blk.due{background:var(--warnsoft);border-left-color:var(--warn)}
+.blk.fixed{background:var(--chip);border-left-color:var(--muted)}
 button.blk{display:block;width:100%;text-align:left;font:inherit;font-size:12px;border:0;border-left:3px solid var(--accent);cursor:grab}
 button.blk.due{border-left-color:var(--warn)}
 button.blk.sel{outline:2px solid var(--accent)}
@@ -356,12 +357,13 @@ function model(){
   }
   var inbox=captures("98_Temp/Inbox.md",false).concat(captures("98_Temp/Phone Inbox.md",true));
   inbox.sort(function(a,b){ return (a.date||"")<(b.date||"")?-1:(a.date||"")>(b.date||"")?1:0; });
-  var weekTxt=(sec["This Week"]||{}), week={start:null,focus:[],blocks:[]};
+  var weekTxt=(sec["This Week"]||{}), week={start:null,focus:[],blocks:[],fixed:[]};
   (weekTxt.lines||[]).forEach(function(o){
     var m, l=o.text;
     if((m=l.match(/Week of:\s*(\d{4}-\d{2}-\d{2})/i))) week.start=m[1];
     else if((m=l.match(/^\s*-\s*Focus:\s*(.+)$/i))) week.focus.push({text:m[1].trim(),plan:null});
     else if((m=l.match(/^\s*-\s*If-then:\s*(.+)$/i))){ if(week.focus.length && !week.focus[week.focus.length-1].plan) week.focus[week.focus.length-1].plan=m[1].trim(); }
+    else if((m=l.match(/^\s*-\s*Fixed:\s*(\d{4}-\d{2}-\d{2})\s+(\d{1,2}:\d{2})\s*-\s*(\d{1,2}:\d{2})\s+(.+)$/i))) week.fixed.push({date:m[1],from:m[2],to:m[3],text:m[4].trim()});
     else if((m=l.match(/^\s*-\s*Block:\s*(\d{4}-\d{2}-\d{2})\s+(\d{1,2}:\d{2})\s*-\s*(\d{1,2}:\d{2})\s+(.+)$/i))) week.blocks.push({date:m[1],from:m[2],to:m[3],text:m[4].trim(),line:o.index});
   });
   week.blocks.sort(function(a,b){ var x=a.date+a.from.padStart(5,"0"), y=b.date+b.from.padStart(5,"0"); return x<y?-1:x>y?1:0; });
@@ -450,8 +452,9 @@ function renderWelcome(){
 function isoAdd(iso,n){ var p=iso.split("-"), d=new Date(Date.UTC(+p[0],+p[1]-1,+p[2]+n)); return d.toISOString().slice(0,10); }
 function weekCard(M){
   var W=M.week, t=M.today, has=W.start||W.focus.length||W.blocks.length;
-  var current=W.start && W.start<=isoAdd(t,6) && isoAdd(W.start,7)>t;
-  var start=current?W.start:t;
+  var end=W.start?isoAdd(W.start,6):null; W.blocks.concat(W.fixed).forEach(function(b){ if(end && b.date>end) end=b.date; });
+  var current=W.start && W.start<=isoAdd(t,6) && end>=t;
+  var start=t;
   var h='<div class="card weekcard"><h2>This week <span>'+(W.start?'plan for the week of '+esc(W.start):'from MEMORY.md')+'</span></h2>';
   if(!has){
     h+='<div class="empty">No plan yet. Say "plan my week" to your AI and it proposes focus outcomes and time blocks around your calendar.</div>';
@@ -464,8 +467,12 @@ function weekCard(M){
   var days=[]; for(var i=0;i<7;i++) days.push(isoAdd(start,i));
   h+='<div class="days">'+days.map(function(d){
     var lbl; try{ var p=d.split("-"); lbl=new Date(Date.UTC(+p[0],+p[1]-1,+p[2],12)).toLocaleDateString(undefined,{weekday:"short",day:"numeric",month:"short",timeZone:"UTC"}); }catch(e){ lbl=d; }
-    var items=(current?W.blocks.filter(function(b){ return b.date===d; }):[]).map(function(b){ return item('b|MEMORY.md|'+b.line,'','<span class="tm">'+esc(b.from)+'-'+esc(b.to)+'</span>'+esc(b.text)); });
-    M.tasks.filter(function(x){ return x.due && ((x.due===d && d>=t) || (d===t && x.due<t)); }).forEach(function(x){ items.push(item('t|'+x.path+'|'+x.line,' due','<span class="tm">'+(x.due<t?'overdue':'due')+' &middot; '+esc(x.ws)+'</span>'+esc(x.text))); });
+    var norm=function(x){ return x.toLowerCase().replace(/\([^)]*\)/g,"").replace(/[^a-z0-9 ]/g,"").replace(/\s+/g," ").trim(); };
+    var dayBlocks=current?W.blocks.filter(function(b){ return b.date===d; }):[];
+    var dayFixed=current?W.fixed.filter(function(b){ return b.date===d; }):[];
+    var items=dayFixed.map(function(f){ return '<div class="blk fixed"><span class="tm">'+esc(f.from)+'-'+esc(f.to)+' &middot; fixed</span>'+esc(f.text)+'</div>'; });
+    items=items.concat(dayBlocks.map(function(b){ return item('b|MEMORY.md|'+b.line,'','<span class="tm">'+esc(b.from)+'-'+esc(b.to)+'</span>'+esc(b.text)); }));
+    M.tasks.filter(function(x){ if(!x.due || !((x.due===d && d>=t) || (d===t && x.due<t))) return false; var n=norm(x.text); return !dayBlocks.some(function(b){ var bn=norm(b.text); return n && bn && (bn.indexOf(n)>=0 || n.indexOf(bn)>=0); }); }).forEach(function(x){ items.push(item('t|'+x.path+'|'+x.line,' due','<span class="tm">'+(x.due<t?'overdue':'due')+' &middot; '+esc(x.ws)+'</span>'+esc(x.text))); });
     if(S.moving && items.some(function(h){ return h.indexOf('data-move="'+esc(S.moving)+'"')>=0; })) items.push(moveMenu(t));
     return '<div class="day'+(d===t?' today':'')+'"'+(S.canWrite&&d>=t?' data-day="'+d+'"':'')+'><div class="dh">'+esc(d===t?'Today':lbl)+'</div>'+(items.join("")||'<div class="m">Open</div>')+'</div>';
   }).join("")+'</div>'+(S.canWrite&&has?'<div class="m" style="margin-top:8px">Drag a block or a task to another day, or tap it to move it. Moving a block changes your plan, not an event already on your calendar.</div>':'')+'</div>';

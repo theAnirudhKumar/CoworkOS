@@ -21,12 +21,13 @@ Use today's date in the user's time zone, from Core Memory in root MEMORY.md. If
 Read:
 
 1. Every workstation's Next Actions: open tasks due today or overdue, and tasks marked `- [x]`, so you know what is already ticked.
-2. The This Week section of root MEMORY.md: today's Block lines and the Focus lines, if the plan is for the current week.
-3. A connected calendar, if there is one, read-only: what is on it tomorrow, so the first thing tomorrow fits around it.
+2. The This Week section of root MEMORY.md: today's Block lines and the Focus lines, if the plan's span covers today.
+3. Today's top three from the daily brief, if start-my-day ran in this session, or from today's `YYYY-MM-DD-daily-brief.md` file if one exists. These are often the most important things to ask about, such as the day's frog.
+4. A connected calendar, if there is one, read-only: what is on it tomorrow, so the first thing tomorrow fits around it.
 
 ## Step 3: What got done
 
-Show the open items from Step 2 in one short list: today's blocks, then tasks due today, then overdue tasks. Ask one question: "Which of these got done?" The user can answer in a few words, such as "the first two" or "all but the report."
+Show the open items from Step 2 in one short list, without repeats: today's top three, then today's blocks, then tasks due today, then overdue tasks. Ask one question: "Which of these got done?" The user can answer in a few words, such as "the first two" or "all but the report."
 
 Mark each finished task `- [x]` in its workstation's Next Actions. Tasks are bookkeeping under the memory rules, and the user just confirmed them, so no further approval is needed. A block that got done needs no change; it stays in the plan as a record for next week's look back.
 
@@ -36,7 +37,7 @@ If the user mentions something they finished that was never a task, it needs no 
 
 For each unfinished item, propose one of three things, in one list the user can answer in one reply:
 
-- **Move it.** A new day, most often tomorrow or the next free day in the plan. For a task, change its `(due YYYY-MM-DD)` date. For a block, change the date and time in its Block line in This Week, and only to a day that still has room.
+- **Move it.** A new day, most often tomorrow or the next free day in the plan. For a task, change its `(due YYYY-MM-DD)` date. For a block, change the date and time in its Block line in This Week, and only to a day that still has room. Keep the two in step: when a task moves, move any Block line for the same work to a day on or before its new due date, and when a block moves past a task's due date, move the due date too.
 - **Drop it.** Some things no longer matter. Remove the task, or the block, on purpose. Dropping is a real choice, not a failure.
 - **Leave it.** Keep it as it is, for an item with no real deadline.
 
