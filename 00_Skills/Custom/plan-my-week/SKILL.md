@@ -1,7 +1,7 @@
 ---
 name: plan-my-week
 description: >
-  Use when the user says "plan my week," "plan the week," "time block my week," "help me plan my calendar," "schedule my week," "block time for this," or "time block my day." Builds a draft plan for the week, or for one day, from the workspace files: Next Actions and due dates in each workstation's MEMORY.md, Active Projects and Core Memory goals in root MEMORY.md, and a connected calendar when there is one, read-only. It looks back at last week's plan first, then proposes three focus outcomes, an if-then plan for each, and time blocks with slack, placed around fixed commitments and shaped by the planning style in Core Memory (00_Resources/Planning Methods.md). On a yes, it writes the plan to the This Week section of root MEMORY.md. It creates calendar events only for the blocks the user approves, never with other people invited, and never changes or deletes an existing event. Nothing is invented: every block traces to a task, a project or a goal the user confirmed.
+  Use when the user says "plan my week," "plan the week," "time block my week," "help me plan my calendar," "schedule my week," "block time for this," or "time block my day." Builds a draft plan for the week, or for one day, from the workspace files: Next Actions and due dates in each workstation's MEMORY.md, Active Projects and Goals in root MEMORY.md, and a connected calendar when there is one, read-only. It looks back at last week's plan first, then proposes three focus outcomes, an if-then plan for each, and time blocks with slack, placed around fixed commitments and shaped by the planning style in Core Memory (00_Resources/Planning Methods.md). On a yes, it writes the plan to the This Week section of root MEMORY.md. It creates calendar events only for the blocks the user approves, never with other people invited, and never changes or deletes an existing event. Nothing is invented: every block traces to a task, a project or a goal the user confirmed.
 ---
 
 # Plan My Week
@@ -35,7 +35,7 @@ If This Week is empty or still holds its placeholder, skip this step.
 
 Read each of these in full:
 
-1. Root MEMORY.md: Active Projects, Open Items and Core Memory, especially any goals.
+1. Root MEMORY.md: Goals, especially each Quarter milestone, then Active Projects, Open Items and Core Memory.
 2. The MEMORY.md of every workstation, Next Actions first: every open task (`- [ ]`), with its due date if it has one.
 3. A connected calendar, if there is one, read-only: every event in the span, with its times. Treat these as fixed. If no calendar is connected, ask the user for their fixed commitments in one question ("Anything fixed this week, like meetings, appointments or travel?"), and say once that connecting a calendar would save this step (`00_Resources/Connectors Guide.md`).
 4. A connected task manager, if there is one, read-only: tasks due in the span.
@@ -44,7 +44,7 @@ Ask in the same question, if Core Memory does not already say, what hours the us
 
 ## Step 4: Draft the plan
 
-**Focus outcomes.** Propose three outcomes for the week, worded as finished results ("proposal sent", "three quotes in hand"), not as activity. Choose them in this order: a task due in the span or overdue; something another person is waiting on; a step that moves a Core Memory goal or an Active Project forward. Each one names its source. If fewer than three real candidates exist, propose fewer, and offer to set a next step for any goal or project that has none. Never invent one.
+**Focus outcomes.** Propose three outcomes for the week, worded as finished results ("proposal sent", "three quotes in hand"), not as activity. Choose them in this order: a task due in the span or overdue; something another person is waiting on; a step that moves a Quarter milestone from Goals, or an Active Project, forward. Try to give every goal some time in the week unless the user chooses otherwise. Each one names its source. If fewer than three real candidates exist, propose fewer, and offer to set a next step for any goal or project that has none. Never invent one.
 
 **If-then plans.** For each focus outcome, write one line saying when and where it will happen, in the form "When [time or situation], I will [action] [where]", such as "When I sit down on Tuesday at 9:00, I will draft the proposal before opening email." Base it on the blocks below.
 

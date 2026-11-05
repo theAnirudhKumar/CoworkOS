@@ -77,6 +77,8 @@ Each Active Projects entry in root MEMORY.md carries the date it was last active
 - **Untracked work.** Look for work that is clearly under way but has no Active Projects entry: an Active handoff in the Chat Context Index, several open tasks in one workstation pointing at the same result, or a dated output file updated this week. Propose a one-line project for each, with its outcome and target date.
 - **Finished projects.** Propose moving each finished project to ARCHIVE.md, under the right month and week, in the format `00_Reference/Memory System.md` describes. Then remove it from Active Projects.
 
+- **Goals.** For each goal in the Goals section, check its workstation has at least one open task that moves its Quarter milestone forward. If not, propose one. If a Quarter line's date has passed, offer the quarterly review in the set-goals skill (`00_Skills/Custom/set-goals/SKILL.md`) in one line, rather than running it here.
+
 Updating Active Projects and writing to ARCHIVE.md are operational bookkeeping under Memory System, so they need no memory-write approval. Still say what you are about to change before you change it, since the user is deciding which projects are finished.
 
 ## Step 5: Memory hygiene

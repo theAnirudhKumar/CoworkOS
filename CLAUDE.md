@@ -47,6 +47,8 @@ When the user says one of these phrases, read the skill file and follow it, even
 | "start my day," "what's on today," "morning brief" | 00_Skills/Custom/start-my-day/SKILL.md |
 | "weekly review," "tidy the workspace" | 00_Skills/Custom/weekly-review/SKILL.md |
 | "plan my week," "time block my week," "help me plan my calendar" | 00_Skills/Custom/plan-my-week/SKILL.md |
+| "wrap up my day," "shut down for the day," "end my day" | 00_Skills/Custom/wrap-up-my-day/SKILL.md |
+| "set my goals," "review my goals," "quarterly review" | 00_Skills/Custom/set-goals/SKILL.md |
 | "close out the session," "session audit," "what did we miss" | 00_Skills/Custom/session-audit/SKILL.md |
 | "hand off this chat," "resume," "pick up where we left off" | 00_Skills/Custom/chat-context/SKILL.md |
 | "make this a skill," "save this as a skill" | 00_Skills/Custom/make-a-skill/SKILL.md |

@@ -53,6 +53,8 @@ Not sure your AI tool can work with a folder on your computer? See [Using Cowork
 - **Corrections that stick.** When you fix something, the AI proposes a rule so it does not happen again. A close-out audit at the end of a session catches anything missed.
 - **A daily brief.** Say "start my day" for the three things most worth doing today, what is waiting on you, and what is coming up, from your files and any calendar or email you connect.
 - **A week you can actually follow.** Say "plan my week" and it proposes three focus outcomes, a when-and-where plan for each, and time blocks with room to spare, placed around your calendar. Pick a planning style that suits you, such as Big Three, time blocking, Eat the frog, 1-3-5, Eisenhower or Pomodoro, and the daily brief follows it too. Nothing lands on your calendar until you say yes.
+- **Goals that reach your week.** Say "set my goals" and each big goal gets a measurable milestone for this quarter, a plan for what is most likely to get in the way, and a first step. The week plan gives them time, and a quarterly review keeps them honest.
+- **An end to the day.** Say "wrap up my day" for a five-minute close: tick off what got done, move or drop the rest, jot down what is on your mind, and set tomorrow's first thing.
 - **A weekly check-up.** Say "weekly review" and in 20 to 30 minutes your second brain is tidied: inbox emptied, finished tasks cleared, overdue ones faced, finished projects archived, stale notes replaced.
 - **A dashboard you name yourself.** Open one file in your browser to see everything at a glance, browse and search every file, and edit them.
 - **Pick up where you left off.** Say "hand off this chat" and a fresh chat later can continue without you explaining everything again.
@@ -116,6 +118,8 @@ Say the phrase in your AI tool and it follows the skill. Setup installs them whe
 | :--- | :--- | :--- |
 | start-my-day | "start my day" | A short daily brief: top three, waiting on you, coming up |
 | plan-my-week | "plan my week" | Focus outcomes and time blocks around your calendar |
+| wrap-up-my-day | "wrap up my day" | Closes the day in five minutes and sets tomorrow's first thing |
+| set-goals | "set my goals" | Yearly goals, quarter milestones and a quarterly review |
 | weekly-review | "weekly review" | A 20 to 30 minute tidy of your whole second brain |
 | session-audit | "close out the session" | Saves the corrections and decisions from today |
 | chat-context | "hand off this chat" | Lets a new chat pick up exactly where this one stopped |
@@ -193,6 +197,8 @@ chmod +x .githooks/pre-commit
 | `00_Skills/Custom/weekly-review/SKILL.md` | A short weekly upkeep that keeps your second brain trustworthy |
 | `00_Skills/Custom/start-my-day/SKILL.md` | A daily brief built from your files, plus any connected apps, read-only |
 | `00_Skills/Custom/plan-my-week/SKILL.md` | A week plan with focus outcomes and time blocks, put on your calendar only on a yes |
+| `00_Skills/Custom/wrap-up-my-day/SKILL.md` | A five-minute end-of-day routine |
+| `00_Skills/Custom/set-goals/SKILL.md` | Goals with quarter milestones, and the quarterly review |
 | `00_Skills/Custom/make-a-skill/SKILL.md` | Turning a repeated piece of work into a reusable skill |
 | `00_Skills/Custom/optimize-tokens/SKILL.md` | Getting the same result from a leaner request |
 | `00_Skills/Third-Party/` | Where someone else's archived skill goes |

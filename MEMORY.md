@@ -12,6 +12,12 @@ Workstation-specific memory lives in each workstation's own MEMORY.md, not here.
 
 - [YYYY-MM-DD] Example entry: "Set up this workspace" - Root - Initial CLAUDE.md and workstation structure in place; no workstations created yet.
 
+## Goals
+
+*A few results the user wants by a date, each cut into a measurable milestone for this quarter. Written by the set-goals skill in a fixed form; three goals or fewer at a time.*
+
+(none yet)
+
 ## This Week
 
 *The plan for the current week: focus outcomes, an if-then plan for each, and time blocks. Written by the plan-my-week skill once the user approves it, and replaced each week rather than added to.*

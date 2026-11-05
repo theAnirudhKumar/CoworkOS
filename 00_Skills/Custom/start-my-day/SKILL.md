@@ -1,7 +1,7 @@
 ---
 name: start-my-day
 description: >
-  Use when the user says "start my day," "what's on today," "morning brief," "what needs my attention," or "plan my day." Builds a short daily brief from the workspace files: Active Projects, Open Items, Scheduled Tasks and Core Memory goals in root MEMORY.md, open tasks and due dates in each workstation's Next Actions, the quick-capture inbox, the living sections of each workstation MEMORY.md, and Active handoffs in the Chat Context Index if it exists. If the AI tool has connected sources such as a calendar, an email connector or a task manager, it reads them and says which it used. It never sends, accepts, declines or changes anything in them. The brief is about 12 lines: today's fixed commitments, the top three things worth doing and why, what is waiting on the user, what is coming up, and anything stale. Every item names its source, and nothing is invented. On a scheduled or unattended run it writes the brief to a dated file and sends nothing.
+  Use when the user says "start my day," "what's on today," "morning brief," "what needs my attention," or "plan my day." Builds a short daily brief from the workspace files: Active Projects, Open Items, Scheduled Tasks and Goals in root MEMORY.md, open tasks and due dates in each workstation's Next Actions, the quick-capture inbox, the living sections of each workstation MEMORY.md, and Active handoffs in the Chat Context Index if it exists. If the AI tool has connected sources such as a calendar, an email connector or a task manager, it reads them and says which it used. It never sends, accepts, declines or changes anything in them. The brief is about 12 lines: today's fixed commitments, the top three things worth doing and why, what is waiting on the user, what is coming up, and anything stale. Every item names its source, and nothing is invented. On a scheduled or unattended run it writes the brief to a dated file and sends nothing.
 ---
 
 # Start My Day
@@ -22,7 +22,7 @@ Use the date and weekday in that time zone for everything below.
 
 Read each of these in full:
 
-1. Root MEMORY.md. The sections that matter here are Active Projects, This Week, Open Items, Scheduled Tasks and Core Memory, especially any goals and the planning style ("Planning style: ...") recorded there.
+1. Root MEMORY.md. The sections that matter here are Active Projects, Goals, This Week, Open Items, Scheduled Tasks and Core Memory, especially the planning style ("Planning style: ...") recorded there.
 2. The MEMORY.md of every workstation. A workstation is a top-level folder that holds a CLAUDE.md, plus any sub-workstation one level inside it. Read its Next Actions first: every open task (`- [ ]`) and its due date, if it has one. Then the other living sections, such as people, key dates and decisions.
 3. `98_Temp/Inbox.md` and `98_Temp/Phone Inbox.md`, only to count the lines waiting there.
 4. `00_Resources/Chat Context Index.md`, if it exists. Note each row marked Active, since that is unfinished work the user may want to pick up.
@@ -51,7 +51,7 @@ Every item must trace to a file or a connected source. If you cannot point to wh
 
 1. A task that is overdue, or due today or tomorrow, from Next Actions or a connected source.
 2. Something another person is waiting on.
-3. Something that moves a goal in Core Memory forward.
+3. Something that moves a Quarter milestone in Goals forward.
 4. An Active Project that has gone quiet and needs one push to keep moving.
 
 Each item gets one line saying what it is and why it made the list today.
@@ -60,7 +60,7 @@ If This Week holds a plan for the current week, it comes first: today's Block li
 
 Shape the top three to the planning style, as its section in `00_Resources/Planning Methods.md` describes: the frog first for Eat the frog, the day as 1, 3 and 5 for 1-3-5, the four groups for Eisenhower. With no style recorded, use the order above.
 
-In the first weeks, there may be fewer than three real items. Do not invent any. Instead, if a Core Memory goal or an Active Project has no open task, add one line after the brief offering to set its next step, for example: "Your 10k goal has no next step yet. Want to add one?" Write the task only on a yes.
+In the first weeks, there may be fewer than three real items. Do not invent any. Instead, if a goal or an Active Project has no open task, add one line after the brief offering to set its next step, for example: "Your 10k goal has no next step yet. Want to add one?" Write the task only on a yes.
 
 **Stale** is one line for the most useful thing that looks forgotten. Examples are an Active Project not active in about two weeks, an Open Item that has sat for a month, or an Active handoff that nobody has touched. If several look stale, and the last weekly review is more than about seven days old, suggest the weekly-review skill in this line.
 

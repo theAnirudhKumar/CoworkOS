@@ -4,7 +4,14 @@ All notable changes to this template are documented here. Format follows [Keep a
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-11-05
+
+Your second brain now helps you plan, not just remember: goals that reach the week, a week that fits your calendar, a day with a clear end, and capture from your phone.
+
 ### Added
+- Goals: a new set-goals skill turns a few yearly goals into measurable milestones for this quarter, each with an if-then plan for the likely obstacle and a first step, written to a new Goals section in root MEMORY.md. A quarterly review scores each milestone and sets the next. Setup now writes the user's goals there, and the week plan, the daily brief and the weekly review all read them.
+- Wrap up my day: a new wrap-up-my-day skill closes the day in about five minutes. It ticks off what got done, moves or drops the rest on purpose, captures loose thoughts, and makes tomorrow's first thing a task due tomorrow.
+- Dashboard: a Goals card shows each goal, its milestone and days left, and whether its area has an open task. In the This week strip you can drag a block or a task to another day, or tap it to move it on a phone, which saves the new date. Next actions shows how many tasks are done.
 - Plan my week: a new plan-my-week skill looks back at last week, then proposes three focus outcomes, an if-then plan for each, and time blocks with slack around a connected calendar. It saves the plan to a new This Week section in root MEMORY.md, and creates calendar events only for blocks the user approves.
 - `00_Resources/Planning Methods.md`: a menu of planning styles (Big Three, time blocking, Eat the frog, 1-3-5, Eisenhower, Pomodoro, Getting Things Done) that setup offers. The daily brief and the week plan follow the choice saved in Core Memory.
 - Dashboard: a This week card with the focus outcomes and a seven-day strip of blocks and due tasks.
