@@ -8,6 +8,7 @@ All notable changes to this template are documented here. Format follows [Keep a
 - `chat-context` skill: hands a long chat off to a fresh one through a structured handoff file in the workstation's `Chat Context/` folder, registered in `00_Resources/Chat Context Index.md`, and resumes from it in the next chat.
 - `optimize-tokens` skill: flags requests that will cost far more than they need to and suggests a leaner version, with quality gates so published output is never cut.
 
+- `00_Resources/Starter Rules.md`: an optional menu of 31 working rules that held up in daily use, plus a plain-language writing list. First-run setup offers it in a new step 9, and nothing in it applies until the user picks it. The hand-over step is now step 10.
 - `AGENTS.md` at the root, a one-line pointer to `CLAUDE.md` for AI tools that read that file. File Creation Rule 1 now allows it.
 - `98_Temp/` for files with no clear home yet, reviewed weekly, and `99_Archive/` for old files the user confirms are no longer current. They are the only exceptions to File Creation Rule 5, and neither is a workstation.
 - `00_Reference/CLAUDE.md Change Log.md`: the format and the substantive-or-mechanical test for recording changes to root `CLAUDE.md`.

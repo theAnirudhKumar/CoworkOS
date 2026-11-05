@@ -44,7 +44,7 @@ If SETUP.md exists at the root of this workspace, first-run setup has not been f
 
 ## Rules
 
-*Starter section, for standing behavioral rules the user states directly ("always," "never," "before X do Y"). This file ships with none. Add them here as they come up, and apply the two placement tests above to decide whether something belongs here or in MEMORY.md.*
+*Starter section, for standing behavioral rules the user states directly ("always," "never," "before X do Y"). This file ships with none. 00_Resources/Starter Rules.md holds a menu of tested rules the user can pick from. Add rules here as they come up, and apply the two placement tests above to decide whether something belongs here or in MEMORY.md.*
 
 ---
 
@@ -86,6 +86,7 @@ When adding a new rule, decide where it belongs using the two tests in the Memor
 | 00_Reference/Memory System.md | Writing a memory entry, running an archive pass, or handling a contradiction |
 | 00_Reference/CLAUDE.md Change Log.md | Changing this file, or finding out why one of its rules says what it says |
 | 00_Resources/voice-principles.md | Writing anything as or for the user |
+| 00_Resources/Starter Rules.md | The user asks how to make their AI tool more reliable, or wants to adopt more working rules |
 | 00_Resources/Workstation Setup Guide.md | Creating a new workstation |
 | 00_Skills/Skills Inventory.md | Closing out a session (points to the session-audit skill), or understanding how account skills are archived in this workspace |
 | 00_Resources/Using CoworkOS with Other AI Tools.md | Running this workspace on an AI tool other than Claude Cowork |

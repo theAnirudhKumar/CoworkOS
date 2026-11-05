@@ -101,6 +101,7 @@ Both are optional, and only relevant at all if you use git. If you never put thi
 | `00_Reference/Memory System.md` | Full mechanics: capture triggers, entry format, archiving |
 | `00_Reference/CLAUDE.md Change Log.md` | The record of every substantive change to root `CLAUDE.md`, and what counts as one |
 | `00_Resources/Workstation Setup Guide.md` | How to create a new workstation, and the Starter Workstations menu |
+| `00_Resources/Starter Rules.md` | An optional menu of proven working rules, offered once during setup |
 | `00_Resources/voice-principles.md` | Starter file for how written output should sound; fills in through use |
 | `00_Resources/Using CoworkOS with Other AI Tools.md` | Running this on ChatGPT Work Mode, Kimi Work, OpenClaw, Hermes Agent, or anything else |
 | `00_Resources/GitHub Sync Guide.md` | Setting up the optional GitHub sync |
