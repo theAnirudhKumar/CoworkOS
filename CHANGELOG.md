@@ -4,6 +4,10 @@ All notable changes to this template are documented here. Format follows [Keep a
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-11-05
+
+New skills for handing off chats and keeping requests lean, a much stronger session audit, and the structure and rules a workspace needs once it is used every day.
+
 ### Added
 - `chat-context` skill: hands a long chat off to a fresh one through a structured handoff file in the workstation's `Chat Context/` folder, registered in `00_Resources/Chat Context Index.md`, and resumes from it in the next chat.
 - `optimize-tokens` skill: flags requests that will cost far more than they need to and suggests a leaner version, with quality gates so published output is never cut.
