@@ -87,6 +87,7 @@ When adding a new rule, decide where it belongs using the two tests in the Memor
 | 00_Reference/Visual Standards.md | Producing anything with visual structure: steps, tables, diagrams, or a generated PDF, Word file or deck |
 | 00_Reference/CLAUDE.md Change Log.md | Changing this file, or finding out why one of its rules says what it says |
 | 00_Resources/voice-principles.md | Writing anything as or for the user |
+| 00_Resources/Connectors Guide.md | Connecting another app such as a calendar, email or file storage, or deciding what a connector may do |
 | 00_Resources/Starter Rules.md | The user asks how to make their AI tool more reliable, or wants to adopt more working rules |
 | 00_Resources/Workstation Setup Guide.md | Creating a new workstation |
 | 00_Skills/Skills Inventory.md | Closing out a session (points to the session-audit skill), or understanding how account skills are archived in this workspace |

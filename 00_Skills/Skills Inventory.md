@@ -19,6 +19,9 @@ Codex CLI specifically has a documented, literal answer rather than only "ask yo
 | session-audit | Custom | `Custom/session-audit/SKILL.md` | End-of-session capture and sync. See its own file for what it does. |
 | travel-mode | Custom | `Custom/travel-mode/SKILL.md` | Working from the GitHub copy when the primary computer is unreachable. Requires the optional GitHub sync (00_Resources/GitHub Sync Guide.md). |
 | chat-context | Custom | `Custom/chat-context/SKILL.md` | Hands a long chat off to a fresh one through a structured handoff file, and resumes from it. Keeps its index at `00_Resources/Chat Context Index.md`. |
+| weekly-review | Custom | `Custom/weekly-review/SKILL.md` | A 20 to 30 minute weekly upkeep: files 98_Temp, decides Open Items, archives finished projects, checks memory size and drift. |
+| start-my-day | Custom | `Custom/start-my-day/SKILL.md` | A short daily brief from workspace files, plus any connected calendar, email or task tool, read-only. |
+| make-a-skill | Custom | `Custom/make-a-skill/SKILL.md` | Turns a repeated piece of work into a reusable skill, archived here with an inventory row. |
 | optimize-tokens | Custom | `Custom/optimize-tokens/SKILL.md` | Spots requests that cost far more than they need to, and suggests a leaner version without lowering quality. |
 
 Add a row here every time you archive a skill, so this table stays a true index rather than a folder someone has to browse to understand.

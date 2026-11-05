@@ -36,6 +36,8 @@ Use a skill when it provides a specialized, reusable workflow that improves the 
 
 Only invoke skills that are actually available in the current session.
 
+When the user asks for the same kind of work for the third time, offer once, in one line, to save it as a skill, following 00_Skills/Custom/make-a-skill/SKILL.md. If they decline, do not offer again for that kind of work.
+
 When you build or meaningfully change a custom skill, archive its source into 00_Skills/Custom/ (or 00_Skills/Third-Party/ for someone else's work, keeping the original LICENSE and README) in the same session, and add a row to 00_Skills/Skills Inventory.md. The account is the only place the live skill exists; this is the recovery copy.
 
 ---
