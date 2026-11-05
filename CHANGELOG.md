@@ -5,6 +5,9 @@ All notable changes to this template are documented here. Format follows [Keep a
 ## [Unreleased]
 
 ### Added
+- Plan my week: a new plan-my-week skill looks back at last week, then proposes three focus outcomes, an if-then plan for each, and time blocks with slack around a connected calendar. It saves the plan to a new This Week section in root MEMORY.md, and creates calendar events only for blocks the user approves.
+- `00_Resources/Planning Methods.md`: a menu of planning styles (Big Three, time blocking, Eat the frog, 1-3-5, Eisenhower, Pomodoro, Getting Things Done) that setup offers. The daily brief and the week plan follow the choice saved in Core Memory.
+- Dashboard: a This week card with the focus outcomes and a seven-day strip of blocks and due tasks.
 - Mobile capture: a new `00_Resources/Mobile Capture Guide.md` sets up capture from a phone, by a one-tap iPhone shortcut or a notes app writing to `98_Temp/Phone Inbox.md` in a synced folder, by emailing yourself with "Inbox:" in the subject, or through travel mode. Setup step 7 now asks about phone capture, the weekly review files phone and email captures, the daily brief counts them, and the dashboard shows them in the Inbox card.
 
 ## [1.4.0] - 2026-11-05
