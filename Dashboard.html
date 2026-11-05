@@ -162,8 +162,8 @@ function toast(msg){ var t=$("toast"); t.textContent=msg; t.classList.add("show"
 var TZ=null; /* the user's time zone from Core Memory, when one is recorded */
 function tzOpt(o){ o=o||{}; if(TZ) o.timeZone=TZ; return o; }
 function todayISO(){ try{ return new Intl.DateTimeFormat("en-CA",tzOpt({year:"numeric",month:"2-digit",day:"2-digit"})).format(new Date()); }catch(e){ var d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); } }
-function daysSince(iso){ if(!iso) return null; var t=Date.parse(iso+"T00:00:00"); if(isNaN(t)) return null; return Math.floor((Date.now()-t)/86400000); }
-function ago(ms){ if(!ms) return ""; var d=Math.floor((Date.now()-ms)/86400000); if(d<=0) return "today"; if(d===1) return "yesterday"; if(d<7) return d+" days ago"; if(d<14) return "last week"; if(d<60) return Math.floor(d/7)+" weeks ago"; return Math.floor(d/30)+" months ago"; }
+function daysSince(iso){ if(!iso) return null; var t=Date.parse(iso+"T00:00:00"); if(isNaN(t)) return null; return Math.max(0,Math.floor((Date.parse(todayISO()+"T00:00:00")-t)/86400000)); }
+function ago(ms){ if(!ms) return ""; var d=Math.max(0,Math.floor((Date.now()-ms)/86400000)); if(d<=0) return "today"; if(d===1) return "yesterday"; if(d<7) return d+" days ago"; if(d<14) return "last week"; if(d<60) return Math.floor(d/7)+" weeks ago"; return Math.floor(d/30)+" months ago"; }
 var COLORS=["#3b5bdb","#2f855a","#c2410c","#9333ea","#0891b2","#a16207","#be185d","#4d7c0f","#0f766e","#7c3aed"];
 var store={ get:function(k){ try{return localStorage.getItem(k);}catch(e){return null;} }, set:function(k,v){ try{localStorage.setItem(k,v);}catch(e){} } };
 
@@ -328,11 +328,11 @@ function model(){
   var inboxText=(F["98_Temp/Inbox.md"]||{}).text||"";
   var inbox=inboxText.split("\n").map(function(l,i){ return {raw:l,line:i}; }).filter(function(x){ return /^\s*-\s+/.test(x.raw); }).map(function(x){ var t=x.raw.replace(/^\s*-\s+/,""); var d=t.match(/^\[(\d{4}-\d{2}-\d{2})\]\s*/); return {line:x.line, date:d?d[1]:null, text:d?t.slice(d[0].length):t}; });
   var sched=entriesOf(sec["Scheduled Tasks"]);
-  var wr=null; sched.forEach(function(e){ var m=e.raw.match(/weekly review.*?last run\s*\[?(\d{4}-\d{2}-\d{2})/i); if(m) wr=m[1]; });
+  var wr=null, wrSetup=null; sched.forEach(function(e){ var m=e.raw.match(/weekly review.*?last run\s*\[?(\d{4}-\d{2}-\d{2})/i); if(m) wr=m[1]; var n=e.raw.match(/weekly review.*?set up\s*\[?(\d{4}-\d{2}-\d{2})/i); if(n) wrSetup=n[1]; });
   return {
     projects:entriesOf(sec["Active Projects"]), open:entriesOf(sec["Open Items"]), sched:sched, core:core,
     tasks:tasks, today:today, weekEnd:wk, inbox:inbox,
-    memLines: mem ? mem.split("\n").length : 0, ws:ws, routed:routed, temp:temp, handoffs:handoffs, weekly:wr,
+    memLines: mem ? mem.split("\n").length : 0, ws:ws, routed:routed, temp:temp, handoffs:handoffs, weekly:wr, weeklySetup:wrSetup,
     dashName: nameFrom(/Dashboard name:\s*(.+)$/i), userName: nameFrom(/^\s*-\s*(?:\[[^\]]*\]\s*)?Name:\s*([^.;,]+)/i), hasMemory: !!F["MEMORY.md"]
   };
 }
@@ -453,7 +453,8 @@ function health(M){
   var over=names.filter(function(n){ return M.ws[n].memLines>200; });
   if(over.length) row(false, esc(over.join(", "))+" MEMORY.md over 200 lines");
   var d=daysSince(M.weekly);
-  row(d!==null && d<=7, d===null? "No weekly review recorded yet" : "Weekly review last run "+(d===0?"today":d+" day"+(d===1?"":"s")+" ago"));
+  if(d===null && M.weeklySetup){ var ds=daysSince(M.weeklySetup); row(ds<=7, ds<=7? "First weekly review is due in "+(7-ds)+" day"+(7-ds===1?"":"s") : "First weekly review is due: say \"weekly review\""); }
+  else row(d!==null && d<=7, d===null? "No weekly review recorded yet" : "Weekly review last run "+(d===0?"today":d+" day"+(d===1?"":"s")+" ago"));
   if(S.files["SETUP.md"]) row(false, "First-run setup is not finished yet");
   return out;
 }

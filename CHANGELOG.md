@@ -22,6 +22,11 @@ All notable changes to this template are documented here. Format follows [Keep a
 
 ### Fixed
 - References that pointed at files removed during setup (README, CONTRIBUTING, validate.py).
+- Skills listed in the Skills table can be used without being installed; root CLAUDE.md, Governance Rules and the Skills Inventory no longer say otherwise.
+- The weekly review is offered at session start, because root CLAUDE.md now tells every session to check its date. Setup records "set up [date], not run yet", and the dashboard shows when the first review is due.
+- The capture format is stated exactly (`- [YYYY-MM-DD] the thought`), so every capture reaches the dashboard.
+- The weekly review asks about setup leftovers in one question instead of one at a time, every week.
+- Setup is exempt from the CLAUDE.md change log; the other-tools guide no longer points at the deleted README; saved notes get a Resources table row; the daily brief offers a next step for goals that have none instead of padding; the dashboard never shows a negative "days ago".
 - The example workstation's Resources table pointed at a file that did not exist.
 
 

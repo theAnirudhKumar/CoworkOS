@@ -6,7 +6,7 @@ This is the user's AI second brain: a workstation-based workspace where each fol
 
 ## Memory System
 
-At the start of every session: read MEMORY.md before responding. Use what you find to inform your work, without announcing it.
+At the start of every session: read MEMORY.md before responding. Use what you find to inform your work, without announcing it. One check while you read it: if the "Weekly review" entry under Scheduled Tasks shows the last review, or the setup date if none has run, more than seven days ago, offer the weekly review once, in one line, then carry on with what the user asked.
 
 Memory writes need the user's yes. When you notice something worth remembering, propose the entry and wait. When the user asks directly, with phrases like "remember this," "make a note," "don't forget," "log this," "from now on," or "always," their request is the yes: write it straight away, then say in one line what was saved and where, so they can correct it.
 
@@ -16,9 +16,9 @@ Flag contradictions. If a new instruction conflicts with an existing memory entr
 
 Full mechanics (capture triggers, entry format, archiving) are in 00_Reference/Memory System.md.
 
-At the end of a session, run the session-audit skill (00_Skills/Custom/session-audit/SKILL.md) rather than relying on memory writes caught mid-conversation. You cannot always tell when a session ends, so when the user signals they are done ("thanks, that's all," "bye," "done for today") after real work, offer it in one line. It scans the whole session for corrections, preferences, and decisions that were never written down, proposes where each belongs, and applies only what is approved. This is what keeps this file and MEMORY.md actually current instead of slowly drifting stale.
+At the end of a session, run the session-audit skill (00_Skills/Custom/session-audit/SKILL.md) rather than relying on memory writes caught mid-conversation. You cannot always tell when a session ends, so when the user signals they are done ("thanks, that's all," "bye," "done for today"), offer it in one line if anything was decided, corrected or written this session. It scans the whole session for corrections, preferences, and decisions that were never written down, proposes where each belongs, and applies only what is approved. This is what keeps this file and MEMORY.md actually current instead of slowly drifting stale.
 
-**Capture.** When the user wants something written down fast, such as "jot this down," "capture this," "add to my inbox," or a thought that has no clear home yet, append it as one dated line to `98_Temp/Inbox.md` straight away and confirm in a few words. Their request is the approval, and filing can wait for the weekly review. Never let a passing thought get lost because the right place was unclear.
+**Capture.** When the user wants something written down fast, such as "jot this down," "capture this," "add to my inbox," or a thought that has no clear home yet, append it to `98_Temp/Inbox.md` straight away, as one line in exactly this form, `- [YYYY-MM-DD] the thought`, and confirm in a few words. Their request is the approval, and filing can wait for the weekly review. Never let a passing thought get lost because the right place was unclear.
 
 **Tasks.** When the user names something to do, especially with a date ("get three quotes by Friday," "remind me to call the bank"), write it as a task in the Next Actions section of the right workstation's MEMORY.md, in exactly this form: `- [ ] What to do (due YYYY-MM-DD)`. Leave out the due part if there is no date, and turn words like "Friday" into a real date in the user's time zone. Confirm where it went. A finished task becomes `- [x]`; the weekly review clears those out. The daily brief and the dashboard both read this form, so keep to it.
 
@@ -86,7 +86,7 @@ All instructions, rules, and context in this workspace should be mutually exclus
 - **AGENTS.md** owns nothing. It is a one-line pointer to this file for AI tools that look for that name.
 - **Dashboard.html** owns nothing. It is a page that reads these files and shows them in a browser, so the user can see, browse and edit their workspace outside the chat. Its name for the user lives in Core Memory in MEMORY.md.
 - **98_Temp/ and 99_Archive/** own files, not rules: 98_Temp holds files whose home is not clear yet, and 99_Archive holds old files that are no longer current. Neither is a workstation.
-- **00_Skills/** owns: the record of what skills exist on your AI tool's account, and the archived source of the custom ones. It is a register and a recovery path, never a live skill directory; invoking a skill always uses the account copy.
+- **00_Skills/** owns: the record of what skills exist on your AI tool's account, and the archived source of the custom ones. It holds the recovery copy of each custom skill. Where the AI tool has the skill installed, use the installed copy; where it does not, read the file here and follow it, as the Skills table above says.
 
 Two files are menus, not rule sources: 00_Resources/Starter Rules.md and the plain-language list in it. Once the user picks a rule, the copy in this file or in voice-principles.md is the live one, and the menu is only where it came from. A duplicate check ignores the menus.
 

@@ -34,7 +34,7 @@ Do not add sections outside this order. If a new kind of section is genuinely ne
 
 Use a skill when it provides a specialized, reusable workflow that improves the output. Do not invoke a skill for a one-off task where its structure adds no value. When a skill is clearly relevant, invoke it before generating a response, not after.
 
-Only invoke skills that are actually available in the current session.
+A skill is available when the AI tool has it installed, or when it is listed in the Skills table in root CLAUDE.md, in which case read its file in 00_Skills/Custom/ and follow it. Do not invoke a skill that is neither.
 
 When the user asks for the same kind of work for the third time, offer once, in one line, to save it as a skill, following 00_Skills/Custom/make-a-skill/SKILL.md. If they decline, do not offer again for that kind of work.
 
@@ -156,4 +156,4 @@ Hard limits that apply in every session, without exception:
 - Never guess when uncertain. State the uncertainty and ask.
 - Never duplicate a rule across files. Every rule lives in exactly one place (the MECE principle).
 - Never raise a size cap when a file exceeds its limit. Compress and archive instead.
-- Never invoke a skill that is not actually available in the current session.
+- Never invoke a skill that is neither installed in the AI tool nor listed in the Skills table in root CLAUDE.md.
