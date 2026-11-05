@@ -55,6 +55,12 @@ This repository holds two kinds of file: the workspace itself, and the material 
 
 First-run setup also asks, once, whether you want this workspace synced to a GitHub repository you own. This is optional and off by default: see "Working away from your primary computer" below for what it is for.
 
+## Seeing your workspace in a browser
+
+You do most of the work through chat, but you can also look at everything at once. Double-click `Dashboard.html` in your workspace folder, click **Open my workspace folder**, and choose the folder. You get a dashboard of your active projects, open items, scheduled tasks and workspace health, a tree of every file, search across all of them, and a reader for any file. In Chrome and Edge you can also edit files and mark open items done, and it checks that a file has not changed elsewhere before saving. Other browsers show a read-only view. It runs entirely on your computer: nothing is uploaded, and there is nothing to install. First-run setup asks you to give it a name of your own.
+
+You can still open the same files in any editor or note-taking app that reads markdown.
+
 ## Closing out a session properly
 
 The memory system above only works if `MEMORY.md` and `CLAUDE.md` stay current, and that depends on something noticing, mid-conversation, that a correction or a decision is worth saving. Plenty of what should be captured is not that explicit: a small correction that got fixed and moved past, a preference mentioned in passing, a decision buried inside an unrelated task. Nothing surfaces those unless something deliberately looks back over the whole conversation before it ends.
@@ -94,6 +100,7 @@ Both are optional, and only relevant at all if you use git. If you never put thi
 | `SETUP.md` | First-run setup; deletes itself and the template-maintainer files below when finished |
 | `MEMORY.md` | Template for persistent, cross-session facts |
 | `ARCHIVE.md` | The historical record: completed work, read only on demand |
+| `Dashboard.html` | Your workspace as a page in your browser: dashboard, every file, search, and edits. Double-click it and choose your workspace folder |
 | `AGENTS.md` | A one-line pointer to `CLAUDE.md` for AI tools that look for that name |
 | `98_Temp/`, `99_Archive/` | A holding folder for files with no clear home yet, and a folder for old files that are no longer current |
 | `00_Reference/Governance Rules.md` | Section ordering, size caps, and the rules for where content goes |

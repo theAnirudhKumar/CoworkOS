@@ -45,6 +45,12 @@ A file called `.git/index.lock` means git thinks another git command is still ru
 
 A command finishing without an error is not proof that anything reached GitHub. Run `git status -sb` in the workspace. The first line should read like `## main...origin/main`, with no "ahead" or "behind" after it. If it says "ahead", the push did not land, and the output of the push command will say why.
 
+## The dashboard will not save, or says it is read-only
+
+`Dashboard.html` saves changes only in browsers that let a web page write to a folder you choose, which today means Chrome and Edge. Other browsers, such as Safari and Firefox, open the folder as a read-only snapshot, so the Edit and Done buttons do not appear. Open the file in Chrome or Edge to edit. If you are in one of those and it still says read-only, click Refresh or reopen the folder and allow it to save changes when the browser asks.
+
+If the dashboard shows an old version of a file after you changed it in chat, click Refresh. It reads the folder when you open it, not continuously. If it says a file changed on disk since it was read, that is the safety check working: refresh, then make your edit again.
+
 ## I renamed or deleted Example Workstation and now routing seems broken
 
 Two things need to happen together, and it's easy to do the first without the second. Deleting the folder is only half the change, the Routing Map table near the bottom of root `CLAUDE.md` still has a row pointing at it. Remove that row (or update it to point at whatever replaced it) in the same pass. If your AI tool did the rename or delete for you, ask it to update the Routing Map too, that's the actual cause when routing seems to misfire right after cleaning up the example.

@@ -83,7 +83,7 @@ def check_skill(path, text, bad):
 
 
 def check_root_files(bad):
-    required = ['CLAUDE.md', 'MEMORY.md', 'ARCHIVE.md', 'AGENTS.md', 'SETUP.md', 'README.md',
+    required = ['CLAUDE.md', 'MEMORY.md', 'ARCHIVE.md', 'AGENTS.md', 'Dashboard.html', 'SETUP.md', 'README.md',
                 'CONTRIBUTING.md', 'CHANGELOG.md', 'LICENSE']
     for name in required:
         if not os.path.exists(os.path.join(ROOT, name)):

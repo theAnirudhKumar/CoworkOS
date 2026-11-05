@@ -136,6 +136,8 @@ End with a short report of five lines or fewer:
 
 Then give one suggestion for the coming week, in one sentence. Pick the single thing that would help most, such as an Open Item the user chose to act on, a quiet project worth one hour, or a recurring drift worth a rule. Give only one.
 
+Close with one short line pointing to the dashboard, using the name in Core Memory ("Dashboard name: ...") if there is one, for example: "Your workspace health is also on Basecamp: double-click Dashboard.html in your workspace folder." One line only. If the user has said they do not want this reminder, it will be recorded in Core Memory, so skip it.
+
 If the workspace syncs to GitHub, suggest running the session-audit skill (`00_Skills/Custom/session-audit/SKILL.md`) next, so the changes reach the remote.
 
 ## Keeping it to 20 to 30 minutes

@@ -60,6 +60,7 @@ All instructions, rules, and context in this workspace should be mutually exclus
 - **Workstation MEMORY.md files** own: domain-specific facts and decisions.
 - **ARCHIVE.md** owns: the permanent historical record of completed work, the Workspace Changelog. Never read at session start, only pulled up on demand.
 - **AGENTS.md** owns nothing. It is a one-line pointer to this file for AI tools that look for that name.
+- **Dashboard.html** owns nothing. It is a page that reads these files and shows them in a browser, so the user can see, browse and edit their workspace outside the chat. Its name for the user lives in Core Memory in MEMORY.md.
 - **98_Temp/ and 99_Archive/** own files, not rules: 98_Temp holds files whose home is not clear yet, and 99_Archive holds old files that are no longer current. Neither is a workstation.
 - **00_Skills/** owns: the record of what skills exist on your AI tool's account, and the archived source of the custom ones. It is a register and a recovery path, never a live skill directory; invoking a skill always uses the account copy.
 
@@ -93,4 +94,5 @@ When adding a new rule, decide where it belongs using the two tests in the Memor
 | 00_Skills/Skills Inventory.md | Closing out a session (points to the session-audit skill), or understanding how account skills are archived in this workspace |
 | 00_Resources/Using CoworkOS with Other AI Tools.md | Running this workspace on an AI tool other than Claude Cowork |
 | 00_Resources/GitHub Sync Guide.md | Setting up the optional GitHub sync, or understanding what it involves before agreeing to it |
+| Dashboard.html | The user asks how to see, browse or edit their files outside the chat. Tell them to double-click Dashboard.html in the workspace folder and choose the folder when asked |
 | 00_Resources/Troubleshooting.md | Setup or installation isn't going the way this file describes |
