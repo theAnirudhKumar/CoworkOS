@@ -4,6 +4,10 @@ All notable changes to this template are documented here. Format follows [Keep a
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-11-05
+
+CoworkOS becomes a second brain you can see and trust: a dashboard you name, one-line capture, tasks with due dates, notes that keep the point, and answers that come from what you actually wrote.
+
 ### Added
 - Capture: "jot this down" appends a dated line to a new `98_Temp/Inbox.md` straight away, and the weekly review empties it.
 - Tasks: every workstation's MEMORY.md has a Next Actions section with tasks written as `- [ ] What to do (due YYYY-MM-DD)`. The daily brief puts overdue and due-soon tasks first, the weekly review clears finished ones and faces overdue ones, and the dashboard lists them across all areas with a tick box.
