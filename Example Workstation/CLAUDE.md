@@ -12,7 +12,7 @@ You are the personal finances workstation. Route here for anything about budgeti
 
 | Resource | Read when... |
 | :--- | :--- |
-| Personal Finances Resources/budget-categories.md | Categorizing a new expense or setting up a fresh budget line |
+| Resources/2026-01-15-fifty-thirty-twenty-budget.md | Setting up or resetting the monthly budget |
 
 ## Workflow
 

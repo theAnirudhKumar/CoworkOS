@@ -4,7 +4,7 @@ Problems people actually hit setting this up, in the order they tend to show up.
 
 ## My AI tool didn't ask me any setup questions, it just created folders
 
-This usually means the install prompt from the README got skipped or paraphrased. The prompt matters more than it looks: it tells your AI tool to read `CLAUDE.md`, which sends it to `SETUP.md`, the first-run setup, which is what makes it *ask* what areas of life or work you want tracked instead of guessing. If it already created workstations you did not ask for, tell it to delete them and re-read `SETUP.md` before doing anything else. If you typed your own install instructions instead of using the install prompt from the CoworkOS template's README, paste that version instead, it is the one that has actually been tested.
+This usually means the install prompt from the CoworkOS page on GitHub (github.com/theAnirudhKumar/CoworkOS) got skipped or paraphrased. The prompt matters more than it looks: it tells your AI tool to read `CLAUDE.md`, which sends it to `SETUP.md`, the first-run setup, which is what makes it *ask* what areas of life or work you want tracked instead of guessing. If it already created workstations you did not ask for, tell it to delete them and re-read `SETUP.md` before doing anything else. If you typed your own install instructions instead of using the install prompt from the CoworkOS template's README, paste that version instead, it is the one that has actually been tested.
 
 ## Nothing happens when I say "run session-audit" (or any skill name)
 
@@ -61,4 +61,4 @@ Check whether the fact actually made it into `MEMORY.md` or the relevant worksta
 
 ## Everything above and I'm still stuck
 
-Open an issue on the CoworkOS template repository you downloaded this from (its CONTRIBUTING file describes how contributions work) describing what you asked for, what happened, and what your AI tool is. If it's specific to running this on a tool other than Claude Cowork, check `00_Resources/Using CoworkOS with Other AI Tools.md` first, several tool-specific quirks are already documented there.
+Open an issue at github.com/theAnirudhKumar/CoworkOS/issues describing what you asked for, what happened, and what your AI tool is. If it's specific to running this on a tool other than Claude Cowork, check `00_Resources/Using CoworkOS with Other AI Tools.md` first, several tool-specific quirks are already documented there.

@@ -8,7 +8,7 @@
 
 Where different types of content belong:
 
-1. **Root level:** CLAUDE.md, MEMORY.md, ARCHIVE.md, AGENTS.md (a one-line pointer to CLAUDE.md for AI tools that look for that name), and Dashboard.html (a page that shows the workspace in a browser). No other files at root.
+1. **Root level:** CLAUDE.md, MEMORY.md, ARCHIVE.md, AGENTS.md (a one-line pointer to CLAUDE.md for AI tools that look for that name), and Dashboard.html (a page that shows the workspace in a browser). The template's LICENSE, and the optional `.gitignore` and `.githooks/` for people who use git, also stay. No other files at root.
 2. **00_Reference/:** permanent governance and mechanics files, using stable title-case names without date prefixes (for example, `Memory System.md`). These are pointed to by name from CLAUDE.md and should not be renamed casually.
 3. **00_Resources/:** supporting resource files loaded on demand, such as templates and setup guides. Stable descriptive names, no date prefixes.
 4. **Workstation folders:** each contains a CLAUDE.md and a MEMORY.md. Domain-specific reference or project files live inside the workstation folder, not at root.
@@ -30,7 +30,7 @@ Where different types of content belong:
 ## Approval Rules
 
 11. **Deletion requires confirmation.** Before deleting any file, show its path and a one-sentence description of what it contains. Wait for explicit confirmation.
-12. **Overwrite requires confirmation.** Before overwriting an existing file, show what is changing, either the diff or a clear summary of it. Wait for explicit confirmation. One exception: a skill that owns a file and says how to update it, such as a handoff file or an index the skill maintains, may rewrite that file in place. It still says what it changed.
+12. **Overwrite requires confirmation.** Before overwriting an existing file, show what is changing, either the diff or a clear summary of it. Wait for explicit confirmation. This is about changes the user did not ask for, such as rewriting a file, replacing what they wrote, or cutting content. An edit the user just asked for, or adding a line to a list, is already approved by the request; make it and say what changed. One exception: a skill that owns a file and says how to update it, such as a handoff file or an index the skill maintains, may rewrite that file in place. It still says what it changed.
 13. **Rename requires a reference check first.** Before renaming any file, search the workspace for references to its current name. Show the current name, the new name, and every file that references it. Wait for confirmation.
 14. **Splitting a file requires confirmation.** Before splitting one file into two, show the proposed split and which content goes where. Wait for confirmation.
 
@@ -64,3 +64,4 @@ Where different types of content belong:
 
 24. **Markdown is the default output format.** Create a different format such as a Word document, spreadsheet, or slide deck only when explicitly asked for that format, never as an automatic translation of a generic request, and never because a folder happens to already contain files in that format.
 25. **Strip workspace-only details before a file goes public.** When a workspace file becomes a public page, a shared document or a file in a public repository, remove anything that only means something inside this workspace: frontmatter, internal links, index footers, workspace paths. The workspace copy keeps them, since they are what make it easy to find things here.
+26. **Save the point, not the pile.** When the user shares an article, a document or a long passage to keep, write a short note in `<Workstation>/Resources/`, named `YYYY-MM-DD-topic.md`, never a full copy. It holds four things, in this order: **Why it was saved** (one line, naming the project or area it helps), **Key points** (at most five, written in your own words, with the single most useful one in bold), **Source** (a link or a title and date), and **Use it for** (when a future session should bring it back up). Mark figures and claims as the source's own, such as "the article says", since they were not checked. A note nobody would read again should not be saved at all; say so instead. Collecting more than will ever be used is the most common reason a second brain is abandoned.

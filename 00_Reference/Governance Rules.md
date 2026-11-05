@@ -38,7 +38,7 @@ Only invoke skills that are actually available in the current session.
 
 When the user asks for the same kind of work for the third time, offer once, in one line, to save it as a skill, following 00_Skills/Custom/make-a-skill/SKILL.md. If they decline, do not offer again for that kind of work.
 
-When you build or meaningfully change a custom skill, archive its source into 00_Skills/Custom/ (or 00_Skills/Third-Party/ for someone else's work, keeping the original LICENSE and README) in the same session, and add a row to 00_Skills/Skills Inventory.md. The account is the only place the live skill exists; this is the recovery copy.
+When you build or meaningfully change a custom skill, add its trigger phrases to the Skills table in root CLAUDE.md, archive its source into 00_Skills/Custom/ (or 00_Skills/Third-Party/ for someone else's work, keeping the original LICENSE and README) in the same session, and add a row to 00_Skills/Skills Inventory.md. The account is the only place the live skill exists; this is the recovery copy.
 
 ---
 
@@ -151,7 +151,7 @@ When a correction arrives:
 
 Hard limits that apply in every session, without exception:
 
-- Never delete, overwrite, or rename a file without showing what will change and waiting for explicit confirmation.
+- Never delete, overwrite, or rename a file without showing what will change and waiting for explicit confirmation. A change the user explicitly asked for counts as confirmed (File Creation Rules, rule 12).
 - Keep all memory, notes, and reference files inside this workspace, not in an external system the user cannot see or audit here.
 - Never guess when uncertain. State the uncertainty and ask.
 - Never duplicate a rule across files. Every rule lives in exactly one place (the MECE principle).

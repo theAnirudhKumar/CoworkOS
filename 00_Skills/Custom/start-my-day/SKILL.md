@@ -1,7 +1,7 @@
 ---
 name: start-my-day
 description: >
-  Use when the user says "start my day," "what's on today," "morning brief," "what needs my attention," or "plan my day." Builds a short daily brief from the workspace files: Active Projects, Open Items, Scheduled Tasks and Core Memory goals in root MEMORY.md, the living sections of each workstation MEMORY.md, and Active handoffs in the Chat Context Index if it exists. If the AI tool has connected sources such as a calendar, an email connector or a task manager, it reads them and says which it used. It never sends, accepts, declines or changes anything in them. The brief is about 12 lines: today's fixed commitments, the top three things worth doing and why, what is waiting on the user, what is coming up, and anything stale. Every item names its source, and nothing is invented. On a scheduled or unattended run it writes the brief to a dated file and sends nothing.
+  Use when the user says "start my day," "what's on today," "morning brief," "what needs my attention," or "plan my day." Builds a short daily brief from the workspace files: Active Projects, Open Items, Scheduled Tasks and Core Memory goals in root MEMORY.md, open tasks and due dates in each workstation's Next Actions, the quick-capture inbox, the living sections of each workstation MEMORY.md, and Active handoffs in the Chat Context Index if it exists. If the AI tool has connected sources such as a calendar, an email connector or a task manager, it reads them and says which it used. It never sends, accepts, declines or changes anything in them. The brief is about 12 lines: today's fixed commitments, the top three things worth doing and why, what is waiting on the user, what is coming up, and anything stale. Every item names its source, and nothing is invented. On a scheduled or unattended run it writes the brief to a dated file and sends nothing.
 ---
 
 # Start My Day
@@ -23,8 +23,9 @@ Use the date and weekday in that time zone for everything below.
 Read each of these in full:
 
 1. Root MEMORY.md. The sections that matter here are Active Projects, Open Items, Scheduled Tasks and Core Memory, especially any goals recorded there.
-2. The MEMORY.md of every workstation. A workstation is a top-level folder that holds a CLAUDE.md, plus any sub-workstation one level inside it. Use the living sections, such as active work, key dates and decisions.
-3. `00_Resources/Chat Context Index.md`, if it exists. Note each row marked Active, since that is unfinished work the user may want to pick up.
+2. The MEMORY.md of every workstation. A workstation is a top-level folder that holds a CLAUDE.md, plus any sub-workstation one level inside it. Read its Next Actions first: every open task (`- [ ]`) and its due date, if it has one. Then the other living sections, such as people, key dates and decisions.
+3. `98_Temp/Inbox.md`, only to count the lines waiting there.
+4. `00_Resources/Chat Context Index.md`, if it exists. Note each row marked Active, since that is unfinished work the user may want to pick up.
 
 If a tool cuts off a read, read the file in parts until you reach the end. An item below the cut-off point is still real.
 
@@ -48,7 +49,7 @@ Every item must trace to a file or a connected source. If you cannot point to wh
 
 **Top three** is the hardest part. Pick the three things most worth doing today. Weigh them roughly in this order:
 
-1. Something with a deadline today or tomorrow.
+1. A task that is overdue, or due today or tomorrow, from Next Actions or a connected source.
 2. Something another person is waiting on.
 3. Something that moves a goal in Core Memory forward.
 4. An Active Project that has gone quiet and needs one push to keep moving.
@@ -79,6 +80,8 @@ Keep it to about twelve lines. Use this shape:
 - [Day]: [item] ([source])
 
 **Stale:** [One line] ([source])
+
+[If the inbox is not empty:] [N] quick captures are waiting in your inbox for the weekly review.
 ```
 
 Sources are a few words each, such as "root MEMORY.md, Open Items", "Finances MEMORY.md", "calendar" or "email". Leave out "Today" when no calendar is connected, and say so in the first line.

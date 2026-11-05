@@ -46,11 +46,15 @@ Not sure your AI tool can work with a folder on your computer? See [Using Cowork
 
 - **An AI that remembers you.** Your name, your goals, your decisions and your preferences live in memory files, and every session reads them first.
 - **One folder per area of your life.** Work, Finances, Health, Learning, Travel and more, each with its own rules and memory, so the AI uses the right context for each task. Setup offers 15 common areas to start from.
+- **Capture in one line.** Say "jot this down" and a passing thought lands in your inbox straight away. The weekly review files it later, so nothing gets lost because you did not know where it belonged.
+- **Tasks with real due dates.** "Get three quotes by Friday" becomes a task with a date in the right area, and shows up in your daily brief and on the dashboard until it is done.
+- **Answers from what you actually wrote.** Ask "what did I decide about my running plan?" and it searches your whole second brain and tells you where the answer is, or says plainly that nothing was decided.
 - **Corrections that stick.** When you fix something, the AI proposes a rule so it does not happen again. A close-out audit at the end of a session catches anything missed.
 - **A daily brief.** Say "start my day" for the three things most worth doing today, what is waiting on you, and what is coming up, from your files and any calendar or email you connect.
-- **A weekly check-up.** Say "weekly review" and in 20 to 30 minutes your second brain is tidied: loose files filed, finished projects archived, stale notes replaced.
+- **A weekly check-up.** Say "weekly review" and in 20 to 30 minutes your second brain is tidied: inbox emptied, finished tasks cleared, overdue ones faced, finished projects archived, stale notes replaced.
 - **A dashboard you name yourself.** Open one file in your browser to see everything at a glance, browse and search every file, and edit them.
 - **Pick up where you left off.** Say "hand off this chat" and a fresh chat later can continue without you explaining everything again.
+- **Keeps the point, not the pile.** Share an article to save and it keeps a short note: why you saved it, the few points that matter, and the source. Saving everything is the most common way a second brain dies.
 - **Habits that become skills.** Ask for the same kind of work three times and it offers to save the method as a skill.
 - **Private by default.** Plain markdown on your own computer. Nothing is uploaded unless you choose to sync to your own private GitHub repository, and an optional guard stops commits that contain something shaped like an ID or account number.
 
@@ -98,7 +102,7 @@ You talk to it in your AI tool as usual. The files are the long-term memory behi
 
 ## Your dashboard
 
-Double-click `Dashboard.html` in your workspace folder and choose the folder. You get your active projects, what is waiting on you, scheduled tasks and the health of your second brain, plus a tree of every file, search across all of them and a reader for any file. In Chrome and Edge you can edit files and mark items done, and it checks that a file has not changed elsewhere before saving. Other browsers show a read-only view.
+Double-click `Dashboard.html` in your workspace folder and choose the folder. You get your next actions with due dates, your inbox with a box to jot something down, active projects, deferred items and the health of your second brain, plus a tree of every file, search across all of them and a reader for any file. In Chrome and Edge you can tick off tasks, capture to your inbox, edit files and mark items done, and it checks that a file has not changed elsewhere before saving. Other browsers show a read-only view.
 
 It has light, dark and system themes, and it carries the name you gave it during setup. It runs entirely in your browser, with nothing to install and nothing uploaded. You can also open the same files in any notes app or editor that reads markdown.
 

@@ -4,7 +4,7 @@
 
 ---
 
-**Operational bookkeeping exemption.** Active Projects updates, Scheduled Tasks updates, and entries to ARCHIVE.md are not subject to the "memory writes require approval" rule. These are operational bookkeeping, not personal memories, so write them as part of the natural workflow when the triggering event happens.
+**Operational bookkeeping exemption.** Active Projects updates, Scheduled Tasks updates, entries to ARCHIVE.md, lines captured to `98_Temp/Inbox.md`, and tasks in a Next Actions section are not subject to the "memory writes require approval" rule. These are operational bookkeeping, not personal memories, so write them as part of the natural workflow when the triggering event happens.
 
 ---
 
@@ -43,7 +43,9 @@ Propose a memory entry when:
 
 Root MEMORY.md holds four living sections: Active Projects, Scheduled Tasks, Open Items, and Core Memory. The first three need upkeep as work moves. They give session-start orientation without needing to read every workstation.
 
-**Active Projects:** track project name, which workstation it belongs to, current status in one or two sentences, and the date it was last active. Remove an entry once the project completes, moving it to ARCHIVE.md.
+**Active Projects:** a project is a result with an end, such as "kitchen renovated" or "10k race run", rather than an ongoing area of life, which is what a workstation is for. Track the outcome, which workstation it belongs to, the target date if there is one, current status in one or two sentences, and the date it was last active. Its individual tasks live in that workstation's Next Actions. Propose a new project, in one line, whenever work clearly spans more than one session or has several steps toward a dated result, such as a handoff being written for it or a deadline being set. Remove an entry once the project completes, moving it to ARCHIVE.md.
+
+**Next Actions (in each workstation's MEMORY.md):** the concrete tasks for that area, one per line, in the form `- [ ] What to do (due YYYY-MM-DD)`. Keep each to one line. Mark a finished task `- [x]`; the weekly review removes finished tasks and logs anything worth keeping in ARCHIVE.md. A task list that keeps growing is a sign that something should become a project, or be dropped on purpose.
 
 **Scheduled Tasks:** track task name, workstation, schedule or cadence, what it does, and the date it was created. Mark it paused or retired rather than deleting it outright if it stops running. Also record two facts that are easy to get wrong. First, where the task's instructions live and where its schedule lives, since many tools keep them in different places, so editing one does not change the other. Second, whether it runs only while a particular computer or app is open, or on a server whatever happens. Before creating a new task, check the tool's own list of scheduled tasks, so the same job is not set up twice. A task's instructions are worth keeping in the workspace too, the same way skills are archived in 00_Skills/, so they can be recovered.
 

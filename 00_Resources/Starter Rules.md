@@ -10,6 +10,10 @@ Show the user the group headings and the rules under each, in plain words, and a
 
 Do not copy the whole file across. Rules nobody chose are noise that every session has to read.
 
+**Start with these five.** They prevent the failures new users hit first, so offer them before the full list: rule 1 (one requested change means only that change), rule 3 (ask only when the answer changes what gets built), rule 8 (a cut-off read has not been read), rule 15 (say where something landed), and rule 23 (nothing goes out on an unattended run). Show the rest only if the user wants more.
+
+Once copied, a rule's live version is the one in root CLAUDE.md, and this menu is only where it came from.
+
 ---
 
 ## Doing what was asked
