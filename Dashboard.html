@@ -80,6 +80,19 @@ h2 span{color:var(--muted);font-weight:500}
 .t{font-weight:560}
 .m{color:var(--muted);font-size:12.5px}
 .empty{color:var(--muted);font-size:13px;padding:6px 0}
+.weekcard{margin-bottom:14px}
+.focus{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-bottom:12px}
+.focus .f{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--side)}
+.focus .f .t{font-weight:600}
+.focus .f .m{margin-top:4px}
+.days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}
+.day{border:1px solid var(--line);border-radius:10px;padding:8px;min-height:96px}
+.day.today{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.day .dh{font-size:12px;color:var(--muted);margin-bottom:6px;font-weight:600}
+.day.today .dh{color:var(--accent)}
+.blk{font-size:12px;border-radius:6px;padding:4px 6px;margin-bottom:4px;background:var(--soft);color:var(--ink);border-left:3px solid var(--accent);overflow-wrap:anywhere}
+.blk .tm{display:block;color:var(--muted);font-size:11px}
+.blk.due{background:var(--warnsoft);border-left-color:var(--warn)}
 .ws{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}
 .wsc{border:1px solid var(--line);border-radius:10px;padding:11px;background:none;text-align:left}
 .wsc:hover{border-color:var(--muted)}
@@ -119,6 +132,8 @@ dialog::backdrop{background:rgba(0,0,0,.35)}
   main{padding:16px}
   .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
   .grid{grid-template-columns:1fr}
+  .days{grid-template-columns:1fr}
+  .day{min-height:0}
 }
 </style>
 </head>
@@ -331,11 +346,20 @@ function model(){
   }
   var inbox=captures("98_Temp/Inbox.md",false).concat(captures("98_Temp/Phone Inbox.md",true));
   inbox.sort(function(a,b){ return (a.date||"")<(b.date||"")?-1:(a.date||"")>(b.date||"")?1:0; });
+  var weekTxt=(sec["This Week"]||{}), week={start:null,focus:[],blocks:[]};
+  (weekTxt.lines||[]).forEach(function(o){
+    var m, l=o.text;
+    if((m=l.match(/Week of:\s*(\d{4}-\d{2}-\d{2})/i))) week.start=m[1];
+    else if((m=l.match(/^\s*-\s*Focus:\s*(.+)$/i))) week.focus.push({text:m[1].trim(),plan:null});
+    else if((m=l.match(/^\s*-\s*If-then:\s*(.+)$/i))){ if(week.focus.length && !week.focus[week.focus.length-1].plan) week.focus[week.focus.length-1].plan=m[1].trim(); }
+    else if((m=l.match(/^\s*-\s*Block:\s*(\d{4}-\d{2}-\d{2})\s+(\d{1,2}:\d{2})\s*-\s*(\d{1,2}:\d{2})\s+(.+)$/i))) week.blocks.push({date:m[1],from:m[2],to:m[3],text:m[4].trim()});
+  });
+  week.blocks.sort(function(a,b){ var x=a.date+a.from.padStart(5,"0"), y=b.date+b.from.padStart(5,"0"); return x<y?-1:x>y?1:0; });
   var sched=entriesOf(sec["Scheduled Tasks"]);
   var wr=null, wrSetup=null; sched.forEach(function(e){ var m=e.raw.match(/weekly review.*?last run\s*\[?(\d{4}-\d{2}-\d{2})/i); if(m) wr=m[1]; var n=e.raw.match(/weekly review.*?set up\s*\[?(\d{4}-\d{2}-\d{2})/i); if(n) wrSetup=n[1]; });
   return {
     projects:entriesOf(sec["Active Projects"]), open:entriesOf(sec["Open Items"]), sched:sched, core:core,
-    tasks:tasks, today:today, weekEnd:wk, inbox:inbox,
+    tasks:tasks, today:today, weekEnd:wk, inbox:inbox, week:week,
     memLines: mem ? mem.split("\n").length : 0, ws:ws, routed:routed, temp:temp, handoffs:handoffs, weekly:wr, weeklySetup:wrSetup,
     dashName: nameFrom(/Dashboard name:\s*(.+)$/i), userName: nameFrom(/^\s*-\s*(?:\[[^\]]*\]\s*)?Name:\s*([^.;,]+)/i), hasMemory: !!F["MEMORY.md"]
   };
@@ -406,6 +430,30 @@ function renderWelcome(){
   getHandle().then(function(h){ if(h && $("reopenSlot")) $("reopenSlot").innerHTML='<button class="btn" id="reopenBtn">Reopen '+esc(h.name)+'</button>'; if(h) $("reopenBtn").onclick=function(){ reopen(h); }; });
 }
 
+function isoAdd(iso,n){ var p=iso.split("-"), d=new Date(Date.UTC(+p[0],+p[1]-1,+p[2]+n)); return d.toISOString().slice(0,10); }
+function weekCard(M){
+  var W=M.week, t=M.today, has=W.start||W.focus.length||W.blocks.length;
+  var current=W.start && W.start<=isoAdd(t,6) && isoAdd(W.start,7)>t;
+  var start=current?W.start:t;
+  var h='<div class="card weekcard"><h2>This week <span>'+(W.start?'plan for the week of '+esc(W.start):'from MEMORY.md')+'</span></h2>';
+  if(!has){
+    h+='<div class="empty">No plan yet. Say "plan my week" to your AI and it proposes focus outcomes and time blocks around your calendar.</div>';
+  } else if(!current){
+    h+='<div class="note">This plan is from the week of '+esc(W.start||"an earlier week")+'. Say "plan my week" to make this week\'s.</div>';
+  }
+  if(has && current && W.focus.length){
+    h+='<div class="focus">'+W.focus.map(function(f,i){ return '<div class="f"><div class="t">'+(i+1)+'. '+esc(f.text)+'</div>'+(f.plan?'<div class="m">'+esc(f.plan)+'</div>':'')+'</div>'; }).join("")+'</div>';
+  }
+  var days=[]; for(var i=0;i<7;i++) days.push(isoAdd(start,i));
+  h+='<div class="days">'+days.map(function(d){
+    var lbl; try{ var p=d.split("-"); lbl=new Date(Date.UTC(+p[0],+p[1]-1,+p[2],12)).toLocaleDateString(undefined,{weekday:"short",day:"numeric",month:"short",timeZone:"UTC"}); }catch(e){ lbl=d; }
+    var items=(current?W.blocks.filter(function(b){ return b.date===d; }):[]).map(function(b){ return '<div class="blk"><span class="tm">'+esc(b.from)+'-'+esc(b.to)+'</span>'+esc(b.text)+'</div>'; });
+    M.tasks.filter(function(x){ return x.due && ((x.due===d && d>=t) || (d===t && x.due<t)); }).forEach(function(x){ items.push('<div class="blk due"><span class="tm">'+(x.due<t?'overdue':'due')+' &middot; '+esc(x.ws)+'</span>'+esc(x.text)+'</div>'); });
+    return '<div class="day'+(d===t?' today':'')+'"><div class="dh">'+esc(d===t?'Today':lbl)+'</div>'+(items.join("")||'<div class="m">Open</div>')+'</div>';
+  }).join("")+'</div></div>';
+  return h;
+}
+
 function renderDashboard(){
   var M=model(), title=M.dashName||"My Workspace";
   var wsNames=Object.keys(M.ws).sort();
@@ -417,6 +465,7 @@ function renderDashboard(){
   if(!M.hasMemory) h+='<div class="note">No MEMORY.md was found at the top of this folder. Choose the folder that holds CLAUDE.md and MEMORY.md.</div>';
   h+='<div class="stats">'+
     stat(M.tasks.filter(function(t){ return t.due && t.due<=M.weekEnd; }).length,"Tasks due in the next 7 days")+stat(M.projects.length,"Active projects")+stat(M.open.length,"Deferred open items")+stat(M.inbox.length,"Quick captures in your inbox")+'</div>';
+  h+=weekCard(M);
   h+='<div class="grid">';
   h+='<div class="card"><h2>Next actions <span>'+M.tasks.length+' open</span></h2>'+(M.tasks.length?M.tasks.slice(0,8).map(function(t){
       var over=t.due && t.due<M.today, soon=t.due && !over && t.due<=M.weekEnd;

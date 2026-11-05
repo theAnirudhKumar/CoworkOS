@@ -12,6 +12,12 @@ Workstation-specific memory lives in each workstation's own MEMORY.md, not here.
 
 - [YYYY-MM-DD] Example entry: "Set up this workspace" - Root - Initial CLAUDE.md and workstation structure in place; no workstations created yet.
 
+## This Week
+
+*The plan for the current week: focus outcomes, an if-then plan for each, and time blocks. Written by the plan-my-week skill once the user approves it, and replaced each week rather than added to.*
+
+(not planned yet)
+
 ## Scheduled Tasks
 
 *Track every recurring or automated task: name, workstation, schedule or cadence, what it does, and the date it was created. Note where its instructions live, where its schedule lives, and whether it only runs while a particular computer or app is open.*

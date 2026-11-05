@@ -52,6 +52,7 @@ Not sure your AI tool can work with a folder on your computer? See [Using Cowork
 - **Answers from what you actually wrote.** Ask "what did I decide about my running plan?" and it searches your whole second brain and tells you where the answer is, or says plainly that nothing was decided.
 - **Corrections that stick.** When you fix something, the AI proposes a rule so it does not happen again. A close-out audit at the end of a session catches anything missed.
 - **A daily brief.** Say "start my day" for the three things most worth doing today, what is waiting on you, and what is coming up, from your files and any calendar or email you connect.
+- **A week you can actually follow.** Say "plan my week" and it proposes three focus outcomes, a when-and-where plan for each, and time blocks with room to spare, placed around your calendar. Pick a planning style that suits you, such as Big Three, time blocking, Eat the frog, 1-3-5, Eisenhower or Pomodoro, and the daily brief follows it too. Nothing lands on your calendar until you say yes.
 - **A weekly check-up.** Say "weekly review" and in 20 to 30 minutes your second brain is tidied: inbox emptied, finished tasks cleared, overdue ones faced, finished projects archived, stale notes replaced.
 - **A dashboard you name yourself.** Open one file in your browser to see everything at a glance, browse and search every file, and edit them.
 - **Pick up where you left off.** Say "hand off this chat" and a fresh chat later can continue without you explaining everything again.
@@ -103,7 +104,7 @@ You talk to it in your AI tool as usual. The files are the long-term memory behi
 
 ## Your dashboard
 
-Double-click `Dashboard.html` in your workspace folder and choose the folder. You get your next actions with due dates, your inbox with a box to jot something down, active projects, deferred items and the health of your second brain, plus a tree of every file, search across all of them and a reader for any file. In Chrome and Edge you can tick off tasks, capture to your inbox, edit files and mark items done, and it checks that a file has not changed elsewhere before saving. Other browsers show a read-only view.
+Double-click `Dashboard.html` in your workspace folder and choose the folder. You get this week's plan, with your focus outcomes and a seven-day strip of time blocks and due dates, then your next actions, your inbox with a box to jot something down, active projects, deferred items and the health of your second brain, plus a tree of every file, search across all of them and a reader for any file. In Chrome and Edge you can tick off tasks, capture to your inbox, edit files and mark items done, and it checks that a file has not changed elsewhere before saving. Other browsers show a read-only view.
 
 It has light, dark and system themes, and it carries the name you gave it during setup. It runs entirely in your browser, with nothing to install and nothing uploaded. You can also open the same files in any notes app or editor that reads markdown.
 
@@ -114,6 +115,7 @@ Say the phrase in your AI tool and it follows the skill. Setup installs them whe
 | Skill | Say | What it does |
 | :--- | :--- | :--- |
 | start-my-day | "start my day" | A short daily brief: top three, waiting on you, coming up |
+| plan-my-week | "plan my week" | Focus outcomes and time blocks around your calendar |
 | weekly-review | "weekly review" | A 20 to 30 minute tidy of your whole second brain |
 | session-audit | "close out the session" | Saves the corrections and decisions from today |
 | chat-context | "hand off this chat" | Lets a new chat pick up exactly where this one stopped |
@@ -176,6 +178,7 @@ chmod +x .githooks/pre-commit
 | `00_Reference/Visual Standards.md` | Layout rules for steps, tables, diagrams and generated documents |
 | `00_Reference/CLAUDE.md Change Log.md` | The record of every substantive change to root `CLAUDE.md`, and what counts as one |
 | `00_Resources/Workstation Setup Guide.md` | How to create a new area, and the Starter Workstations menu |
+| `00_Resources/Planning Methods.md` | Planning styles to choose from, and the rules every week plan follows |
 | `00_Resources/Mobile Capture Guide.md` | Jotting things down from your phone: a synced folder, email to yourself, or travel mode |
 | `00_Resources/Connectors Guide.md` | Which apps to connect first, what each unlocks, and the safety rules |
 | `00_Resources/Starter Rules.md` | An optional menu of proven working rules, offered once during setup |
@@ -189,6 +192,7 @@ chmod +x .githooks/pre-commit
 | `00_Skills/Custom/chat-context/SKILL.md` | Handing a long chat off to a fresh one, and resuming from the handoff |
 | `00_Skills/Custom/weekly-review/SKILL.md` | A short weekly upkeep that keeps your second brain trustworthy |
 | `00_Skills/Custom/start-my-day/SKILL.md` | A daily brief built from your files, plus any connected apps, read-only |
+| `00_Skills/Custom/plan-my-week/SKILL.md` | A week plan with focus outcomes and time blocks, put on your calendar only on a yes |
 | `00_Skills/Custom/make-a-skill/SKILL.md` | Turning a repeated piece of work into a reusable skill |
 | `00_Skills/Custom/optimize-tokens/SKILL.md` | Getting the same result from a leaner request |
 | `00_Skills/Third-Party/` | Where someone else's archived skill goes |

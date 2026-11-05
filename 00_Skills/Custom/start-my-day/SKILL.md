@@ -22,7 +22,7 @@ Use the date and weekday in that time zone for everything below.
 
 Read each of these in full:
 
-1. Root MEMORY.md. The sections that matter here are Active Projects, Open Items, Scheduled Tasks and Core Memory, especially any goals recorded there.
+1. Root MEMORY.md. The sections that matter here are Active Projects, This Week, Open Items, Scheduled Tasks and Core Memory, especially any goals and the planning style ("Planning style: ...") recorded there.
 2. The MEMORY.md of every workstation. A workstation is a top-level folder that holds a CLAUDE.md, plus any sub-workstation one level inside it. Read its Next Actions first: every open task (`- [ ]`) and its due date, if it has one. Then the other living sections, such as people, key dates and decisions.
 3. `98_Temp/Inbox.md` and `98_Temp/Phone Inbox.md`, only to count the lines waiting there.
 4. `00_Resources/Chat Context Index.md`, if it exists. Note each row marked Active, since that is unfinished work the user may want to pick up.
@@ -55,6 +55,10 @@ Every item must trace to a file or a connected source. If you cannot point to wh
 4. An Active Project that has gone quiet and needs one push to keep moving.
 
 Each item gets one line saying what it is and why it made the list today.
+
+If This Week holds a plan for the current week, it comes first: today's Block lines go under "Today" with the calendar events, and a Focus outcome scheduled for today is a strong candidate for the top three. If the plan is from an earlier week, or This Week is empty and it is Monday, add one line offering the plan-my-week skill.
+
+Shape the top three to the planning style, as its section in `00_Resources/Planning Methods.md` describes: the frog first for Eat the frog, the day as 1, 3 and 5 for 1-3-5, the four groups for Eisenhower. With no style recorded, use the order above.
 
 In the first weeks, there may be fewer than three real items. Do not invent any. Instead, if a Core Memory goal or an Active Project has no open task, add one line after the brief offering to set its next step, for example: "Your 10k goal has no next step yet. Want to add one?" Write the task only on a yes.
 
@@ -121,4 +125,4 @@ If a source fails to load or returns nothing, say so in the first line and carry
 
 ## What this deliberately does not do
 
-It does not change MEMORY.md entries, reorder projects or close Open Items. That is the weekly review's job. It does not reply to messages, accept invitations or move tasks. It does not plan the whole day hour by hour unless the user asks for that after the brief.
+It does not change MEMORY.md entries, reorder projects or close Open Items. That is the weekly review's job. It does not reply to messages, accept invitations or move tasks. It does not plan the whole day hour by hour; if the user asks for that, use the plan-my-week skill for today.

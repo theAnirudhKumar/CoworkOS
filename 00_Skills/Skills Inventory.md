@@ -21,6 +21,7 @@ Codex CLI specifically has a documented, literal answer rather than only "ask yo
 | chat-context | Custom | `Custom/chat-context/SKILL.md` | Hands a long chat off to a fresh one through a structured handoff file, and resumes from it. Keeps its index at `00_Resources/Chat Context Index.md`. |
 | weekly-review | Custom | `Custom/weekly-review/SKILL.md` | A 20 to 30 minute weekly upkeep: files 98_Temp, decides Open Items, archives finished projects, checks memory size and drift. |
 | start-my-day | Custom | `Custom/start-my-day/SKILL.md` | A short daily brief from workspace files, plus any connected calendar, email or task tool, read-only. |
+| plan-my-week | Custom | `Custom/plan-my-week/SKILL.md` | A draft week plan: three focus outcomes, if-then plans and time blocks around the calendar, in the user's planning style. Writes This Week in root MEMORY.md and creates calendar events only on a yes. |
 | make-a-skill | Custom | `Custom/make-a-skill/SKILL.md` | Turns a repeated piece of work into a reusable skill, archived here with an inventory row. |
 | optimize-tokens | Custom | `Custom/optimize-tokens/SKILL.md` | Spots requests that cost far more than they need to, and suggests a leaner version without lowering quality. |
 
