@@ -4,6 +4,12 @@ All notable changes to this template are documented here. Format follows [Keep a
 
 ## [Unreleased]
 
+### Added
+- `Dashboard.html` at the workspace root: open it in a browser, choose the workspace folder once, and see a dashboard of active projects, open items, scheduled tasks, memory size, workstations, handoffs and workspace health, plus a tree of every file, search and a reader. In Chrome and Edge it can edit any file and mark open items done, checking first that the file has not changed on disk. Light, dark or system theme. Runs locally with nothing to install and no outside requests.
+- The dashboard carries a name the user chooses, saved as `Dashboard name:` in Core Memory. First-run setup has a new step 11 that introduces the dashboard and offers names (Atlas, Basecamp, Compass, Mission Control, North Star, Headquarters, The Desk, or the user's own). The about-me step now records `Name:` and `Time zone:` in a fixed form the dashboard reads. The hand-over is now step 12.
+- `start-my-day` and `weekly-review` end with a one-line nudge to the dashboard, by its name.
+- Troubleshooting covers a dashboard that will not save or shows an old file.
+
 ## [1.3.0] - 2026-11-05
 
 Three habits that make the workspace a second brain you keep using: a weekly review, a daily brief and turning repeated work into skills. Plus an about-me step in setup and a guide to connecting your other apps safely.

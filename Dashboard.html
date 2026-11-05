@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Workspace Dashboard</title>
+<style>
+:root{
+  --bg:#f6f5f2;--panel:#ffffff;--side:#fbfaf8;--ink:#1d1f23;--muted:#6b6f76;--line:#e6e3dd;
+  --accent:#3b5bdb;--accent-ink:#ffffff;--soft:#eef2ff;--warn:#b45309;--warnsoft:#fff3e0;--ok:#2f855a;--oksoft:#e8f5ee;
+  --chip:#f1efea;--code:#f3f1ec;--shadow:0 1px 2px rgba(0,0,0,.04);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#111317;--panel:#181b21;--side:#14161b;--ink:#e8eaee;--muted:#9aa1ad;--line:#2a2f38;
+    --accent:#7c93f2;--accent-ink:#0f1115;--soft:#1f2640;--warn:#f0a35e;--warnsoft:#33261a;--ok:#5fc48c;--oksoft:#16301f;
+    --chip:#22262e;--code:#1f232a;--shadow:none;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#111317;--panel:#181b21;--side:#14161b;--ink:#e8eaee;--muted:#9aa1ad;--line:#2a2f38;
+  --accent:#7c93f2;--accent-ink:#0f1115;--soft:#1f2640;--warn:#f0a35e;--warnsoft:#33261a;--ok:#5fc48c;--oksoft:#16301f;
+  --chip:#22262e;--code:#1f232a;--shadow:none;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;font:14px/1.5 -apple-system,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+button{font:inherit;color:inherit;cursor:pointer}
+a{color:var(--accent)}
+.app{display:grid;grid-template-columns:270px 1fr;height:100vh}
+aside{background:var(--side);border-right:1px solid var(--line);padding:16px 12px;overflow:auto}
+.brand{display:flex;align-items:center;gap:10px;font-weight:650;font-size:15px;margin:2px 4px 14px}
+.logo{width:28px;height:28px;border-radius:8px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-size:13px;font-weight:700;flex:none}
+.brand span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.search{width:100%;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:8px 10px;color:var(--ink);margin-bottom:12px;font:inherit}
+.nav button{display:flex;width:100%;gap:9px;align-items:center;padding:7px 9px;border:0;background:none;border-radius:7px;text-align:left}
+.nav button:hover{background:var(--chip)}
+.nav button.on{background:var(--soft);color:var(--accent);font-weight:600}
+.sec{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:16px 9px 6px}
+.tree{font-size:13.5px}
+.tree details{margin:0}
+.tree summary{list-style:none;padding:4px 8px;border-radius:6px;cursor:pointer;display:flex;align-items:center;gap:7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tree summary::-webkit-details-marker{display:none}
+.tree summary:hover,.tree .file:hover{background:var(--chip)}
+.tree .file{display:block;width:100%;text-align:left;border:0;background:none;padding:3px 8px;border-radius:6px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tree .file.on{color:var(--accent);background:var(--soft)}
+.tree .kids{padding-left:14px}
+.dot{width:8px;height:8px;border-radius:2px;flex:none;display:inline-block}
+.badge{font-size:11px;padding:0 6px;border-radius:99px;background:var(--warnsoft);color:var(--warn);margin-left:auto}
+main{overflow:auto;padding:24px 32px 40px}
+.top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:18px;flex-wrap:wrap}
+h1{font-size:24px;margin:0 0 4px;line-height:1.25}
+.sub{color:var(--muted)}
+.actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:var(--panel);border-radius:8px;padding:7px 12px;font-weight:550}
+.btn:hover{border-color:var(--muted)}
+.btn.p{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.sm{padding:3px 9px;font-size:12.5px;font-weight:500}
+.btn:disabled{opacity:.5;cursor:default}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--panel)}
+.seg button{border:0;background:none;padding:6px 10px;font-size:12.5px}
+.seg button.on{background:var(--soft);color:var(--accent);font-weight:600}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;box-shadow:var(--shadow)}
+.stat .n{font-size:26px;font-weight:700}
+.stat .n small{font-size:14px;color:var(--muted);font-weight:500}
+.stat .l{color:var(--muted);font-size:13px}
+.bar{height:6px;background:var(--chip);border-radius:9px;overflow:hidden;margin-top:8px}
+.bar i{display:block;height:100%;background:var(--accent)}
+.bar.over i{background:var(--warn)}
+.grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:14px}
+h2{font-size:14px;margin:0 0 8px;display:flex;justify-content:space-between;gap:8px}
+h2 span{color:var(--muted);font-weight:500}
+.row{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-top:1px solid var(--line)}
+.row:first-of-type{border-top:0}
+.row .body{flex:1;min-width:0}
+.tag{font-size:11px;padding:2px 7px;border-radius:99px;background:var(--chip);color:var(--muted);white-space:nowrap}
+.tag.w{background:var(--warnsoft);color:var(--warn)}
+.tag.g{background:var(--oksoft);color:var(--ok)}
+.t{font-weight:560}
+.m{color:var(--muted);font-size:12.5px}
+.empty{color:var(--muted);font-size:13px;padding:6px 0}
+.ws{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}
+.wsc{border:1px solid var(--line);border-radius:10px;padding:11px;background:none;text-align:left}
+.wsc:hover{border-color:var(--muted)}
+.wsc .nm{font-weight:600;display:flex;align-items:center;gap:7px}
+.doc{max-width:860px}
+.doc .crumb{color:var(--muted);font-size:12.5px;margin-bottom:6px;word-break:break-all}
+.md h1{font-size:24px;margin:.2em 0 .5em}.md h2{font-size:18px;margin:1.4em 0 .5em;display:block}.md h3{font-size:15px;margin:1.2em 0 .4em}
+.md p{margin:.6em 0}.md ul,.md ol{padding-left:22px}.md li{margin:.25em 0}
+.md code{background:var(--code);padding:1px 5px;border-radius:4px;font-size:.92em}
+.md pre{background:var(--code);padding:12px;border-radius:8px;overflow:auto}.md pre code{background:none;padding:0}
+.md table{border-collapse:collapse;width:100%;margin:.8em 0;font-size:13.5px}
+.md th,.md td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+.md th{background:var(--chip)}
+.md blockquote{margin:.8em 0;padding:4px 14px;border-left:3px solid var(--line);color:var(--muted)}
+.md hr{border:0;border-top:1px solid var(--line);margin:1.4em 0}
+textarea.editor{width:100%;min-height:65vh;font:13px/1.55 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:14px;resize:vertical}
+.hit{padding:10px 0;border-top:1px solid var(--line)}.hit:first-child{border-top:0}
+.hit mark{background:var(--soft);color:var(--ink);padding:0 2px;border-radius:3px}
+.welcome{max-width:620px;margin:8vh auto;text-align:left}
+.welcome h1{font-size:28px}
+.welcome ol{padding-left:20px}.welcome li{margin:6px 0}
+.note{background:var(--warnsoft);color:var(--warn);border-radius:10px;padding:10px 12px;font-size:13px;margin:12px 0}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 14px;border-radius:9px;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.show{opacity:1}
+dialog{border:1px solid var(--line);border-radius:14px;background:var(--panel);color:var(--ink);padding:22px;max-width:460px;width:calc(100% - 32px)}
+dialog::backdrop{background:rgba(0,0,0,.35)}
+.names{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.names button{border:1px solid var(--line);background:var(--bg);border-radius:99px;padding:5px 12px}
+.names button.on{border-color:var(--accent);color:var(--accent);background:var(--soft)}
+.field{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit}
+.menu{display:none}
+@media (max-width:860px){
+  .app{grid-template-columns:1fr}
+  aside{display:none;position:fixed;inset:0 25% 0 0;z-index:5;box-shadow:0 0 40px rgba(0,0,0,.3)}
+  aside.open{display:block}
+  .menu{display:inline-block}
+  main{padding:16px}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside id="side">
+    <div class="brand"><div class="logo" id="logo">W</div><span id="brandName">My Workspace</span></div>
+    <input class="search" id="search" type="search" placeholder="Search all files" autocomplete="off">
+    <div class="nav">
+      <button data-view="dashboard" class="on">Dashboard</button>
+      <button data-view="files">All files</button>
+      <button data-open="MEMORY.md">Memory</button>
+    </div>
+    <div class="sec">Workstations</div>
+    <div class="tree" id="wsTree"></div>
+    <div class="sec">Workspace</div>
+    <div class="tree" id="sysTree"></div>
+  </aside>
+  <main id="main"></main>
+</div>
+<dialog id="nameDialog">
+  <h2 style="display:block;font-size:17px">Name your dashboard</h2>
+  <div class="sub">Pick one of these, or write your own. You can change it later.</div>
+  <div class="names" id="nameOptions"></div>
+  <input class="field" id="nameInput" placeholder="Or type a name" maxlength="40">
+  <div class="sub" id="nameWhere" style="margin-top:10px;font-size:12.5px"></div>
+  <div class="actions" style="justify-content:flex-end;margin-top:16px">
+    <button class="btn" id="nameSkip">Not now</button>
+    <button class="btn p" id="nameSave">Save name</button>
+  </div>
+</dialog>
+<div class="toast" id="toast"></div>
+<script>
+(function(){
+"use strict";
+
+/* ---------- small helpers ---------- */
+var $ = function(id){ return document.getElementById(id); };
+function esc(s){ return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];}); }
+function toast(msg){ var t=$("toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(toast._t); toast._t=setTimeout(function(){t.classList.remove("show");},2600); }
+function todayISO(){ var d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+function daysSince(iso){ if(!iso) return null; var t=Date.parse(iso+"T00:00:00"); if(isNaN(t)) return null; return Math.floor((Date.now()-t)/86400000); }
+function ago(ms){ if(!ms) return ""; var d=Math.floor((Date.now()-ms)/86400000); if(d<=0) return "today"; if(d===1) return "yesterday"; if(d<7) return d+" days ago"; if(d<14) return "last week"; if(d<60) return Math.floor(d/7)+" weeks ago"; return Math.floor(d/30)+" months ago"; }
+var COLORS=["#3b5bdb","#2f855a","#c2410c","#9333ea","#0891b2","#a16207","#be185d","#4d7c0f","#0f766e","#7c3aed"];
+var store={ get:function(k){ try{return localStorage.getItem(k);}catch(e){return null;} }, set:function(k,v){ try{localStorage.setItem(k,v);}catch(e){} } };
+
+/* ---------- theme: light, dark or system ---------- */
+function applyTheme(mode){
+  if(mode==="light"||mode==="dark") document.documentElement.setAttribute("data-theme",mode);
+  else document.documentElement.removeAttribute("data-theme");
+  store.set("cw-theme",mode);
+  document.querySelectorAll("[data-theme-btn]").forEach(function(b){ b.classList.toggle("on", b.getAttribute("data-theme-btn")===mode); });
+}
+var themeMode = store.get("cw-theme") || "system";
+applyTheme(themeMode);
+function themeSwitch(){
+  return '<div class="seg" title="Theme">'+["light","dark","system"].map(function(m){
+    return '<button data-theme-btn="'+m+'" class="'+(themeMode===m?"on":"")+'">'+m.charAt(0).toUpperCase()+m.slice(1)+'</button>';
+  }).join("")+'</div>';
+}
+
+/* ---------- state ---------- */
+var S = { dir:null, files:{}, canWrite:false, view:"welcome", current:null, editing:false, folderName:"", loadedAt:0 };
+var SKIP_DIRS = { ".git":1, "node_modules":1, ".backups":1, ".obsidian":1, ".claude":1, ".github":1, ".trash":1 };
+
+/* ---------- loading the folder ---------- */
+async function walk(dirHandle, prefix, out){
+  for await (var entry of dirHandle.values()){
+    var path = prefix ? prefix+"/"+entry.name : entry.name;
+    if(entry.kind==="directory"){
+      if(SKIP_DIRS[entry.name] || entry.name.charAt(0)===".") continue;
+      await walk(entry, path, out);
+    } else if(/\.md$/i.test(entry.name)){
+      var f = await entry.getFile();
+      out[path] = { text: await f.text(), mtime: f.lastModified, handle: entry };
+    }
+  }
+}
+async function openWithPicker(){
+  if(!window.showDirectoryPicker){ $("folderInput").click(); return; }
+  try{
+    var dir = await window.showDirectoryPicker({ id:"cowork-workspace", mode:"readwrite" });
+    await loadDir(dir);
+    saveHandle(dir);
+  }catch(e){ if(e && e.name!=="AbortError") toast("Could not open that folder: "+e.message); }
+}
+async function loadDir(dir){
+  var out={}; await walk(dir,"",out);
+  S.dir=dir; S.files=out; S.folderName=dir.name; S.loadedAt=Date.now();
+  S.canWrite = true;
+  try{ if(dir.queryPermission && (await dir.queryPermission({mode:"readwrite"}))!=="granted") S.canWrite=false; }catch(e){}
+  afterLoad();
+}
+function loadFromInput(fileList){
+  var out={}, pending=[];
+  Array.prototype.forEach.call(fileList,function(f){
+    var rel=(f.webkitRelativePath||f.name).split("/");
+    var top=rel.shift();
+    S.folderName=top;
+    var path=rel.join("/");
+    if(!/\.md$/i.test(path)) return;
+    if(rel.some(function(p){ return SKIP_DIRS[p] || p.charAt(0)==="."; })) return;
+    pending.push(f.text().then(function(t){ out[path]={ text:t, mtime:f.lastModified, handle:null }; }));
+  });
+  Promise.all(pending).then(function(){ S.dir=null; S.files=out; S.canWrite=false; S.loadedAt=Date.now(); afterLoad(); });
+}
+/* remember the folder between visits, where the browser allows it */
+function idb(){ return new Promise(function(res,rej){ var r=indexedDB.open("cowork-dashboard",1); r.onupgradeneeded=function(){ r.result.createObjectStore("h"); }; r.onsuccess=function(){res(r.result);}; r.onerror=function(){rej(r.error);}; }); }
+async function saveHandle(h){ try{ var db=await idb(); db.transaction("h","readwrite").objectStore("h").put(h,"dir"); }catch(e){} }
+async function getHandle(){ try{ var db=await idb(); return await new Promise(function(res){ var q=db.transaction("h").objectStore("h").get("dir"); q.onsuccess=function(){res(q.result||null);}; q.onerror=function(){res(null);}; }); }catch(e){ return null; } }
+async function reopen(h){
+  try{
+    var p = await h.requestPermission({mode:"readwrite"});
+    if(p!=="granted"){ toast("Permission was not given."); return; }
+    await loadDir(h);
+  }catch(e){ toast("Could not reopen the folder. Choose it again."); }
+}
+async function refresh(){
+  if(S.dir){ await loadDir(S.dir); toast("Read the folder again."); }
+  else { toast("Choose the folder again to see changes."); $("folderInput").click(); }
+}
+
+/* ---------- writing files ---------- */
+async function writeFile(path, text, expectMtime){
+  var rec=S.files[path];
+  if(!S.canWrite || !rec || !rec.handle) throw new Error("This browser opened a read-only copy.");
+  var cur=await rec.handle.getFile();
+  if(expectMtime && cur.lastModified!==expectMtime){
+    var disk=await cur.text();
+    if(disk!==rec.text) throw new Error("CHANGED");
+  }
+  var w=await rec.handle.createWritable(); await w.write(text); await w.close();
+  var f=await rec.handle.getFile(); rec.text=text; rec.mtime=f.lastModified;
+}
+
+/* ---------- reading the workspace ---------- */
+function sections(text){
+  var out={}, cur=null;
+  (text||"").split("\n").forEach(function(line,i){
+    var m=line.match(/^##\s+(.+?)\s*$/);
+    if(m){ cur=m[1].trim(); out[cur]={start:i,lines:[]}; return; }
+    if(cur) out[cur].lines.push({text:line,index:i});
+  });
+  return out;
+}
+function entriesOf(sec){
+  if(!sec) return [];
+  return sec.lines.filter(function(l){ return /^\s*-\s+/.test(l.text) && !/Example entry:/i.test(l.text); }).map(function(l){
+    var raw=l.text.replace(/^\s*-\s+/,"");
+    var dm=raw.match(/^\[(\d{4}-\d{2}-\d{2})\]\s*/); var date=dm?dm[1]:null; if(dm) raw=raw.slice(dm[0].length);
+    var plain=raw.replace(/\*\*|__|`/g,"").replace(/\[([^\]]+)\]\([^)]+\)/g,"$1");
+    var title=plain, detail="";
+    var q=plain.match(/^"([^"]+)"\s*[-:]?\s*(.*)$/);
+    if(q){ title=q[1]; detail=q[2]; }
+    else { var cut=plain.search(/[.;:]\s|\s-\s/); if(cut>8 && cut<110){ title=plain.slice(0,cut); detail=plain.slice(cut+1).replace(/^[\s-]+/,""); } }
+    return { line:l.index, raw:l.text, date:date, title:title.trim(), detail:detail.trim() };
+  });
+}
+function tableRows(text, heading){
+  var lines=(text||"").split("\n"), on=!heading, rows=[];
+  for(var i=0;i<lines.length;i++){
+    var l=lines[i];
+    if(heading && /^##\s/.test(l)) on = l.indexOf(heading)>=0;
+    if(!on || !/^\|/.test(l)) continue;
+    if(/^\|\s*:?-+/.test(l)) continue;
+    rows.push(l.split("|").slice(1,-1).map(function(c){ return c.trim(); }));
+  }
+  return rows.slice(1);
+}
+function model(){
+  var F=S.files, mem=(F["MEMORY.md"]||{}).text||"", claude=(F["CLAUDE.md"]||{}).text||"";
+  var sec=sections(mem);
+  var core=entriesOf(sec["Core Memory"]);
+  var nameFrom=function(re){ for(var i=0;i<core.length;i++){ var m=core[i].raw.match(re); if(m) return m[1].trim().replace(/[.\s]+$/,""); } return null; };
+  var ws={}, tops={};
+  Object.keys(F).forEach(function(p){
+    var parts=p.split("/"); if(parts.length<2) return;
+    var top=parts[0]; tops[top]=tops[top]||[]; tops[top].push(p);
+  });
+  Object.keys(tops).forEach(function(top){
+    if(/^(00_|98_|99_)/.test(top)) return;
+    if(!F[top+"/CLAUDE.md"]) return;
+    var files=tops[top], latest=0; files.forEach(function(p){ latest=Math.max(latest,F[p].mtime||0); });
+    var mm=F[top+"/MEMORY.md"];
+    ws[top]={ name:top, files:files, latest:latest, memLines: mm ? mm.text.split("\n").length : 0 };
+  });
+  var routed=tableRows(claude,"Routing Map").map(function(r){ return r[0].replace(/[*_]/g,"").trim(); });
+  var temp=Object.keys(F).filter(function(p){ return /^98_Temp\//.test(p) && !/98_Temp\.md$/.test(p); });
+  var chat=(F["00_Resources/Chat Context Index.md"]||{}).text;
+  var handoffs=chat ? tableRows(chat).filter(function(r){ return /active/i.test(r[4]||""); }).map(function(r){ return {date:r[0],ws:r[1],topic:r[2],file:(r[3]||"").replace(/`/g,"")}; }) : [];
+  var sched=entriesOf(sec["Scheduled Tasks"]);
+  var wr=null; sched.forEach(function(e){ var m=e.raw.match(/weekly review.*?last run\s*\[?(\d{4}-\d{2}-\d{2})/i); if(m) wr=m[1]; });
+  return {
+    projects:entriesOf(sec["Active Projects"]), open:entriesOf(sec["Open Items"]), sched:sched, core:core,
+    memLines: mem ? mem.split("\n").length : 0, ws:ws, routed:routed, temp:temp, handoffs:handoffs, weekly:wr,
+    dashName: nameFrom(/Dashboard name:\s*(.+)$/i), userName: nameFrom(/^\s*-\s*(?:\[[^\]]*\]\s*)?Name:\s*([^.;,]+)/i), hasMemory: !!F["MEMORY.md"]
+  };
+}
+
+/* ---------- markdown to HTML (small, safe subset) ---------- */
+function inline(s){
+  s=esc(s);
+  s=s.replace(/`([^`]+)`/g,"<code>$1</code>");
+  s=s.replace(/\*\*([^*]+)\*\*/g,"<strong>$1</strong>").replace(/(^|[^*])\*([^*\s][^*]*)\*/g,"$1<em>$2</em>");
+  s=s.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g,function(m,t,u){
+    if(/^https?:\/\//i.test(u)) return '<a href="'+u+'" target="_blank" rel="noopener">'+t+'</a>';
+    return '<a href="#" data-link="'+u+'">'+t+'</a>';
+  });
+  return s;
+}
+function md(text){
+  var lines=text.replace(/\r/g,"").split("\n"), out=[], i=0;
+  if(lines[0]==="---"){ var e=lines.indexOf("---",1); if(e>0) i=e+1; }
+  var list=null;
+  function close(){ if(list){ out.push("</"+list+">"); list=null; } }
+  while(i<lines.length){
+    var l=lines[i];
+    if(/^```/.test(l)){ close(); var buf=[]; i++; while(i<lines.length && !/^```/.test(lines[i])){ buf.push(esc(lines[i])); i++; } out.push("<pre><code>"+buf.join("\n")+"</code></pre>"); i++; continue; }
+    if(/^\|/.test(l) && i+1<lines.length && /^\|\s*:?-/.test(lines[i+1])){
+      close(); var head=l.split("|").slice(1,-1); var html="<table><thead><tr>"+head.map(function(c){return "<th>"+inline(c.trim())+"</th>";}).join("")+"</tr></thead><tbody>"; i+=2;
+      while(i<lines.length && /^\|/.test(lines[i])){ html+="<tr>"+lines[i].split("|").slice(1,-1).map(function(c){return "<td>"+inline(c.trim())+"</td>";}).join("")+"</tr>"; i++; }
+      out.push(html+"</tbody></table>"); continue;
+    }
+    var h=l.match(/^(#{1,4})\s+(.*)$/); if(h){ close(); out.push("<h"+h[1].length+">"+inline(h[2])+"</h"+h[1].length+">"); i++; continue; }
+    if(/^\s*(---|\*\*\*)\s*$/.test(l)){ close(); out.push("<hr>"); i++; continue; }
+    if(/^>\s?/.test(l)){ close(); out.push("<blockquote>"+inline(l.replace(/^>\s?/,""))+"</blockquote>"); i++; continue; }
+    var ul=l.match(/^\s*[-*]\s+(.*)$/), ol=l.match(/^\s*\d+\.\s+(.*)$/);
+    if(ul||ol){ var kind=ul?"ul":"ol"; if(list!==kind){ close(); out.push("<"+kind+">"); list=kind; } out.push("<li>"+inline((ul||ol)[1])+"</li>"); i++; continue; }
+    if(!l.trim()){ close(); i++; continue; }
+    close(); var para=[l]; i++;
+    while(i<lines.length && lines[i].trim() && !/^(#{1,4}\s|```|\||>|\s*[-*]\s|\s*\d+\.\s)/.test(lines[i])){ para.push(lines[i]); i++; }
+    out.push("<p>"+inline(para.join(" "))+"</p>");
+  }
+  close();
+  return out.join("\n");
+}
+
+/* ---------- views ---------- */
+function setView(v, path){
+  S.view=v; S.current=path||null; S.editing=false;
+  document.querySelectorAll(".nav button").forEach(function(b){
+    b.classList.toggle("on", (b.dataset.view===v) || (v==="file" && b.dataset.open===path));
+  });
+  $("side").classList.remove("open");
+  render();
+}
+function header(title, sub){
+  return '<div class="top"><div><button class="btn sm menu" id="menuBtn">Menu</button><h1>'+title+'</h1><div class="sub">'+sub+'</div></div>'+
+    '<div class="actions">'+themeSwitch()+(S.loadedAt?'<button class="btn" id="refreshBtn">Refresh</button>':'')+'</div></div>';
+}
+function greeting(){ var h=new Date().getHours(); return h<12?"Good morning":h<18?"Good afternoon":"Good evening"; }
+
+function renderWelcome(){
+  var supportsWrite=!!window.showDirectoryPicker;
+  $("main").innerHTML='<div class="top"><div></div><div class="actions">'+themeSwitch()+'</div></div>'+
+  '<div class="welcome"><h1>Your workspace, at a glance</h1>'+
+  '<p class="sub">This page reads the markdown files in your workspace folder and shows them as a dashboard you can click through. Everything stays on your computer. Nothing is uploaded.</p>'+
+  '<ol><li>Click <strong>Open my workspace folder</strong>.</li><li>Choose the folder that holds <code>CLAUDE.md</code> and <code>MEMORY.md</code>.</li><li>Allow the browser to view'+(supportsWrite?' and save changes to':'')+' the folder when it asks.</li></ol>'+
+  '<div class="actions" style="margin-top:18px"><button class="btn p" id="openBtn">Open my workspace folder</button><span id="reopenSlot"></span></div>'+
+  (supportsWrite?'':'<div class="note">This browser can show your workspace but cannot save changes to it. To edit from here, open this file in Chrome or Edge.</div>')+
+  '</div>';
+  getHandle().then(function(h){ if(h && $("reopenSlot")) $("reopenSlot").innerHTML='<button class="btn" id="reopenBtn">Reopen '+esc(h.name)+'</button>'; if(h) $("reopenBtn").onclick=function(){ reopen(h); }; });
+}
+
+function renderDashboard(){
+  var M=model(), title=M.dashName||"My Workspace";
+  var wsNames=Object.keys(M.ws).sort();
+  var greet=greeting()+(M.userName?", "+esc(M.userName):"");
+  var dateStr=new Date().toLocaleDateString(undefined,{weekday:"long",day:"numeric",month:"long"});
+  var nFiles=Object.keys(S.files).length;
+  var memPct=Math.min(100,Math.round(M.memLines/150*100));
+  var h=header(greet, esc(dateStr)+". Read from "+nFiles+" files in "+esc(S.folderName||"your workspace")+", "+ago(S.loadedAt)+"."+(S.canWrite?"":" Read-only in this browser."));
+  if(!M.hasMemory) h+='<div class="note">No MEMORY.md was found at the top of this folder. Choose the folder that holds CLAUDE.md and MEMORY.md.</div>';
+  h+='<div class="stats">'+
+    stat(M.projects.length,"Active projects")+stat(M.open.length,"Open items waiting on you")+stat(M.sched.length,"Scheduled tasks")+
+    '<div class="card stat"><div class="n">'+M.memLines+'<small>/150</small></div><div class="l">Lines in MEMORY.md</div><div class="bar'+(M.memLines>150?" over":"")+'"><i style="width:'+memPct+'%"></i></div></div></div>';
+  h+='<div class="grid">';
+  h+='<div class="card"><h2>Active projects <span>from MEMORY.md</span></h2>'+(M.projects.length?M.projects.map(function(e){
+      var d=daysSince(e.date), quiet=d!==null && d>14;
+      return '<div class="row">'+(e.date?'<span class="tag'+(quiet?" w":"")+'">'+(quiet?d+" days quiet":esc(e.date))+'</span>':'')+'<div class="body"><div class="t">'+esc(e.title)+'</div>'+(e.detail?'<div class="m">'+esc(e.detail)+'</div>':'')+'</div></div>';
+    }).join(""):'<div class="empty">Nothing here yet. Projects appear as you work, under Active Projects in MEMORY.md.</div>')+'</div>';
+  h+='<div class="card"><h2>Waiting on you <span>Open Items</span></h2>'+(M.open.length?M.open.map(function(e){
+      return '<div class="row"><span class="tag w">Open</span><div class="body"><div class="t">'+esc(e.title)+'</div>'+(e.detail?'<div class="m">'+esc(e.detail)+'</div>':'')+'</div>'+
+        (S.canWrite?'<button class="btn sm" data-done="'+e.line+'" title="Mark as done and remove it from Open Items">Done</button>':'')+'</div>';
+    }).join(""):'<div class="empty">Nothing deferred. Anything you put off lands here.</div>')+'</div>';
+  h+='<div class="card"><h2>Workstations <span>'+wsNames.length+'</span></h2>'+(wsNames.length?'<div class="ws">'+wsNames.map(function(n,i){
+      var w=M.ws[n]; return '<button class="wsc" data-open="'+esc(n)+'/CLAUDE.md"><div class="nm"><span class="dot" style="background:'+COLORS[i%COLORS.length]+'"></span>'+esc(n)+'</div><div class="m">'+w.files.length+' files, '+(ago(w.latest)||"no dates")+'</div></button>';
+    }).join("")+'</div>':'<div class="empty">No workstations yet. Ask your AI tool to create one, or finish first-run setup.</div>')+'</div>';
+  h+='<div class="card"><h2>Workspace health</h2>'+health(M).join("")+'</div>';
+  h+='<div class="card"><h2>Scheduled tasks <span>from MEMORY.md</span></h2>'+(M.sched.length?M.sched.map(function(e){ return '<div class="row"><div class="body"><div class="t">'+esc(e.title)+'</div>'+(e.detail?'<div class="m">'+esc(e.detail)+'</div>':'')+'</div></div>'; }).join(""):'<div class="empty">No scheduled tasks recorded.</div>')+'</div>';
+  h+='<div class="card"><h2>Latest handoffs <span>chat-context</span></h2>'+(M.handoffs.length?M.handoffs.slice(-4).reverse().map(function(r){
+      return '<div class="row"><span class="tag">'+esc(r.ws)+'</span><div class="body"><div class="t">'+esc(r.topic)+'</div><div class="m">'+esc(r.date)+'</div></div>'+(S.files[r.file]?'<button class="btn sm" data-open="'+esc(r.file)+'">Open</button>':'')+'</div>';
+    }).join(""):'<div class="empty">No open handoffs. Say "hand off this chat" to save one.</div>')+'</div>';
+  h+='</div>';
+  $("main").innerHTML=h;
+}
+function stat(n,l){ return '<div class="card stat"><div class="n">'+n+'</div><div class="l">'+l+'</div></div>'; }
+function health(M){
+  var out=[], row=function(ok,t){ out.push('<div class="row"><span class="tag '+(ok?"g":"w")+'">'+(ok?"OK":"Check")+'</span><div class="body t">'+t+'</div></div>'); };
+  var names=Object.keys(M.ws), routedSet={}; M.routed.forEach(function(r){ routedSet[r.toLowerCase()]=1; });
+  var missing=names.filter(function(n){ return !routedSet[n.toLowerCase()]; });
+  var ghost=M.routed.filter(function(r){ return r && !/^example workstation$/i.test(r) && !M.ws[r] && !Object.keys(M.ws).some(function(n){return n.toLowerCase()===r.toLowerCase();}); });
+  row(!missing.length, missing.length? esc(missing.join(", "))+" "+(missing.length>1?"have":"has")+" no Routing Map row" : "Every workstation has a Routing Map row");
+  if(ghost.length) row(false, "Routing Map points to a missing folder: "+esc(ghost.join(", ")));
+  row(!M.temp.length, M.temp.length? M.temp.length+" file"+(M.temp.length>1?"s":"")+" in 98_Temp need a home" : "98_Temp is empty");
+  row(M.memLines<=150, M.memLines<=150? "MEMORY.md is within its 150-line limit" : "MEMORY.md is over its 150-line limit");
+  var over=names.filter(function(n){ return M.ws[n].memLines>200; });
+  if(over.length) row(false, esc(over.join(", "))+" MEMORY.md over 200 lines");
+  var d=daysSince(M.weekly);
+  row(d!==null && d<=7, d===null? "No weekly review recorded yet" : "Weekly review last run "+(d===0?"today":d+" day"+(d===1?"":"s")+" ago"));
+  if(S.files["SETUP.md"]) row(false, "First-run setup is not finished yet");
+  return out;
+}
+
+function renderFile(){
+  var p=S.current, rec=S.files[p];
+  if(!rec){ $("main").innerHTML=header("Not found",esc(p||"")); return; }
+  var h='<div class="top"><div class="doc"><button class="btn sm menu" id="menuBtn">Menu</button><div class="crumb">'+esc(S.folderName)+" / "+esc(p)+'</div><div class="sub">Updated '+ago(rec.mtime)+'</div></div><div class="actions">'+themeSwitch()+
+    (S.editing? '<button class="btn" id="cancelEdit">Cancel</button><button class="btn p" id="saveEdit">Save</button>' :
+      (S.canWrite?'<button class="btn" id="editBtn">Edit</button>':'')+'<button class="btn" id="copyPath">Copy path</button>')+'</div></div>';
+  if(S.editing) h+='<textarea class="editor" id="editor" spellcheck="true">'+esc(rec.text)+'</textarea><div class="sub" style="margin-top:8px">Saving writes straight to the file. If the file changed on disk since it was opened, nothing is overwritten.</div>';
+  else h+='<div class="doc md">'+md(rec.text)+'</div>';
+  $("main").innerHTML=h;
+}
+
+function renderFiles(){
+  var paths=Object.keys(S.files).sort(), groups={};
+  paths.forEach(function(p){ var top=p.indexOf("/")>0?p.split("/")[0]:"(top level)"; (groups[top]=groups[top]||[]).push(p); });
+  var h=header("All files", paths.length+" markdown files in "+esc(S.folderName));
+  h+='<div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(280px,1fr))">'+Object.keys(groups).sort().map(function(g){
+    return '<div class="card"><h2>'+esc(g)+' <span>'+groups[g].length+'</span></h2>'+groups[g].map(function(p){
+      return '<div class="row"><div class="body"><a href="#" data-open="'+esc(p)+'">'+esc(p.indexOf("/")>0?p.slice(g.length+1):p)+'</a></div><span class="m">'+ago(S.files[p].mtime)+'</span></div>';
+    }).join("")+'</div>';
+  }).join("")+'</div>';
+  $("main").innerHTML=h;
+}
+
+function renderSearch(q){
+  var terms=q.toLowerCase(), hits=[];
+  Object.keys(S.files).sort().forEach(function(p){
+    var t=S.files[p].text, i=t.toLowerCase().indexOf(terms), inName=p.toLowerCase().indexOf(terms)>=0;
+    if(i<0 && !inName) return;
+    var snip=i>=0? t.slice(Math.max(0,i-60), i+q.length+90).replace(/\s+/g," ") : "";
+    hits.push({p:p,snip:snip});
+  });
+  var re=new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"),"ig");
+  var h=header("Search", hits.length+" file"+(hits.length===1?"":"s")+" mention \""+esc(q)+"\"");
+  h+='<div class="card">'+(hits.length?hits.slice(0,80).map(function(x){
+    return '<div class="hit"><a href="#" data-open="'+esc(x.p)+'">'+esc(x.p)+'</a>'+(x.snip?'<div class="m">'+esc(x.snip).replace(re,function(m){return "<mark>"+m+"</mark>";})+'</div>':'')+'</div>';
+  }).join(""):'<div class="empty">No matches.</div>')+'</div>';
+  S.view="search"; $("main").innerHTML=h;
+}
+
+function renderTrees(){
+  if(!S.loadedAt){ $("wsTree").innerHTML='<div class="empty" style="padding:4px 9px">Open your folder to see them.</div>'; $("sysTree").innerHTML=""; return; }
+  var M=model(), paths=Object.keys(S.files).sort();
+  function tree(prefix, list){
+    var dirs={}, files=[];
+    list.forEach(function(p){ var rest=p.slice(prefix.length); var k=rest.indexOf("/"); if(k>0){ var d=rest.slice(0,k); (dirs[d]=dirs[d]||[]).push(p);} else files.push(p); });
+    return Object.keys(dirs).sort().map(function(d){ return '<details><summary>'+esc(d)+'</summary><div class="kids">'+tree(prefix+d+"/",dirs[d])+'</div></details>'; }).join("")+
+      files.map(function(p){ return '<button class="file'+(S.current===p?" on":"")+'" data-open="'+esc(p)+'">'+esc(p.slice(prefix.length))+'</button>'; }).join("");
+  }
+  var wsNames=Object.keys(M.ws).sort();
+  $("wsTree").innerHTML=wsNames.length? wsNames.map(function(n,i){
+    var list=paths.filter(function(p){ return p.indexOf(n+"/")===0; });
+    return '<details'+(S.current&&S.current.indexOf(n+"/")===0?" open":"")+'><summary><span class="dot" style="background:'+COLORS[i%COLORS.length]+'"></span>'+esc(n)+'</summary><div class="kids">'+tree(n+"/",list)+'</div></details>';
+  }).join("") : '<div class="empty" style="padding:4px 9px">None yet.</div>';
+  var sys=paths.filter(function(p){ var top=p.split("/")[0]; return p.indexOf("/")<0 || !M.ws[top]; });
+  var tempCount=M.temp.length;
+  $("sysTree").innerHTML=tree("",sys).replace('<summary>98_Temp</summary>','<summary>98_Temp'+(tempCount?'<span class="badge">'+tempCount+'</span>':'')+'</summary>');
+}
+
+function render(){
+  var M=S.loadedAt?model():null, name=(M&&M.dashName)||"My Workspace";
+  $("brandName").textContent=name; $("logo").textContent=name.trim().charAt(0).toUpperCase()||"W";
+  document.title=name+(S.loadedAt?"":" Dashboard");
+  renderTrees();
+  if(!S.loadedAt) renderWelcome();
+  else if(S.view==="file") renderFile();
+  else if(S.view==="files") renderFiles();
+  else renderDashboard();
+}
+
+/* ---------- actions ---------- */
+async function markDone(lineIndex){
+  var rec=S.files["MEMORY.md"]; if(!rec) return;
+  var lines=rec.text.split("\n"), line=lines[lineIndex];
+  if(!line || !/^\s*-\s+/.test(line)) { toast("That item moved. Refresh and try again."); return; }
+  if(!confirm("Mark this as done and remove it from Open Items in MEMORY.md?\n\n"+line.replace(/^\s*-\s+/,""))) return;
+  lines.splice(lineIndex,1);
+  try{ await writeFile("MEMORY.md", lines.join("\n"), rec.mtime); toast("Done. Removed from Open Items."); render(); }
+  catch(e){ handleWriteError(e); }
+}
+function handleWriteError(e){
+  if(e && e.message==="CHANGED") toast("This file changed on disk since it was read. Refresh, then try again. Nothing was overwritten.");
+  else toast("Could not save: "+(e&&e.message||e));
+}
+
+var NAME_IDEAS=["Atlas","Basecamp","Compass","Mission Control","North Star","Headquarters","The Desk"];
+function openNameDialog(){
+  var M=model(), ideas=NAME_IDEAS.slice(); if(M.userName) ideas.push(M.userName+"'s HQ");
+  var picked=M.dashName||"";
+  $("nameOptions").innerHTML=ideas.map(function(n){ return '<button data-name="'+esc(n)+'" class="'+(n===picked?"on":"")+'">'+esc(n)+'</button>'; }).join("");
+  $("nameInput").value=ideas.indexOf(picked)<0?picked:"";
+  $("nameWhere").textContent=S.canWrite? "Saved as one line in the Core Memory section of MEMORY.md, so your AI tool knows it too." : "This browser cannot save to your folder, so the name is kept in this browser only. Ask your AI tool to add \"Dashboard name: ...\" to Core Memory to keep it everywhere.";
+  $("nameDialog").showModal();
+}
+async function saveName(name){
+  name=name.trim().replace(/[\r\n]/g," ").slice(0,40); if(!name) return;
+  var rec=S.files["MEMORY.md"];
+  if(S.canWrite && rec){
+    var lines=rec.text.split("\n"), entry="- ["+todayISO()+"] Dashboard name: "+name+".";
+    var at=lines.findIndex(function(l){ return /Dashboard name:/i.test(l); });
+    if(at>=0) lines[at]=entry;
+    else {
+      var h=lines.findIndex(function(l){ return /^##\s+Core Memory\s*$/.test(l); });
+      if(h<0){ lines.push("","## Core Memory","",entry); }
+      else {
+        var end=h+1; while(end<lines.length && !/^##\s/.test(lines[end])) end++;
+        var body=lines.slice(h+1,end); var noneAt=body.findIndex(function(l){ return /^\(none yet\)\s*$/.test(l); });
+        if(noneAt>=0) lines[h+1+noneAt]=entry;
+        else { var ins=end; while(ins>h+1 && !lines[ins-1].trim()) ins--; lines.splice(ins,0,entry); }
+      }
+    }
+    try{ await writeFile("MEMORY.md", lines.join("\n"), rec.mtime); toast("Saved. Your dashboard is now "+name+"."); }
+    catch(e){ handleWriteError(e); return; }
+  } else { store.set("cw-name",name); toast("Saved in this browser."); }
+  render();
+}
+
+/* ---------- events ---------- */
+document.addEventListener("click", function(ev){
+  var t=ev.target.closest("button, a"); if(!t) return;
+  if(t.dataset.themeBtn){ themeMode=t.dataset.themeBtn; applyTheme(themeMode); return; }
+  if(t.id==="openBtn"){ openWithPicker(); return; }
+  if(t.id==="refreshBtn"){ refresh(); return; }
+  if(t.id==="menuBtn"){ $("side").classList.toggle("open"); return; }
+  if(t.dataset.view){ if(!S.loadedAt){ renderWelcome(); return; } setView(t.dataset.view); return; }
+  if(t.dataset.open){ ev.preventDefault(); if(!S.loadedAt) return; setView("file", t.dataset.open); return; }
+  if(t.dataset.link){ ev.preventDefault(); var base=S.current&&S.current.indexOf("/")>0?S.current.slice(0,S.current.lastIndexOf("/")+1):""; var target=decodeURIComponent(t.dataset.link.split("#")[0]);
+    var cand=[base+target, target].map(function(x){ return x.replace(/^\.\//,""); }); for(var i=0;i<cand.length;i++){ if(S.files[cand[i]]){ setView("file",cand[i]); return; } } toast("That file is not in this folder."); return; }
+  if(t.dataset.done!==undefined){ markDone(parseInt(t.dataset.done,10)); return; }
+  if(t.id==="editBtn"){ S.editing=true; renderFile(); return; }
+  if(t.id==="cancelEdit"){ S.editing=false; renderFile(); return; }
+  if(t.id==="saveEdit"){ var p=S.current, rec=S.files[p]; writeFile(p,$("editor").value,rec.mtime).then(function(){ S.editing=false; toast("Saved "+p); render(); }).catch(handleWriteError); return; }
+  if(t.id==="copyPath"){ var full=(S.folderName?S.folderName+"/":"")+S.current; (navigator.clipboard?navigator.clipboard.writeText(full):Promise.reject()).then(function(){toast("Copied "+full);},function(){toast(full);}); return; }
+  if(t.dataset.name){ document.querySelectorAll("#nameOptions button").forEach(function(b){ b.classList.toggle("on", b===t); }); $("nameInput").value=""; return; }
+  if(t.id==="nameSkip"){ store.set("cw-name-skipped","1"); $("nameDialog").close(); return; }
+  if(t.id==="nameSave"){ var on=document.querySelector("#nameOptions button.on"); var n=$("nameInput").value.trim()||(on&&on.dataset.name)||""; if(!n){ toast("Pick a name or type one."); return; } $("nameDialog").close(); saveName(n); return; }
+  if(t.id==="brandName"||t.id==="logo"){ if(S.loadedAt) openNameDialog(); }
+});
+$("logo").title="Rename this dashboard"; $("brandName").style.cursor="pointer"; $("logo").style.cursor="pointer";
+$("brandName").addEventListener("click",function(){ if(S.loadedAt) openNameDialog(); });
+$("logo").addEventListener("click",function(){ if(S.loadedAt) openNameDialog(); });
+var searchTimer; $("search").addEventListener("input",function(e){ var q=e.target.value.trim(); clearTimeout(searchTimer); searchTimer=setTimeout(function(){ if(!S.loadedAt) return; if(q.length<2){ if(S.view==="search") setView("dashboard"); return; } renderSearch(q); },150); });
+document.addEventListener("keydown",function(e){ if(e.key==="/" && document.activeElement.tagName!=="INPUT" && document.activeElement.tagName!=="TEXTAREA"){ e.preventDefault(); $("search").focus(); } });
+
+/* hidden folder input for browsers without the folder picker */
+var input=document.createElement("input"); input.type="file"; input.id="folderInput"; input.multiple=true; input.setAttribute("webkitdirectory",""); input.style.display="none";
+input.addEventListener("change",function(){ if(input.files.length) loadFromInput(input.files); });
+document.body.appendChild(input);
+
+function afterLoad(){
+  S.view="dashboard"; S.current=null; S.editing=false;
+  var M=model(); if(!M.dashName){ var local=store.get("cw-name"); if(local) S.localName=local; }
+  render();
+  if(!M.dashName && !store.get("cw-name") && !store.get("cw-name-skipped")) setTimeout(openNameDialog,300);
+}
+/* a name kept only in this browser fills in when MEMORY.md has none */
+var _model=model; model=function(){ var m=_model(); if(!m.dashName && store.get("cw-name")) m.dashName=store.get("cw-name"); return m; };
+
+/* hook for automated checks: load files without a folder picker */
+window.CoworkDashboard={ loadFiles:function(map,opts){ S.files={}; Object.keys(map).forEach(function(k){ var v=map[k]; S.files[k]= typeof v==="string"? {text:v,mtime:Date.now(),handle:null} : v; }); S.folderName=(opts&&opts.name)||"workspace"; S.canWrite=!!(opts&&opts.canWrite); S.dir=null; S.loadedAt=Date.now(); afterLoad(); }, state:S };
+
+render();
+})();
+</script>
+</body>
+</html>

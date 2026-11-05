@@ -8,7 +8,7 @@
 
 Where different types of content belong:
 
-1. **Root level:** CLAUDE.md, MEMORY.md, ARCHIVE.md, and AGENTS.md, a one-line pointer to CLAUDE.md for AI tools that look for that name. No other files at root.
+1. **Root level:** CLAUDE.md, MEMORY.md, ARCHIVE.md, AGENTS.md (a one-line pointer to CLAUDE.md for AI tools that look for that name), and Dashboard.html (a page that shows the workspace in a browser). No other files at root.
 2. **00_Reference/:** permanent governance and mechanics files, using stable title-case names without date prefixes (for example, `Memory System.md`). These are pointed to by name from CLAUDE.md and should not be renamed casually.
 3. **00_Resources/:** supporting resource files loaded on demand, such as templates and setup guides. Stable descriptive names, no date prefixes.
 4. **Workstation folders:** each contains a CLAUDE.md and a MEMORY.md. Domain-specific reference or project files live inside the workstation folder, not at root.

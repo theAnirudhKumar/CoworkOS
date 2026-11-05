@@ -96,6 +96,10 @@ Sometimes this skill runs on a schedule with nobody watching. On those runs:
 
 If the user asks to set this up as a scheduled task, record it under Scheduled Tasks in root MEMORY.md, with the details Memory System asks for, including where the briefs are saved. That entry is operational bookkeeping and needs no approval. Check the tool's own list of scheduled tasks first, so the same brief is not set up twice.
 
+## A soft nudge to the dashboard
+
+After the brief, add one short line pointing to the dashboard, using the name in Core Memory ("Dashboard name: ...") if there is one. For example: "All of this is also on Basecamp: double-click Dashboard.html in your workspace folder." Keep it to one line, put it after the closing question, and leave it out on an unattended run. If the user has said they do not want this reminder, it will be recorded in Core Memory, so skip it.
+
 ## Rules
 
 ### Read-only by default
