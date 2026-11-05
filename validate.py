@@ -66,6 +66,14 @@ def check_skill(path, text, bad):
     d = re.search(r'^description:[ \t]*>[ \t]*\n(.*?)\n---', text, re.S | re.M)
     if not d:
         bad.append(f'{rel(path)}: no block description in frontmatter')
+    else:
+        desc = ' '.join(d.group(1).split())
+        if len(desc) > 1024:
+            bad.append(f'{rel(path)}: description is {len(desc)} characters, over the 1,024 limit')
+
+    lines = text.count('\n') + 1
+    if lines > 500:
+        bad.append(f'{rel(path)}: {lines} lines, over the 500-line limit for a SKILL.md')
 
     h1 = re.search(r'^# (.+)$', text, re.M)
     if h1:

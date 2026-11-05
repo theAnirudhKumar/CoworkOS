@@ -15,7 +15,10 @@
 *passport*
 *aadhaar*
 *aadhar*
-*ssn*
+# Matched only as a separate word in the name, so an ordinary file such as
+# classnotes.md is not hidden by accident.
+ssn[-_.]*
+*[-_]ssn[-_.]*
 *social-security*
 *bank-statement*
 *paystub*
@@ -23,5 +26,14 @@
 *salary-slip*
 *specimen-signature*
 
-# Local backups, if you keep a .backups/ folder before bulk edits
+# Backups taken before editing files (see Governance Rules). Kept on disk only,
+# since a backup can hold text that was removed on purpose.
 .backups/
+
+# Python caches from any helper script
+__pycache__/
+*.pyc
+
+# Per-computer AI tool settings and temporary agent worktrees, not workspace content
+.claude/settings.local.json
+.claude/worktrees/

@@ -84,6 +84,7 @@ When adding a new rule, decide where it belongs using the two tests in the Memor
 | 00_Reference/Governance Rules.md | Modifying this file, adding a new section, or deciding where a rule belongs |
 | 00_Reference/File Creation Rules.md | Creating any new file in the workspace |
 | 00_Reference/Memory System.md | Writing a memory entry, running an archive pass, or handling a contradiction |
+| 00_Reference/Visual Standards.md | Producing anything with visual structure: steps, tables, diagrams, or a generated PDF, Word file or deck |
 | 00_Reference/CLAUDE.md Change Log.md | Changing this file, or finding out why one of its rules says what it says |
 | 00_Resources/voice-principles.md | Writing anything as or for the user |
 | 00_Resources/Starter Rules.md | The user asks how to make their AI tool more reliable, or wants to adopt more working rules |
