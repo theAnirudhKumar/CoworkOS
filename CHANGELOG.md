@@ -8,7 +8,16 @@ All notable changes to this template are documented here. Format follows [Keep a
 - `chat-context` skill: hands a long chat off to a fresh one through a structured handoff file in the workstation's `Chat Context/` folder, registered in `00_Resources/Chat Context Index.md`, and resumes from it in the next chat.
 - `optimize-tokens` skill: flags requests that will cost far more than they need to and suggests a leaner version, with quality gates so published output is never cut.
 
+- `AGENTS.md` at the root, a one-line pointer to `CLAUDE.md` for AI tools that read that file. File Creation Rule 1 now allows it.
+- `98_Temp/` for files with no clear home yet, reviewed weekly, and `99_Archive/` for old files the user confirms are no longer current. They are the only exceptions to File Creation Rule 5, and neither is a workstation.
+- `00_Reference/CLAUDE.md Change Log.md`: the format and the substantive-or-mechanical test for recording changes to root `CLAUDE.md`.
+- A Core Memory section in root `MEMORY.md` for lasting facts that belong to no single workstation.
+- File Creation Rules 6a (a refreshed document keeps its filename) and 25 (strip workspace-only details before a file goes public), and an exception to rule 12 for files a skill owns.
+
 ### Changed
+- Root `CLAUDE.md`: loading context is never shortened because a task looks small; a start-of-session freshness check when GitHub sync is on; more memory trigger phrases; table rows for the change log and voice-principles.
+- Governance Rules: a backup into `.backups/` before editing more than a handful of files, and a rule to write instruction files in plain words.
+- Memory System: Scheduled Tasks now records where a task's instructions and schedule live and whether it needs a particular computer to be on.
 - `session-audit` now reads every file in full before filtering, counts the AI's own breach of an existing rule as a correction, quotes the stale line when a finding replaces an entry, checks root MEMORY.md against its line ceiling, checks that no other session is mid-write before writing or committing, backs up each file before editing, and dates entries in the user's own time zone. Its sync step gained a commit message format, a report format, identity-guard handling, a failure table and stronger safety rules.
 - `travel-mode` accepts the token in the trigger message, handles refused pushes and degraded mode more clearly, checks every turn that nothing lives only in the chat, runs `chat-context` before close-out when the session carried a lot of thinking, and never tells the user to change a setting nobody has checked exists.
 

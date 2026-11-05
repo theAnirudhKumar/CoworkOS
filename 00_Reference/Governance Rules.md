@@ -100,7 +100,9 @@ Publication and delivery status in particular is a fact to verify, never somethi
 
 For multi-step tasks: outline the plan first, wait for approval, then execute step by step, summarizing what was done and what is next after each major step.
 
-For structural changes to the workspace (a new workstation, renamed files, changed routing): log the change in ARCHIVE.md. If the change affects root CLAUDE.md, keep a record of what changed and why.
+For structural changes to the workspace (a new workstation, renamed files, changed routing): log the change in ARCHIVE.md. If the change affects root CLAUDE.md, add an entry to 00_Reference/CLAUDE.md Change Log.md, which also says which changes count as substantive.
+
+Before editing more than a handful of files in one pass, copy every file that will change into `.backups/YYYY-MM-DD-<change-name>/` inside the workspace, and name that path when reporting the change. Write the backup before the first edit. A temporary folder outside the workspace does not count, because it can disappear when the session ends. Git does not replace this either: the backup is a restorable copy on disk, and git covers what happens to the off-machine copy. This template's `.gitignore` keeps `.backups/` out of git, because a backup can hold text that was removed on purpose.
 
 ---
 
@@ -113,6 +115,10 @@ Take the date from a source you trust to be current (the operating environment's
 ---
 
 ## Communication Rules
+
+### Writing Instruction Files
+
+Write CLAUDE.md, MEMORY.md and every other instruction file in plain words: short sentences, one idea each, everyday vocabulary, and no clever turns of phrase. The AI reads these files first in every session, and their style leaks into what it writes. A rule written in plain words also gets followed more reliably.
 
 ### Output Standards
 

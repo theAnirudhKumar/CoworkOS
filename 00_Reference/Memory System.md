@@ -41,13 +41,15 @@ Propose a memory entry when:
 
 ## Root MEMORY.md: Active Tracking
 
-Root MEMORY.md holds three living sections that need upkeep: Active Projects, Scheduled Tasks, and Open Items. They give session-start orientation without needing to read every workstation.
+Root MEMORY.md holds four living sections: Active Projects, Scheduled Tasks, Open Items, and Core Memory. The first three need upkeep as work moves. They give session-start orientation without needing to read every workstation.
 
 **Active Projects:** track project name, which workstation it belongs to, current status in one or two sentences, and the date it was last active. Remove an entry once the project completes, moving it to ARCHIVE.md.
 
-**Scheduled Tasks:** track task name, workstation, schedule or cadence, what it does, and the date it was created. Mark it paused or retired rather than deleting it outright if it stops running.
+**Scheduled Tasks:** track task name, workstation, schedule or cadence, what it does, and the date it was created. Mark it paused or retired rather than deleting it outright if it stops running. Also record two facts that are easy to get wrong. First, where the task's instructions live and where its schedule lives, since many tools keep them in different places, so editing one does not change the other. Second, whether it runs only while a particular computer or app is open, or on a server whatever happens. Before creating a new task, check the tool's own list of scheduled tasks, so the same job is not set up twice. A task's instructions are worth keeping in the workspace too, the same way skills are archived in 00_Skills/, so they can be recovered.
 
 **Open Items:** track anything deliberately deferred, not forgotten: a first-run setup step skipped for now, a decision put off, a local fix made to a shipped template file that should be reported as an issue rather than kept as private drift. State what was deferred, why, and what is lost by leaving it that way, so it stays visible instead of silently disappearing. This is where first-run setup should log a step the user chose to skip. Remove an entry once it is resolved, either by acting on it or by deciding on purpose to leave it.
+
+**Core Memory:** durable facts about the user that are not tied to one workstation and are not a project, a task or a deferred item. This is usually where "remember this" lands when no workstation fits. Keep each entry to the two-sentence cap. A fact that belongs to one area of life goes in that workstation's MEMORY.md instead.
 
 ---
 
