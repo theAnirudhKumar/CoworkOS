@@ -310,7 +310,7 @@ function model(){
     ws[top]={ name:top, files:files, latest:latest, memLines: mm ? mm.text.split("\n").length : 0 };
   });
   var routed=tableRows(claude,"Routing Map").map(function(r){ return r[0].replace(/[*_]/g,"").trim(); });
-  var temp=Object.keys(F).filter(function(p){ return /^98_Temp\//.test(p) && !/98_Temp\.md$/.test(p) && !/98_Temp\/Inbox\.md$/.test(p); });
+  var temp=Object.keys(F).filter(function(p){ return /^98_Temp\//.test(p) && !/98_Temp\.md$/.test(p) && !/98_Temp\/(Phone )?Inbox\.md$/.test(p); });
   var chat=(F["00_Resources/Chat Context Index.md"]||{}).text;
   var handoffs=chat ? tableRows(chat).filter(function(r){ return /active/i.test(r[4]||""); }).map(function(r){ return {date:r[0],ws:r[1],topic:r[2],file:(r[3]||"").replace(/`/g,"")}; }) : [];
   var tasks=[], today=todayISO();
@@ -325,8 +325,12 @@ function model(){
   });
   tasks.sort(function(a,b){ if(a.due&&b.due) return a.due<b.due?-1:a.due>b.due?1:0; return a.due?-1:b.due?1:0; });
   var weekAhead=new Date(Date.now()+7*86400000), wk=weekAhead.getFullYear()+"-"+String(weekAhead.getMonth()+1).padStart(2,"0")+"-"+String(weekAhead.getDate()).padStart(2,"0");
-  var inboxText=(F["98_Temp/Inbox.md"]||{}).text||"";
-  var inbox=inboxText.split("\n").map(function(l,i){ return {raw:l,line:i}; }).filter(function(x){ return /^\s*-\s+/.test(x.raw); }).map(function(x){ var t=x.raw.replace(/^\s*-\s+/,""); var d=t.match(/^\[(\d{4}-\d{2}-\d{2})\]\s*/); return {line:x.line, date:d?d[1]:null, text:d?t.slice(d[0].length):t}; });
+  function captures(path,phone){
+    var txt=(F[path]||{}).text||"";
+    return txt.split("\n").map(function(l,i){ return {raw:l,line:i}; }).filter(function(x){ return /^\s*-\s+/.test(x.raw); }).map(function(x){ var t=x.raw.replace(/^\s*-\s+/,""); var d=t.match(/^\[(\d{4}-\d{2}-\d{2})\]\s*/); return {path:path, phone:phone, line:x.line, date:d?d[1]:null, text:d?t.slice(d[0].length):t}; });
+  }
+  var inbox=captures("98_Temp/Inbox.md",false).concat(captures("98_Temp/Phone Inbox.md",true));
+  inbox.sort(function(a,b){ return (a.date||"")<(b.date||"")?-1:(a.date||"")>(b.date||"")?1:0; });
   var sched=entriesOf(sec["Scheduled Tasks"]);
   var wr=null, wrSetup=null; sched.forEach(function(e){ var m=e.raw.match(/weekly review.*?last run\s*\[?(\d{4}-\d{2}-\d{2})/i); if(m) wr=m[1]; var n=e.raw.match(/weekly review.*?set up\s*\[?(\d{4}-\d{2}-\d{2})/i); if(n) wrSetup=n[1]; });
   return {
@@ -419,7 +423,7 @@ function renderDashboard(){
       return '<div class="row">'+(S.canWrite?'<button class="btn sm" data-task="'+esc(t.path)+'|'+t.line+'" title="Mark done">&#10003;</button>':'')+'<div class="body"><div class="t">'+esc(t.text)+'</div><div class="m">'+esc(t.ws)+'</div></div>'+(t.due?'<span class="tag'+(over||soon?" w":"")+'">'+(over?"overdue, ":"")+esc(t.due)+'</span>':'')+'</div>';
     }).join("")+(M.tasks.length>8?'<div class="m" style="padding-top:6px">and '+(M.tasks.length-8)+' more in your workstations</div>':''):'<div class="empty">No open tasks. Tell your AI what you need to do, with a date, and it lands here.</div>')+'</div>';
   h+='<div class="card"><h2>Inbox <span>quick captures</span></h2>'+(S.canWrite?'<form id="captureForm" style="display:flex;gap:8px;margin-bottom:6px"><input class="field" id="captureInput" placeholder="Jot something down" autocomplete="off"><button class="btn p" type="submit">Add</button></form>':'')+(M.inbox.length?M.inbox.slice(-5).reverse().map(function(x){
-      return '<div class="row"><div class="body"><div class="t">'+esc(x.text)+'</div>'+(x.date?'<div class="m">'+esc(x.date)+'</div>':'')+'</div></div>';
+      return '<div class="row"><div class="body"><div class="t">'+esc(x.text)+'</div>'+((x.date||x.phone)?'<div class="m">'+esc([x.date,x.phone?"from your phone":""].filter(Boolean).join(" \u00b7 "))+'</div>':'')+'</div></div>';
     }).join(""):'<div class="empty">Empty. The weekly review files every capture, so this stays short.</div>')+'</div>';
   h+='<div class="card"><h2>Active projects <span>from MEMORY.md</span></h2>'+(M.projects.length?M.projects.map(function(e){
       var d=daysSince(e.date), quiet=d!==null && d>14;

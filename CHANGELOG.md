@@ -4,6 +4,9 @@ All notable changes to this template are documented here. Format follows [Keep a
 
 ## [Unreleased]
 
+### Added
+- Mobile capture: a new `00_Resources/Mobile Capture Guide.md` sets up capture from a phone, by a one-tap iPhone shortcut or a notes app writing to `98_Temp/Phone Inbox.md` in a synced folder, by emailing yourself with "Inbox:" in the subject, or through travel mode. Setup step 7 now asks about phone capture, the weekly review files phone and email captures, the daily brief counts them, and the dashboard shows them in the Inbox card.
+
 ## [1.4.0] - 2026-11-05
 
 CoworkOS becomes a second brain you can see and trust: a dashboard you name, one-line capture, tasks with due dates, notes that keep the point, and answers that come from what you actually wrote.

@@ -21,7 +21,7 @@ The reliable move is to ask your AI tool directly, in your own words: "How do I 
 Add one at a time, and use each for a while before adding the next. Here is what each kind unlocks in this workspace.
 
 - **Calendar.** The AI can see your fixed commitments for the day. The start-my-day skill (`00_Skills/Custom/start-my-day/SKILL.md`) can then plan around meetings instead of over them.
-- **Email.** The AI can tell you what is waiting on a reply from you. It can also draft replies for you to check and send.
+- **Email.** The AI can tell you what is waiting on a reply from you. It can also draft replies for you to check and send. It also lets you capture from any phone by emailing yourself, as 00_Resources/Mobile Capture Guide.md describes.
 - **File storage.** The AI can read documents where they already live. You do not need to copy them into this workspace.
 - **A task manager.** The AI can show your open tasks alongside the Open Items in root MEMORY.md, so nothing deferred gets lost between the two.
 - **A notes or meetings tool.** The AI can pull decisions and action items from your meeting notes, and propose saving the lasting ones to the right workstation's MEMORY.md.

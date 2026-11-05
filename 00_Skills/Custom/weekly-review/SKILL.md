@@ -41,9 +41,11 @@ State the files you loaded before moving on.
 
 ## Step 2: Empty the inbox, then file what is in 98_Temp
 
-Start with `98_Temp/Inbox.md`, the quick-capture list. Take each line in turn and propose one of four things: turn it into a task in a workstation's Next Actions (with a due date if it has one), add it to the right MEMORY.md as a fact or decision (memory approval applies), move it into a workstation note, or drop it. Remove each line from the inbox once it has a home or is dropped. The aim is an empty inbox, because a capture list that is never emptied stops being trusted, and then stops being used.
+First gather everything captured away from the computer. Take the lines in `98_Temp/Phone Inbox.md` into this step alongside the inbox. If root MEMORY.md has an "Email capture" entry under Scheduled Tasks and an email connector is connected, search for emails from the user whose subject starts with "Inbox:" sent after the date in that entry, add each as a dated line to `98_Temp/Inbox.md`, and update the entry's date. Only read the mailbox; never move, label or delete an email.
 
-Then list every other file in `98_Temp/` except its index file, `98_Temp.md`, and `Inbox.md`. For each one, read its opening and propose one of two homes: the workstation it belongs to, or `99_Archive/` if it is no longer current. Give the file name, its date prefix, and one line on what it holds and why that home fits.
+Then start with `98_Temp/Inbox.md`, the quick-capture list. Take each line in turn and propose one of four things: turn it into a task in a workstation's Next Actions (with a due date if it has one), add it to the right MEMORY.md as a fact or decision (memory approval applies), move it into a workstation note, or drop it. Remove each line from the inbox, or from `Phone Inbox.md`, once it has a home or is dropped. Keep the header of `Phone Inbox.md`, since the phone keeps adding below it. The aim is an empty inbox, because a capture list that is never emptied stops being trusted, and then stops being used.
+
+Then list every other file in `98_Temp/` except its index file, `98_Temp.md`, `Inbox.md` and `Phone Inbox.md`. For each one, read its opening and propose one of two homes: the workstation it belongs to, or `99_Archive/` if it is no longer current. Give the file name, its date prefix, and one line on what it holds and why that home fits.
 
 Present the whole list at once so the user can answer in one reply. Move only what they approve.
 

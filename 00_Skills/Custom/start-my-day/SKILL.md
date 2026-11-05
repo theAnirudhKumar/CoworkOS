@@ -24,7 +24,7 @@ Read each of these in full:
 
 1. Root MEMORY.md. The sections that matter here are Active Projects, Open Items, Scheduled Tasks and Core Memory, especially any goals recorded there.
 2. The MEMORY.md of every workstation. A workstation is a top-level folder that holds a CLAUDE.md, plus any sub-workstation one level inside it. Read its Next Actions first: every open task (`- [ ]`) and its due date, if it has one. Then the other living sections, such as people, key dates and decisions.
-3. `98_Temp/Inbox.md`, only to count the lines waiting there.
+3. `98_Temp/Inbox.md` and `98_Temp/Phone Inbox.md`, only to count the lines waiting there.
 4. `00_Resources/Chat Context Index.md`, if it exists. Note each row marked Active, since that is unfinished work the user may want to pick up.
 
 If a tool cuts off a read, read the file in parts until you reach the end. An item below the cut-off point is still real.

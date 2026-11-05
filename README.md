@@ -47,6 +47,7 @@ Not sure your AI tool can work with a folder on your computer? See [Using Cowork
 - **An AI that remembers you.** Your name, your goals, your decisions and your preferences live in memory files, and every session reads them first.
 - **One folder per area of your life.** Work, Finances, Health, Learning, Travel and more, each with its own rules and memory, so the AI uses the right context for each task. Setup offers 15 common areas to start from.
 - **Capture in one line.** Say "jot this down" and a passing thought lands in your inbox straight away. The weekly review files it later, so nothing gets lost because you did not know where it belonged.
+- **Capture from your phone.** A one-tap iPhone shortcut, a notes app on any phone, or an email to yourself, and the thought is waiting in your inbox when you sit down. See the [Mobile Capture Guide](00_Resources/Mobile%20Capture%20Guide.md).
 - **Tasks with real due dates.** "Get three quotes by Friday" becomes a task with a date in the right area, and shows up in your daily brief and on the dashboard until it is done.
 - **Answers from what you actually wrote.** Ask "what did I decide about my running plan?" and it searches your whole second brain and tells you where the answer is, or says plainly that nothing was decided.
 - **Corrections that stick.** When you fix something, the AI proposes a rule so it does not happen again. A close-out audit at the end of a session catches anything missed.
@@ -175,6 +176,7 @@ chmod +x .githooks/pre-commit
 | `00_Reference/Visual Standards.md` | Layout rules for steps, tables, diagrams and generated documents |
 | `00_Reference/CLAUDE.md Change Log.md` | The record of every substantive change to root `CLAUDE.md`, and what counts as one |
 | `00_Resources/Workstation Setup Guide.md` | How to create a new area, and the Starter Workstations menu |
+| `00_Resources/Mobile Capture Guide.md` | Jotting things down from your phone: a synced folder, email to yourself, or travel mode |
 | `00_Resources/Connectors Guide.md` | Which apps to connect first, what each unlocks, and the safety rules |
 | `00_Resources/Starter Rules.md` | An optional menu of proven working rules, offered once during setup |
 | `00_Resources/voice-principles.md` | Starter file for how written output should sound; fills in through use |

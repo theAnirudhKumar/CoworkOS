@@ -62,3 +62,7 @@ Check whether the fact actually made it into `MEMORY.md` or the relevant worksta
 ## Everything above and I'm still stuck
 
 Open an issue at github.com/theAnirudhKumar/CoworkOS/issues describing what you asked for, what happened, and what your AI tool is. If it's specific to running this on a tool other than Claude Cowork, check `00_Resources/Using CoworkOS with Other AI Tools.md` first, several tool-specific quirks are already documented there.
+
+## Things I capture on my phone never reach my inbox
+
+See the last section of `00_Resources/Mobile Capture Guide.md`. The usual cause is sync: the phone saved the line, but the cloud folder on the computer has not caught up yet, so open the folder there or wait a few minutes. If an iPhone shortcut fails to write at all, check its file path matches your workspace folder exactly, and that the folder sits at the top level of iCloud Drive.

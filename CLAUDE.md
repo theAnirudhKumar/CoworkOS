@@ -18,7 +18,7 @@ Full mechanics (capture triggers, entry format, archiving) are in 00_Reference/M
 
 At the end of a session, run the session-audit skill (00_Skills/Custom/session-audit/SKILL.md) rather than relying on memory writes caught mid-conversation. You cannot always tell when a session ends, so when the user signals they are done ("thanks, that's all," "bye," "done for today"), offer it in one line if anything was decided, corrected or written this session. It scans the whole session for corrections, preferences, and decisions that were never written down, proposes where each belongs, and applies only what is approved. This is what keeps this file and MEMORY.md actually current instead of slowly drifting stale.
 
-**Capture.** When the user wants something written down fast, such as "jot this down," "capture this," "add to my inbox," or a thought that has no clear home yet, append it to `98_Temp/Inbox.md` straight away, as one line in exactly this form, `- [YYYY-MM-DD] the thought`, and confirm in a few words. Their request is the approval, and filing can wait for the weekly review. Never let a passing thought get lost because the right place was unclear.
+**Capture.** When the user wants something written down fast, such as "jot this down," "capture this," "add to my inbox," or a thought that has no clear home yet, append it to `98_Temp/Inbox.md` straight away, as one line in exactly this form, `- [YYYY-MM-DD] the thought`, and confirm in a few words. Their request is the approval, and filing can wait for the weekly review. Captures sent from a phone land in `98_Temp/Phone Inbox.md` or arrive by email instead (see 00_Resources/Mobile Capture Guide.md); leave that file to the phone, and let the weekly review empty it. Never let a passing thought get lost because the right place was unclear.
 
 **Tasks.** When the user names something to do, especially with a date ("get three quotes by Friday," "remind me to call the bank"), write it as a task in the Next Actions section of the right workstation's MEMORY.md, in exactly this form: `- [ ] What to do (due YYYY-MM-DD)`. Leave out the due part if there is no date, and turn words like "Friday" into a real date in the user's time zone. Confirm where it went. A finished task becomes `- [x]`; the weekly review clears those out. The daily brief and the dashboard both read this form, so keep to it.
 
@@ -114,6 +114,7 @@ When adding a new rule, decide where it belongs using the two tests in the Memor
 | 00_Reference/Visual Standards.md | Producing anything with visual structure: steps, tables, diagrams, or a generated PDF, Word file or deck |
 | 00_Reference/CLAUDE.md Change Log.md | Changing this file, or finding out why one of its rules says what it says |
 | 00_Resources/voice-principles.md | Writing anything as or for the user |
+| 00_Resources/Mobile Capture Guide.md | The user wants to jot things down from their phone, or reach their second brain away from the computer |
 | 00_Resources/Connectors Guide.md | Connecting another app such as a calendar, email or file storage, or deciding what a connector may do |
 | 00_Resources/Starter Rules.md | The user asks how to make their AI tool more reliable, or wants to adopt more working rules |
 | 00_Resources/Workstation Setup Guide.md | Creating a new workstation |
