@@ -4,6 +4,10 @@ All notable changes to this template are documented here. Format follows [Keep a
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-11-05
+
+Three habits that make the workspace a second brain you keep using: a weekly review, a daily brief and turning repeated work into skills. Plus an about-me step in setup and a guide to connecting your other apps safely.
+
 ### Added
 - `weekly-review` skill: a 20 to 30 minute upkeep that files `98_Temp`, decides each Open Item, flags quiet or finished projects, checks memory for stale entries and size, and looks for drift. Offered once at session start when the last review, recorded under Scheduled Tasks in root `MEMORY.md`, is over a week old.
 - `start-my-day` skill: a brief of about 12 lines from the workspace files, plus any connected calendar, email or task tool used read-only. Every item names its source, and an unattended run writes a dated file and sends nothing.
