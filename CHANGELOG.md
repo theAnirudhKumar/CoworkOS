@@ -4,6 +4,13 @@ All notable changes to this template are documented here. Format follows [Keep a
 
 ## [Unreleased]
 
+### Added
+- `weekly-review` skill: a 20 to 30 minute upkeep that files `98_Temp`, decides each Open Item, flags quiet or finished projects, checks memory for stale entries and size, and looks for drift. Offered once at session start when the last review, recorded under Scheduled Tasks in root `MEMORY.md`, is over a week old.
+- `start-my-day` skill: a brief of about 12 lines from the workspace files, plus any connected calendar, email or task tool used read-only. Every item names its source, and an unattended run writes a dated file and sends nothing.
+- `make-a-skill` skill: turns a repeated piece of work into a reusable skill, archived in `00_Skills/Custom/` with an inventory row. Governance Rules now offers it once when the same kind of work is asked for a third time.
+- `00_Resources/Connectors Guide.md`: what a connector is, which to add first, eight safety rules, and how to record which connectors are in use.
+- First-run setup step 1: a short, skippable "about me" round (name, time zone, what the user does, this year's goals) saved to Core Memory on approval. Later steps are renumbered.
+
 ## [1.2.0] - 2026-11-05
 
 New skills for handing off chats and keeping requests lean, a much stronger session audit, and the structure and rules a workspace needs once it is used every day.

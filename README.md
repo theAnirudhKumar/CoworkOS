@@ -102,6 +102,7 @@ Both are optional, and only relevant at all if you use git. If you never put thi
 | `00_Reference/Visual Standards.md` | Layout rules for steps, tables, diagrams and generated documents |
 | `00_Reference/CLAUDE.md Change Log.md` | The record of every substantive change to root `CLAUDE.md`, and what counts as one |
 | `00_Resources/Workstation Setup Guide.md` | How to create a new workstation, and the Starter Workstations menu |
+| `00_Resources/Connectors Guide.md` | Which apps to connect first, what each unlocks, and the safety rules |
 | `00_Resources/Starter Rules.md` | An optional menu of proven working rules, offered once during setup |
 | `00_Resources/voice-principles.md` | Starter file for how written output should sound; fills in through use |
 | `00_Resources/Using CoworkOS with Other AI Tools.md` | Running this on ChatGPT Work Mode, Kimi Work, OpenClaw, Hermes Agent, or anything else |
@@ -111,6 +112,9 @@ Both are optional, and only relevant at all if you use git. If you never put thi
 | `00_Skills/Custom/session-audit/SKILL.md` | The session-audit skill itself, and the worked example of the registry pattern |
 | `00_Skills/Custom/travel-mode/SKILL.md` | Working from the GitHub copy when your primary computer is unreachable |
 | `00_Skills/Custom/chat-context/SKILL.md` | Handing a long chat off to a fresh one, and resuming from the handoff |
+| `00_Skills/Custom/weekly-review/SKILL.md` | A short weekly upkeep that keeps the workspace trustworthy |
+| `00_Skills/Custom/start-my-day/SKILL.md` | A daily brief built from the workspace, plus any connected apps, read-only |
+| `00_Skills/Custom/make-a-skill/SKILL.md` | Turning a repeated piece of work into a reusable skill |
 | `00_Skills/Custom/optimize-tokens/SKILL.md` | Getting the same result from a leaner request |
 | `00_Skills/Third-Party/` | Where someone else's archived skill goes |
 | `Example Workstation/` | A filled-in sample workstation: `CLAUDE.md` and `MEMORY.md` with realistic content |
