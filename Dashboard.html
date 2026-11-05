@@ -159,7 +159,9 @@ dialog::backdrop{background:rgba(0,0,0,.35)}
 var $ = function(id){ return document.getElementById(id); };
 function esc(s){ return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];}); }
 function toast(msg){ var t=$("toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(toast._t); toast._t=setTimeout(function(){t.classList.remove("show");},2600); }
-function todayISO(){ var d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+var TZ=null; /* the user's time zone from Core Memory, when one is recorded */
+function tzOpt(o){ o=o||{}; if(TZ) o.timeZone=TZ; return o; }
+function todayISO(){ try{ return new Intl.DateTimeFormat("en-CA",tzOpt({year:"numeric",month:"2-digit",day:"2-digit"})).format(new Date()); }catch(e){ var d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); } }
 function daysSince(iso){ if(!iso) return null; var t=Date.parse(iso+"T00:00:00"); if(isNaN(t)) return null; return Math.floor((Date.now()-t)/86400000); }
 function ago(ms){ if(!ms) return ""; var d=Math.floor((Date.now()-ms)/86400000); if(d<=0) return "today"; if(d===1) return "yesterday"; if(d<7) return d+" days ago"; if(d<14) return "last week"; if(d<60) return Math.floor(d/7)+" weeks ago"; return Math.floor(d/30)+" months ago"; }
 var COLORS=["#3b5bdb","#2f855a","#c2410c","#9333ea","#0891b2","#a16207","#be185d","#4d7c0f","#0f766e","#7c3aed"];
@@ -293,6 +295,8 @@ function model(){
   var sec=sections(mem);
   var core=entriesOf(sec["Core Memory"]);
   var nameFrom=function(re){ for(var i=0;i<core.length;i++){ var m=core[i].raw.match(re); if(m) return m[1].trim().replace(/[.\s]+$/,""); } return null; };
+  var tzName=(function(){ for(var i=0;i<core.length;i++){ var m=core[i].raw.match(/Time zone:\s*([A-Za-z_]+\/[A-Za-z_\/+-]+|UTC)/i); if(m) return m[1]; } return null; })();
+  if(tzName){ try{ new Intl.DateTimeFormat("en",{timeZone:tzName}); TZ=tzName; }catch(e){ TZ=null; } } else TZ=null;
   var ws={}, tops={};
   Object.keys(F).forEach(function(p){
     var parts=p.split("/"); if(parts.length<2) return;
@@ -306,13 +310,28 @@ function model(){
     ws[top]={ name:top, files:files, latest:latest, memLines: mm ? mm.text.split("\n").length : 0 };
   });
   var routed=tableRows(claude,"Routing Map").map(function(r){ return r[0].replace(/[*_]/g,"").trim(); });
-  var temp=Object.keys(F).filter(function(p){ return /^98_Temp\//.test(p) && !/98_Temp\.md$/.test(p); });
+  var temp=Object.keys(F).filter(function(p){ return /^98_Temp\//.test(p) && !/98_Temp\.md$/.test(p) && !/98_Temp\/Inbox\.md$/.test(p); });
   var chat=(F["00_Resources/Chat Context Index.md"]||{}).text;
   var handoffs=chat ? tableRows(chat).filter(function(r){ return /active/i.test(r[4]||""); }).map(function(r){ return {date:r[0],ws:r[1],topic:r[2],file:(r[3]||"").replace(/`/g,"")}; }) : [];
+  var tasks=[], today=todayISO();
+  Object.keys(F).forEach(function(p){
+    var top=p.split("/")[0]; if(p.indexOf("/")<0 || /^(00_|98_|99_)/.test(top) || !F[top+"/CLAUDE.md"]) return;
+    F[p].text.split("\n").forEach(function(line,i){
+      var m=line.match(/^\s*-\s*\[([ xX])\]\s+(.*)$/); if(!m || m[1]!==" ") return;
+      if(/Example task:/i.test(m[2])) return;
+      var dm=m[2].match(/\(due\s+(\d{4}-\d{2}-\d{2})\)/i);
+      tasks.push({ path:p, line:i, text:m[2].replace(/\s*\(due\s+\d{4}-\d{2}-\d{2}\)/i,"").replace(/\*\*|`/g,"").trim(), due:dm?dm[1]:null, ws:top });
+    });
+  });
+  tasks.sort(function(a,b){ if(a.due&&b.due) return a.due<b.due?-1:a.due>b.due?1:0; return a.due?-1:b.due?1:0; });
+  var weekAhead=new Date(Date.now()+7*86400000), wk=weekAhead.getFullYear()+"-"+String(weekAhead.getMonth()+1).padStart(2,"0")+"-"+String(weekAhead.getDate()).padStart(2,"0");
+  var inboxText=(F["98_Temp/Inbox.md"]||{}).text||"";
+  var inbox=inboxText.split("\n").map(function(l,i){ return {raw:l,line:i}; }).filter(function(x){ return /^\s*-\s+/.test(x.raw); }).map(function(x){ var t=x.raw.replace(/^\s*-\s+/,""); var d=t.match(/^\[(\d{4}-\d{2}-\d{2})\]\s*/); return {line:x.line, date:d?d[1]:null, text:d?t.slice(d[0].length):t}; });
   var sched=entriesOf(sec["Scheduled Tasks"]);
   var wr=null; sched.forEach(function(e){ var m=e.raw.match(/weekly review.*?last run\s*\[?(\d{4}-\d{2}-\d{2})/i); if(m) wr=m[1]; });
   return {
     projects:entriesOf(sec["Active Projects"]), open:entriesOf(sec["Open Items"]), sched:sched, core:core,
+    tasks:tasks, today:today, weekEnd:wk, inbox:inbox,
     memLines: mem ? mem.split("\n").length : 0, ws:ws, routed:routed, temp:temp, handoffs:handoffs, weekly:wr,
     dashName: nameFrom(/Dashboard name:\s*(.+)$/i), userName: nameFrom(/^\s*-\s*(?:\[[^\]]*\]\s*)?Name:\s*([^.;,]+)/i), hasMemory: !!F["MEMORY.md"]
   };
@@ -369,7 +388,7 @@ function header(title, sub){
   return '<div class="top"><div><button class="btn sm menu" id="menuBtn">Menu</button><h1>'+title+'</h1><div class="sub">'+sub+'</div></div>'+
     '<div class="actions">'+themeSwitch()+(S.loadedAt?'<button class="btn" id="refreshBtn">Refresh</button>':'')+'</div></div>';
 }
-function greeting(){ var h=new Date().getHours(); return h<12?"Good morning":h<18?"Good afternoon":"Good evening"; }
+function greeting(){ var h=new Date().getHours(); try{ h=parseInt(new Intl.DateTimeFormat("en-GB",tzOpt({hour:"2-digit",hourCycle:"h23"})).format(new Date()),10); }catch(e){} return h<12?"Good morning":h<18?"Good afternoon":"Good evening"; }
 
 function renderWelcome(){
   var supportsWrite=!!window.showDirectoryPicker;
@@ -387,20 +406,26 @@ function renderDashboard(){
   var M=model(), title=M.dashName||"My Workspace";
   var wsNames=Object.keys(M.ws).sort();
   var greet=greeting()+(M.userName?", "+esc(M.userName):"");
-  var dateStr=new Date().toLocaleDateString(undefined,{weekday:"long",day:"numeric",month:"long"});
+  var dateStr; try{ dateStr=new Date().toLocaleDateString(undefined,tzOpt({weekday:"long",day:"numeric",month:"long"})); }catch(e){ dateStr=new Date().toLocaleDateString(); }
   var nFiles=Object.keys(S.files).length;
   var memPct=Math.min(100,Math.round(M.memLines/150*100));
   var h=header(greet, esc(dateStr)+". Read from "+nFiles+" files in "+esc(S.folderName||"your workspace")+", "+ago(S.loadedAt)+"."+(S.canWrite?"":" Read-only in this browser."));
   if(!M.hasMemory) h+='<div class="note">No MEMORY.md was found at the top of this folder. Choose the folder that holds CLAUDE.md and MEMORY.md.</div>';
   h+='<div class="stats">'+
-    stat(M.projects.length,"Active projects")+stat(M.open.length,"Open items waiting on you")+stat(M.sched.length,"Scheduled tasks")+
-    '<div class="card stat"><div class="n">'+M.memLines+'<small>/150</small></div><div class="l">Lines in MEMORY.md</div><div class="bar'+(M.memLines>150?" over":"")+'"><i style="width:'+memPct+'%"></i></div></div></div>';
+    stat(M.tasks.filter(function(t){ return t.due && t.due<=M.weekEnd; }).length,"Tasks due in the next 7 days")+stat(M.projects.length,"Active projects")+stat(M.open.length,"Deferred open items")+stat(M.inbox.length,"Quick captures in your inbox")+'</div>';
   h+='<div class="grid">';
+  h+='<div class="card"><h2>Next actions <span>'+M.tasks.length+' open</span></h2>'+(M.tasks.length?M.tasks.slice(0,8).map(function(t){
+      var over=t.due && t.due<M.today, soon=t.due && !over && t.due<=M.weekEnd;
+      return '<div class="row">'+(S.canWrite?'<button class="btn sm" data-task="'+esc(t.path)+'|'+t.line+'" title="Mark done">&#10003;</button>':'')+'<div class="body"><div class="t">'+esc(t.text)+'</div><div class="m">'+esc(t.ws)+'</div></div>'+(t.due?'<span class="tag'+(over||soon?" w":"")+'">'+(over?"overdue, ":"")+esc(t.due)+'</span>':'')+'</div>';
+    }).join("")+(M.tasks.length>8?'<div class="m" style="padding-top:6px">and '+(M.tasks.length-8)+' more in your workstations</div>':''):'<div class="empty">No open tasks. Tell your AI what you need to do, with a date, and it lands here.</div>')+'</div>';
+  h+='<div class="card"><h2>Inbox <span>quick captures</span></h2>'+(S.canWrite?'<form id="captureForm" style="display:flex;gap:8px;margin-bottom:6px"><input class="field" id="captureInput" placeholder="Jot something down" autocomplete="off"><button class="btn p" type="submit">Add</button></form>':'')+(M.inbox.length?M.inbox.slice(-5).reverse().map(function(x){
+      return '<div class="row"><div class="body"><div class="t">'+esc(x.text)+'</div>'+(x.date?'<div class="m">'+esc(x.date)+'</div>':'')+'</div></div>';
+    }).join(""):'<div class="empty">Empty. The weekly review files every capture, so this stays short.</div>')+'</div>';
   h+='<div class="card"><h2>Active projects <span>from MEMORY.md</span></h2>'+(M.projects.length?M.projects.map(function(e){
       var d=daysSince(e.date), quiet=d!==null && d>14;
       return '<div class="row">'+(e.date?'<span class="tag'+(quiet?" w":"")+'">'+(quiet?d+" days quiet":esc(e.date))+'</span>':'')+'<div class="body"><div class="t">'+esc(e.title)+'</div>'+(e.detail?'<div class="m">'+esc(e.detail)+'</div>':'')+'</div></div>';
     }).join(""):'<div class="empty">Nothing here yet. Projects appear as you work, under Active Projects in MEMORY.md.</div>')+'</div>';
-  h+='<div class="card"><h2>Waiting on you <span>Open Items</span></h2>'+(M.open.length?M.open.map(function(e){
+  h+='<div class="card"><h2>Deferred <span>Open Items</span></h2>'+(M.open.length?M.open.map(function(e){
       return '<div class="row"><span class="tag w">Open</span><div class="body"><div class="t">'+esc(e.title)+'</div>'+(e.detail?'<div class="m">'+esc(e.detail)+'</div>':'')+'</div>'+
         (S.canWrite?'<button class="btn sm" data-done="'+e.line+'" title="Mark as done and remove it from Open Items">Done</button>':'')+'</div>';
     }).join(""):'<div class="empty">Nothing deferred. Anything you put off lands here.</div>')+'</div>';
@@ -512,6 +537,33 @@ async function markDone(lineIndex){
   try{ await writeFile("MEMORY.md", lines.join("\n"), rec.mtime); toast("Done. Removed from Open Items."); render(); }
   catch(e){ handleWriteError(e); }
 }
+async function toggleTask(ref){
+  var k=ref.lastIndexOf("|"), path=ref.slice(0,k), idx=parseInt(ref.slice(k+1),10), rec=S.files[path];
+  if(!rec) return;
+  var lines=rec.text.split("\n"), line=lines[idx];
+  if(!line || !/^\s*-\s*\[ \]/.test(line)){ toast("That task moved. Refresh and try again."); return; }
+  lines[idx]=line.replace(/\[ \]/,"[x]");
+  try{ await writeFile(path, lines.join("\n"), rec.mtime); toast("Done. The weekly review clears finished tasks."); render(); }
+  catch(e){ handleWriteError(e); }
+}
+async function capture(text){
+  text=text.trim().replace(/[\r\n]+/g," "); if(!text) return;
+  var path="98_Temp/Inbox.md", rec=S.files[path], entry="- ["+todayISO()+"] "+text;
+  try{
+    if(!rec){
+      if(!S.canWrite || !S.dir) throw new Error("This browser opened a read-only copy.");
+      var folder=await S.dir.getDirectoryHandle("98_Temp",{create:true});
+      var fh=await folder.getFileHandle("Inbox.md",{create:true});
+      var body="# Inbox\n\nQuick captures, one dated line each, newest at the bottom.\n\n"+entry+"\n";
+      var w=await fh.createWritable(); await w.write(body); await w.close();
+      var f=await fh.getFile(); S.files[path]={text:body,mtime:f.lastModified,handle:fh};
+    } else {
+      var t=rec.text.replace(/\s*$/,"")+"\n"+entry+"\n";
+      await writeFile(path, t, rec.mtime);
+    }
+    toast("Captured to your inbox."); render();
+  }catch(e){ handleWriteError(e); }
+}
 function handleWriteError(e){
   if(e && e.message==="CHANGED") toast("This file changed on disk since it was read. Refresh, then try again. Nothing was overwritten.");
   else toast("Could not save: "+(e&&e.message||e));
@@ -561,6 +613,7 @@ document.addEventListener("click", function(ev){
   if(t.dataset.link){ ev.preventDefault(); var base=S.current&&S.current.indexOf("/")>0?S.current.slice(0,S.current.lastIndexOf("/")+1):""; var target=decodeURIComponent(t.dataset.link.split("#")[0]);
     var cand=[base+target, target].map(function(x){ return x.replace(/^\.\//,""); }); for(var i=0;i<cand.length;i++){ if(S.files[cand[i]]){ setView("file",cand[i]); return; } } toast("That file is not in this folder."); return; }
   if(t.dataset.done!==undefined){ markDone(parseInt(t.dataset.done,10)); return; }
+  if(t.dataset.task){ toggleTask(t.dataset.task); return; }
   if(t.id==="editBtn"){ S.editing=true; renderFile(); return; }
   if(t.id==="cancelEdit"){ S.editing=false; renderFile(); return; }
   if(t.id==="saveEdit"){ var p=S.current, rec=S.files[p]; writeFile(p,$("editor").value,rec.mtime).then(function(){ S.editing=false; toast("Saved "+p); render(); }).catch(handleWriteError); return; }
@@ -573,6 +626,7 @@ document.addEventListener("click", function(ev){
 $("logo").title="Rename this dashboard"; $("brandName").style.cursor="pointer"; $("logo").style.cursor="pointer";
 $("brandName").addEventListener("click",function(){ if(S.loadedAt) openNameDialog(); });
 $("logo").addEventListener("click",function(){ if(S.loadedAt) openNameDialog(); });
+document.addEventListener("submit",function(ev){ if(ev.target.id==="captureForm"){ ev.preventDefault(); var v=$("captureInput").value; capture(v); } });
 var searchTimer; $("search").addEventListener("input",function(e){ var q=e.target.value.trim(); clearTimeout(searchTimer); searchTimer=setTimeout(function(){ if(!S.loadedAt) return; if(q.length<2){ if(S.view==="search") setView("dashboard"); return; } renderSearch(q); },150); });
 document.addEventListener("keydown",function(e){ if(e.key==="/" && document.activeElement.tagName!=="INPUT" && document.activeElement.tagName!=="TEXTAREA"){ e.preventDefault(); $("search").focus(); } });
 

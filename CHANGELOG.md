@@ -4,6 +4,27 @@ All notable changes to this template are documented here. Format follows [Keep a
 
 ## [Unreleased]
 
+### Added
+- Capture: "jot this down" appends a dated line to a new `98_Temp/Inbox.md` straight away, and the weekly review empties it.
+- Tasks: every workstation's MEMORY.md has a Next Actions section with tasks written as `- [ ] What to do (due YYYY-MM-DD)`. The daily brief puts overdue and due-soon tasks first, the weekly review clears finished ones and faces overdue ones, and the dashboard lists them across all areas with a tick box.
+- Recall: before answering about the user's own past, the AI searches the whole workspace, names the file it found, and says plainly when nothing was recorded.
+- File Creation Rule 26: a saved article becomes a short note in `<Workstation>/Resources/` (why it was saved, at most five key points, source, use it for), never a full copy. The example workstation ships one.
+- A Skills table in root CLAUDE.md maps trigger phrases to skill files, so skills work in every session even where the AI tool cannot install them.
+- Setup offers a Quick pace (essentials now, the rest when it first helps), asks which areas to keep, and leads the rules menu with five recommended rules.
+- Dashboard: Next actions and Inbox cards with tick-to-complete and quick capture; "Deferred" replaces "Waiting on you"; dates and greeting follow the time zone in Core Memory.
+
+### Changed
+- An explicit "remember this" is saved straight away and confirmed in one line; only memories the AI suggests still wait for a yes.
+- The "files loaded" note is one short line and can be switched off. Session-audit is offered when the user signals they are done. The first weekly review is offered a week after setup, not in the next session.
+- Workstations start with Next Actions, People and Key Decisions; Resources tables and Workflow steps are no longer invented up front.
+- Weekly review looks for untracked work and proposes projects for it; Memory System says when work should become a project.
+- Rule clarifications: an edit the user asked for counts as confirmed; Starter Rules is a menu, so copied rules do not count as duplicates; the root-files rule names LICENSE and the git files.
+
+### Fixed
+- References that pointed at files removed during setup (README, CONTRIBUTING, validate.py).
+- The example workstation's Resources table pointed at a file that did not exist.
+
+
 ### Changed
 - README rewritten around what CoworkOS is to the person using it, an AI second brain: a one-line promise, a dashboard screenshot, the quick start, a "See it in action" section with illustrations of setup, the folder and a daily brief, what you get day to day, how it works, the skills, and the details folded away below. Light and dark images live in `.github/assets/`, which setup removes along with the rest of `.github/`.
 - Root `CLAUDE.md`, `SETUP.md` and the dashboard's welcome screen now describe the workspace as the user's AI second brain.

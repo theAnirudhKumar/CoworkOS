@@ -1,7 +1,7 @@
 ---
 name: weekly-review
 description: >
-  Use when the user says "weekly review," "review my week," "tidy the workspace," or "workspace check-up." Also offer it once, without running it, when a session starts and the last review recorded in root MEMORY.md is more than about seven days old. It is a 20 to 30 minute upkeep ritual for a CoworkOS-style workspace. It files what is sitting in 98_Temp, asks about each Open Item, flags quiet or finished Active Projects, checks MEMORY.md files for stale or conflicting entries and size, and looks for drift such as broken routing rows, missing files and rules written in two places. Every change is proposed first and only what the user approves is applied. It ends with one ARCHIVE.md line, a short report and one suggestion for the coming week. It does not reorganise the workspace, add structure or rewrite rules.
+  Use when the user says "weekly review," "review my week," "tidy the workspace," or "workspace check-up." Also offer it once, without running it, when a session starts and the last review recorded in root MEMORY.md is more than about seven days old. It is a 20 to 30 minute upkeep ritual for a CoworkOS-style workspace. It empties the quick-capture inbox, files what is sitting in 98_Temp, clears finished tasks and flags overdue ones, asks about each Open Item, flags quiet or finished Active Projects, checks MEMORY.md files for stale or conflicting entries and size, and looks for drift such as broken routing rows, missing files and rules written in two places. Every change is proposed first and only what the user approves is applied. It ends with one ARCHIVE.md line, a short report and one suggestion for the coming week. It does not reorganise the workspace, add structure or rewrite rules.
 ---
 
 # Weekly Review
@@ -39,9 +39,11 @@ These files can run long. If a tool cuts off a read or says the output is too la
 
 State the files you loaded before moving on.
 
-## Step 2: File what is in 98_Temp
+## Step 2: Empty the inbox, then file what is in 98_Temp
 
-List every file in `98_Temp/` except its own index file, `98_Temp.md`. For each one, read its opening and propose one of two homes: the workstation it belongs to, or `99_Archive/` if it is no longer current. Give the file name, its date prefix, and one line on what it holds and why that home fits.
+Start with `98_Temp/Inbox.md`, the quick-capture list. Take each line in turn and propose one of four things: turn it into a task in a workstation's Next Actions (with a due date if it has one), add it to the right MEMORY.md as a fact or decision (memory approval applies), move it into a workstation note, or drop it. Remove each line from the inbox once it has a home or is dropped. The aim is an empty inbox, because a capture list that is never emptied stops being trusted, and then stops being used.
+
+Then list every other file in `98_Temp/` except its index file, `98_Temp.md`, and `Inbox.md`. For each one, read its opening and propose one of two homes: the workstation it belongs to, or `99_Archive/` if it is no longer current. Give the file name, its date prefix, and one line on what it holds and why that home fits.
 
 Present the whole list at once so the user can answer in one reply. Move only what they approve.
 
@@ -50,6 +52,10 @@ A move is a rename, so follow rule 13 in File Creation Rules: search the workspa
 Never delete a file here. If the user wants one gone, follow rule 11 in File Creation Rules: show its path and a one-sentence description, and wait for an explicit yes.
 
 If 98_Temp is empty, say so in one line and move on.
+
+## Step 2b: Clear finished tasks and face overdue ones
+
+In every workstation's Next Actions, remove tasks marked `- [x]`, and add one line to ARCHIVE.md for any that mark something worth remembering, such as a milestone. Then list every open task whose due date has passed, and ask for each: do it this week with a new date, or drop it on purpose. An overdue list that nobody looks at teaches the user to ignore the whole system.
 
 ## Step 3: Decide each Open Item
 
@@ -66,6 +72,7 @@ Remove an entry only after the user picks "drop" or the thing is done. Workstati
 Each Active Projects entry in root MEMORY.md carries the date it was last active. Compare that date with today.
 
 - **Quiet projects.** Flag any project not active in about two weeks. Ask whether it is still active, paused, or finished. If it is still active, propose an updated status line.
+- **Untracked work.** Look for work that is clearly under way but has no Active Projects entry: an Active handoff in the Chat Context Index, several open tasks in one workstation pointing at the same result, or a dated output file updated this week. Propose a one-line project for each, with its outcome and target date.
 - **Finished projects.** Propose moving each finished project to ARCHIVE.md, under the right month and week, in the format `00_Reference/Memory System.md` describes. Then remove it from Active Projects.
 
 Updating Active Projects and writing to ARCHIVE.md are operational bookkeeping under Memory System, so they need no memory-write approval. Still say what you are about to change before you change it, since the user is deciding which projects are finished.
@@ -120,7 +127,7 @@ Place it under the current month heading and the current week heading, most rece
 Start the line with "Weekly review" so the next session can find it. Keep it to the two-sentence cap. For example:
 
 ```
-- [YYYY-MM-DD] Weekly review: 3 files filed from 98_Temp, 1 Open Item dropped, 1 project moved to the archive, 2 stale entries replaced. No drift found.
+- [YYYY-MM-DD] Weekly review: inbox emptied (6 lines), 3 files filed from 98_Temp, 4 finished tasks cleared, 1 Open Item dropped, 1 project moved to the archive, 2 stale entries replaced. No drift found.
 ```
 
 Log the review in both places even if nothing changed, since the date is what the next offer checks.

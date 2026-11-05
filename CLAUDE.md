@@ -8,7 +8,7 @@ This is the user's AI second brain: a workstation-based workspace where each fol
 
 At the start of every session: read MEMORY.md before responding. Use what you find to inform your work, without announcing it.
 
-Memory writes require approval. Propose an entry when something memory-worthy happens, but never write to MEMORY.md without confirmation first. Entries can also be triggered directly: phrases like "remember this," "make a note," "don't forget," "log this," "from now on," or "always." Once a write is approved, make it right away and confirm it was done.
+Memory writes need the user's yes. When you notice something worth remembering, propose the entry and wait. When the user asks directly, with phrases like "remember this," "make a note," "don't forget," "log this," "from now on," or "always," their request is the yes: write it straight away, then say in one line what was saved and where, so they can correct it.
 
 All memory entries are persistent. They stay in MEMORY.md until the user asks to remove or change them.
 
@@ -16,7 +16,15 @@ Flag contradictions. If a new instruction conflicts with an existing memory entr
 
 Full mechanics (capture triggers, entry format, archiving) are in 00_Reference/Memory System.md.
 
-At the end of a session, run the session-audit skill (00_Skills/Custom/session-audit/SKILL.md) rather than relying on memory writes caught mid-conversation. It scans the whole session for corrections, preferences, and decisions that were never written down, proposes where each belongs, and applies only what is approved. This is what keeps this file and MEMORY.md actually current instead of slowly drifting stale.
+At the end of a session, run the session-audit skill (00_Skills/Custom/session-audit/SKILL.md) rather than relying on memory writes caught mid-conversation. You cannot always tell when a session ends, so when the user signals they are done ("thanks, that's all," "bye," "done for today") after real work, offer it in one line. It scans the whole session for corrections, preferences, and decisions that were never written down, proposes where each belongs, and applies only what is approved. This is what keeps this file and MEMORY.md actually current instead of slowly drifting stale.
+
+**Capture.** When the user wants something written down fast, such as "jot this down," "capture this," "add to my inbox," or a thought that has no clear home yet, append it as one dated line to `98_Temp/Inbox.md` straight away and confirm in a few words. Their request is the approval, and filing can wait for the weekly review. Never let a passing thought get lost because the right place was unclear.
+
+**Tasks.** When the user names something to do, especially with a date ("get three quotes by Friday," "remind me to call the bank"), write it as a task in the Next Actions section of the right workstation's MEMORY.md, in exactly this form: `- [ ] What to do (due YYYY-MM-DD)`. Leave out the due part if there is no date, and turn words like "Friday" into a real date in the user's time zone. Confirm where it went. A finished task becomes `- [x]`; the weekly review clears those out. The daily brief and the dashboard both read this form, so keep to it.
+
+**Recall.** Before answering any question about the user's own past, such as what they decided, planned, prefer or were told, search the whole workspace first, not only the files already loaded: root MEMORY.md, every workstation's files, chat handoffs and ARCHIVE.md. Try a few likely words, since "running plan" may be written as "training plan." Answer from what is written, and name the file it came from. If nothing is written down, say so plainly, never fill the gap with a guess, and offer to record the answer now. An honest "I have nothing on that" is worth more than a confident wrong memory.
+
+**Saving what matters.** When the user shares an article, a document or a long passage to keep, do not store the whole thing. Follow rule 26 in 00_Reference/File Creation Rules.md: a short note saying why it was saved, the few points that matter, and where it came from.
 
 **Where things go.** Apply two tests when deciding where to save something. Test 1: does it prescribe behavior (look for "always," "never," "before doing X, do Y")? If so, it belongs in this file, under the right section. Test 2: does it describe a fact about the world that could change (status, a decision, a preference, something the user asked to be remembered)? If so, it belongs in MEMORY.md. When neither test clearly applies, say which file seems right and ask for confirmation before writing.
 
@@ -26,9 +34,25 @@ At the end of a session, run the session-audit skill (00_Skills/Custom/session-a
 
 Before starting any task, identify the relevant workstation from the Routing Map below, read its CLAUDE.md and MEMORY.md, and state which files were loaded before responding.
 
-Loading context is never skipped, and never shortened because the task looks small. Before the first draft, file or reply, also read every reference file those two files point to for that kind of work, such as 00_Resources/voice-principles.md before writing anything as or for the user, and 00_Reference/File Creation Rules.md before creating a file. This applies to a session continued from a summary too. If a file is too large to read in one go, read it in parts; a search inside a file is no substitute for reading it. Short requests are where this gets dropped, so start the first reply with the list of files loaded.
+Loading context is never skipped, and never shortened because the task looks small. Before the first draft, file or reply, also read every reference file those two files point to for that kind of work, such as 00_Resources/voice-principles.md before writing anything as or for the user, and 00_Reference/File Creation Rules.md before creating a file. This applies to a session continued from a summary too. If a file is too large to read in one go, read it in parts; a search inside a file is no substitute for reading it. Short requests are where this gets dropped, so start the first reply of a task with one short line naming what was loaded, such as "Loaded: Work." If the user asks you to stop showing it, record that in Preferences and keep loading the files anyway.
 
 If this workspace syncs to GitHub (see 00_Resources/GitHub Sync Guide.md), check it is current before changing anything: fetch, then check the status. If the remote has commits this copy has not seen, usually from working on another device, say so and stop before editing. Close any app that keeps files open in memory, such as a note-taking app, before pulling, because it can write its old copy back over the pulled files.
+
+### Skills
+
+When the user says one of these phrases, read the skill file and follow it, even if the skill is not installed in the AI tool. This table is how every session finds the skills.
+
+| Say | Skill file |
+| :--- | :--- |
+| "start my day," "what's on today," "morning brief" | 00_Skills/Custom/start-my-day/SKILL.md |
+| "weekly review," "tidy the workspace" | 00_Skills/Custom/weekly-review/SKILL.md |
+| "close out the session," "session audit," "what did we miss" | 00_Skills/Custom/session-audit/SKILL.md |
+| "hand off this chat," "resume," "pick up where we left off" | 00_Skills/Custom/chat-context/SKILL.md |
+| "make this a skill," "save this as a skill" | 00_Skills/Custom/make-a-skill/SKILL.md |
+| "optimize tokens," "how do I prompt this better" | 00_Skills/Custom/optimize-tokens/SKILL.md |
+| "travel mode," "work from GitHub" | 00_Skills/Custom/travel-mode/SKILL.md |
+
+When a new skill is archived in 00_Skills/Custom/, add its row here in the same session.
 
 ### First-time setup
 
@@ -63,6 +87,8 @@ All instructions, rules, and context in this workspace should be mutually exclus
 - **Dashboard.html** owns nothing. It is a page that reads these files and shows them in a browser, so the user can see, browse and edit their workspace outside the chat. Its name for the user lives in Core Memory in MEMORY.md.
 - **98_Temp/ and 99_Archive/** own files, not rules: 98_Temp holds files whose home is not clear yet, and 99_Archive holds old files that are no longer current. Neither is a workstation.
 - **00_Skills/** owns: the record of what skills exist on your AI tool's account, and the archived source of the custom ones. It is a register and a recovery path, never a live skill directory; invoking a skill always uses the account copy.
+
+Two files are menus, not rule sources: 00_Resources/Starter Rules.md and the plain-language list in it. Once the user picks a rule, the copy in this file or in voice-principles.md is the live one, and the menu is only where it came from. A duplicate check ignores the menus.
 
 When adding a new rule, decide where it belongs using the two tests in the Memory System section. If unsure, ask.
 

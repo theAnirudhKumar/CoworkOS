@@ -112,7 +112,7 @@ Then confirm the full path of the file written or refreshed, and the index row a
 
 ## Mode B: Resume
 
-Resume mode runs at the start of a new chat. Read the index before anything else in that message, including before answering any question the user asked alongside it.
+Resume mode runs at the start of a new chat. Read the index before anything else in that message, including before answering any question the user asked alongside it. This is the one place the usual routing order in root CLAUDE.md bends: the handoff names the workstation, so read it first, then load that workstation's files as Step B3 says.
 
 ### Step B1: Find the handoff
 

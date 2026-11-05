@@ -9,19 +9,20 @@ When creating a new workstation, make a subfolder named for it and add these ins
 Sections, in this order:
 
 - **Identity.** One paragraph: who you are in this workstation, what routes here, what does not. If this workstation is one of the Starter Workstations listed at the end of this guide, write it from that area's gist and covers list rather than inventing one.
-- **Resources.** A table with "Resource" and "Read when..." columns. Start empty and fill it in as reference files accumulate.
-- **Workflow.** Numbered steps for the primary task this workstation handles. Start simple and refine over time.
+- **Resources.** A table with "Resource" and "Read when..." columns, added the first time the workstation has a reference file worth pointing to. Leave the section out until then, since Governance Rules omits sections with nothing in them.
+- **Workflow.** Numbered steps for how work in this area usually goes. A brand-new workstation rarely has any yet, so start with one step, "Ask what the user wants help with in this area, and add steps here as a pattern repeats," rather than inventing a process.
 - **Editorial Rules** (only if this workstation produces written output). Domain-specific writing rules that layer on top of the workspace-wide voice guidance in 00_Resources/voice-principles.md.
 
 ### 2. MEMORY.md
 
 - A header naming the workstation.
-- A small number of living sections scoped to this domain: for example, Contacts (people relevant here) and Key Decisions (reasoning behind choices made in this domain).
+- Three living sections every workstation starts with: **Next Actions** (tasks for this area, one per line, as `- [ ] What to do (due YYYY-MM-DD)`), **People** (who matters here and their role, such as a manager, a doctor or a contractor), and **Key Decisions** (choices made in this area, with the reason). Add others only when the area needs them.
+- Write the three headings with no entries yet. The daily brief, the weekly review and the dashboard look for these exact names.
 - Populate it over time as work happens. Do not write it manually up front.
 
-### 3. An optional resources subfolder
+### 3. A Resources subfolder, when needed
 
-An empty folder for reference files specific to this domain, created only once something needs to go in it.
+`<Workstation>/Resources/` holds notes saved for later in this area, such as a distilled article or a summary of a document. Create it the first time something needs to go in it, and follow rule 26 in 00_Reference/File Creation Rules.md for what a saved note looks like.
 
 ## After creating the workstation
 

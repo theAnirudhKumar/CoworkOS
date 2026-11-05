@@ -48,7 +48,7 @@ Read 00_Skills/Skills Inventory.md. Then check the AI tool's own list of skills,
 
 ## Step 4: Draft the SKILL.md
 
-Follow these structural rules. The template's validate.py checks the first five.
+Follow these structural rules.
 
 1. **Folder name** is lowercase words joined by hyphens, such as `meeting-summary`.
 2. **Frontmatter** starts the file. `name:` matches the folder name exactly.
@@ -99,6 +99,7 @@ Once approved:
 
 1. Save the file to `00_Skills/Custom/<name>/SKILL.md`.
 2. Add a row to the Inventory table in `00_Skills/Skills Inventory.md`, with the skill name, type Custom, the archive path, and a one-line note.
+3. Add a row to the Skills table in root CLAUDE.md with the trigger phrases and the file path, so every future session can find it even where the skill is not installed.
 
 This follows the Skills Rule in 00_Reference/Governance Rules.md. The archive copy is the recovery path if the live skill is ever lost.
 

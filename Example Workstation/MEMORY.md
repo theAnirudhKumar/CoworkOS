@@ -2,7 +2,12 @@
 
 *This is example content inside the example workstation. Replace it with your own once you understand the pattern, or delete the whole folder.*
 
-## Contacts
+## Next Actions
+
+- [ ] Example task: cancel the unused streaming subscription (due YYYY-MM-DD)
+- [x] Example task: set up automatic transfer to the savings account
+
+## People
 
 - (none yet, example workstation has none)
 
@@ -13,6 +18,6 @@
 
 ## Active Subscriptions
 
-*A workstation can add whatever living sections its own domain actually needs, beyond the Contacts and Key Decisions every workstation starts with. This is one example: a running list, kept current as things are added or cancelled.*
+*A workstation can add whatever living sections its own domain actually needs, beyond the Next Actions, People and Key Decisions every workstation starts with. This is one example: a running list, kept current as things are added or cancelled.*
 
 - (none yet, example workstation has none)
