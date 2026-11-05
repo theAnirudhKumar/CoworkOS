@@ -4,7 +4,7 @@ A register of the skills your AI tool's account actually has, plus an archived r
 
 ## Why this folder exists, and what it is not
 
-A skill runs from your Claude account, not from a file in this workspace. Nothing in this folder is read by Claude as a live skill; invoking a skill always uses the account copy, the same way any other Claude session would. So why keep a copy here at all? Because the account is the only place the live version exists, and if it is ever lost, edited by accident, or you switch machines, there is nothing to recover it from unless a copy also lives somewhere durable. This folder is that recovery path, and this file is the index of what should be in it.
+Where your AI tool has a skill installed, the installed copy is the one that runs. Where it does not, the Skills table in root CLAUDE.md sends the AI to the file in this folder, and it follows that file directly. Either way, this folder matters: the account copy is the only other place a skill lives. So why keep a copy here at all? Because the account is the only place the live version exists, and if it is ever lost, edited by accident, or you switch machines, there is nothing to recover it from unless a copy also lives somewhere durable. This folder is that recovery path, and this file is the index of what should be in it.
 
 **The rule:** when you create or meaningfully change a custom skill on your account, copy its source into `Custom/` in the same session. If you are archiving someone else's skill rather than one you wrote, it goes in `Third-Party/` instead, with its original LICENSE and README kept alongside it.
 

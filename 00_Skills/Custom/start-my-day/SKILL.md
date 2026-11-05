@@ -56,6 +56,8 @@ Every item must trace to a file or a connected source. If you cannot point to wh
 
 Each item gets one line saying what it is and why it made the list today.
 
+In the first weeks, there may be fewer than three real items. Do not invent any. Instead, if a Core Memory goal or an Active Project has no open task, add one line after the brief offering to set its next step, for example: "Your 10k goal has no next step yet. Want to add one?" Write the task only on a yes.
+
 **Stale** is one line for the most useful thing that looks forgotten. Examples are an Active Project not active in about two weeks, an Open Item that has sat for a month, or an Active handoff that nobody has touched. If several look stale, and the last weekly review is more than about seven days old, suggest the weekly-review skill in this line.
 
 ## Step 5: Write the brief

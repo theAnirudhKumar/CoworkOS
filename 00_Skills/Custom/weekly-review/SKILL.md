@@ -16,7 +16,7 @@ This skill owns the review procedure only. Root CLAUDE.md owns routing and the m
 
 Run it when the user asks with any of the trigger phrases.
 
-Also offer it once at the start of a session when the last review is more than about seven days old. The date comes from the "Weekly review" entry under Scheduled Tasks in root MEMORY.md, which every session already reads, so ARCHIVE.md stays out of session-start reading. If there is no such entry yet, offer it once the workspace has at least one workstation.
+Also offer it once at the start of a session when the last review is more than about seven days old. The date comes from the "Weekly review" entry under Scheduled Tasks in root MEMORY.md, which every session already reads, so ARCHIVE.md stays out of session-start reading. Root CLAUDE.md tells every session to make this check. If the entry says the review has not run yet, count from its setup date. If there is no entry at all, offer it once the workspace has at least one workstation.
 
 Offer it in one line, such as "It has been about ten days since the last weekly review. Want to run it now?" Then carry on with whatever the user asked. Do not offer it again in the same session, and do not start it without a yes.
 
@@ -26,7 +26,7 @@ If the workspace syncs to GitHub, follow the sync check in the Routing Protocol 
 
 Take today's date from the user's own time zone. Many AI tools run on a server clock set to UTC, which can put you on the wrong day. If the time zone is not recorded in Core Memory in root MEMORY.md, ask once and propose saving it there.
 
-Tell the user the plan in two lines: the eight steps below, and that nothing changes without their yes. Then begin.
+Tell the user the plan in two lines: the steps below, and that nothing changes without their yes. Then begin.
 
 ## Step 1: Load the workspace
 
@@ -59,7 +59,7 @@ In every workstation's Next Actions, remove tasks marked `- [x]`, and add one li
 
 ## Step 3: Decide each Open Item
 
-Open Items in root MEMORY.md are things deferred on purpose. They are only useful if someone decides about them now and then. For each entry, quote it and ask the user to pick one:
+Open Items in root MEMORY.md are things deferred on purpose. They are only useful if someone decides about them now and then. Items deferred during first-run setup, such as the voice questions or the starter rules, are meant to be offered when they would help, so group them into one question ("Keep the setup leftovers for later?") and move on on a yes. For every other entry, quote it and ask the user to pick one:
 
 - **Act now.** Do it during this review if it is quick, or name it as the suggestion for the coming week in Step 8.
 - **Keep.** Leave it as it is. If its reason has changed, propose the new wording.
