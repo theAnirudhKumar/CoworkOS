@@ -1,106 +1,168 @@
 # CoworkOS
 
-A minimal, installable framework for running an AI agent as a persistent, structured assistant across every area of your life or work.
+**Your AI second brain.** A folder of plain files that remembers your life and work, organised by area, so every AI chat starts already knowing you. You own the files, and any AI tool that can read a folder can use them.
 
-Instead of one long system prompt, CoworkOS gives your AI tool a small set of markdown files that work together: a routing protocol that sends each task to the right context, a memory system that persists across sessions, and one governance rule that keeps every fact and every instruction in exactly one place. It was designed and tested against Claude Cowork, but the files themselves are plain markdown, not anything Claude-specific, so it works with other AI tools too. It ships with a worked example so you can see the pattern filled in, not just described.
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/dashboard-dark.png">
+  <img alt="The CoworkOS dashboard: active projects, open items, workstations and workspace health for a sample workspace" src=".github/assets/dashboard-light.png">
+</picture>
 
-## What this is
+<sub>The dashboard that ships with CoworkOS, shown with sample data. It reads your files in your browser and nothing leaves your computer.</sub>
 
-- `CLAUDE.md`, `MEMORY.md`, `ARCHIVE.md` - the three root files. The constitution, the notepad, and the historical record.
-- `SETUP.md` - the first-run setup. It deletes itself, along with the rest of the template's own files, once setup is finished. See "What setup leaves behind" below.
-- `00_Reference/` - the mechanics behind the rules in `CLAUDE.md`, loaded on demand rather than every session.
-- `00_Resources/` - supporting material: the workstation setup guide, a starter voice-principles file, notes on using other AI tools, and the optional GitHub sync guide.
-- `00_Skills/` - a register of the skills your AI tool's account actually has, and a recovery copy of the ones you build yourself. See "Skills live on your account, not in this folder" below.
-- `Example Workstation/` - a filled-in sample so you can see what a real workstation looks like, not just read a description of one. Rename or delete it once the pattern clicks.
-- `.gitignore` and `.githooks/pre-commit` - optional, if you put this workspace under version control. See "Protecting what goes in here" below.
+**[Quick start](#quick-start)** · **[See it in action](#see-it-in-action)** · **[What you get](#what-you-get)** · **[How it works](#how-it-works)** · **[Your dashboard](#your-dashboard)** · **[Skills](#skills-that-come-with-it)**
 
-A "workstation" is a folder for one area of life or work: a job, a side project, health, finances, relationships, anything that deserves its own context. Each one gets its own `CLAUDE.md` and `MEMORY.md`, scoped to that domain, so the root files never have to hold everything at once. `00_Resources/Workstation Setup Guide.md` ships a Starter Workstations list of 15 common life areas, so first-run setup offers a real, complete menu instead of asking you to invent one from scratch.
+## Why a second brain
+
+Every AI chat starts from zero. You explain your job, your goals and your preferences again, and the corrections you made last week are gone. One giant instruction prompt helps for a while, then it gets too long to manage and the AI starts mixing up which rules apply where.
+
+CoworkOS fixes that with a simple structure. Each area of your life gets its own folder, such as Work, Finances, Health or Travel, with its own rules and its own memory. Your AI reads the right folder for each task, remembers what you decided, and asks before it saves anything new. Over weeks it becomes a second brain that knows you, and it is all plain text you can read, edit, move or delete at any time.
+
+## Quick start
+
+Copy this into the AI tool you use (Claude Cowork, or another tool that can work with files on your computer) and it does the rest:
+
+```
+I want to set up CoworkOS, my AI second brain. Please get the files
+from this repository: https://github.com/theAnirudhKumar/CoworkOS
+
+Download the files rather than keeping a git clone, so my second
+brain does not carry this repository's history or point back at it.
+
+Before saving anything, ask me exactly where I want it saved, and
+confirm the full path back to me, so I have a real place to find it
+later rather than a temporary folder. Save the files there.
+
+Then read CLAUDE.md at the root of that folder and follow it,
+including the first-run setup in SETUP.md. Ask me which areas of my
+life or work I want to track before creating anything, and do not
+create anything I did not ask for.
+```
+
+You can pause setup at any point and pick it up later. Your AI asks a few questions about you, offers a starter menu of 15 life areas to keep or remove, sets up the skills, helps you name your dashboard, and then removes the template's own files, so what is left is yours alone.
+
+Not sure your AI tool can work with a folder on your computer? See [Using CoworkOS with Other AI Tools](00_Resources/Using%20CoworkOS%20with%20Other%20AI%20Tools.md).
+
+## What you get
+
+- **An AI that remembers you.** Your name, your goals, your decisions and your preferences live in memory files, and every session reads them first.
+- **One folder per area of your life.** Work, Finances, Health, Learning, Travel and more, each with its own rules and memory, so the AI uses the right context for each task. Setup offers 15 common areas to start from.
+- **Corrections that stick.** When you fix something, the AI proposes a rule so it does not happen again. A close-out audit at the end of a session catches anything missed.
+- **A daily brief.** Say "start my day" for the three things most worth doing today, what is waiting on you, and what is coming up, from your files and any calendar or email you connect.
+- **A weekly check-up.** Say "weekly review" and in 20 to 30 minutes your second brain is tidied: loose files filed, finished projects archived, stale notes replaced.
+- **A dashboard you name yourself.** Open one file in your browser to see everything at a glance, browse and search every file, and edit them.
+- **Pick up where you left off.** Say "hand off this chat" and a fresh chat later can continue without you explaining everything again.
+- **Habits that become skills.** Ask for the same kind of work three times and it offers to save the method as a skill.
+- **Private by default.** Plain markdown on your own computer. Nothing is uploaded unless you choose to sync to your own private GitHub repository, and an optional guard stops commits that contain something shaped like an ID or account number.
+
+## See it in action
+
+These are illustrations with sample data, so you can see what you are setting up before you start.
+
+**1. It starts with a short conversation.** Your AI offers 15 common areas of life, you keep the ones that fit, and it creates a folder for each.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/2-setup-dark.png">
+  <img alt="Illustration: during setup the AI lists 15 life areas, the user drops three, and the AI creates twelve areas and asks what to call the dashboard" src=".github/assets/2-setup-light.png">
+</picture>
+
+**2. Your second brain is a folder of plain files.** Each area has its own rules and memory. `MEMORY.md` holds what your AI should never forget.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/1-folder-dark.png">
+  <img alt="Illustration: the workspace folder with one folder per life area, and MEMORY.md open showing active projects, open items and core memory" src=".github/assets/1-folder-light.png">
+</picture>
+
+**3. Every day, it already knows you.** Ask for your brief, and when you correct it, it offers to remember the correction for good.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset=".github/assets/3-day-dark.png">
+  <img alt="Illustration: the user says start my day, the AI gives a top three and what is waiting, the user adds a weekend rule and the AI offers to save it" src=".github/assets/3-day-light.png">
+</picture>
 
 ## How it works
 
-At the start of a session, your AI tool reads root `MEMORY.md` for orientation, then routes the task to the right workstation using the Routing Map in `CLAUDE.md`. It reads that workstation's own `CLAUDE.md` and `MEMORY.md`, does the work, and proposes any new memory entries for approval before writing them. Every rule about where a new file or a new fact belongs comes down to one test, spelled out in the Governance section of `CLAUDE.md`: does it prescribe behavior, or does it describe a fact about the world that could change.
-
-## Getting started
-
-The easiest way to install this is to copy one block of text into whichever AI tool you use (Claude Cowork, ChatGPT Work Mode, or another tool with file access) and let it do the rest:
-
 ```
-I want to set up a CoworkOS workspace for myself. Please get the files from
-this repository: https://github.com/theAnirudhKumar/CoworkOS
-
-Download the files rather than keeping a git clone, so my workspace does
-not carry this repository's history or point back at it. Before saving anything, ask me exactly where I want this workspace saved,
-and confirm the full path back to me once you have it, so I have a real
-answer to point back to later, not a temporary or session-specific location
-you picked for me. Save the files there. Once the files are saved, read
-CLAUDE.md first, at the root of that folder, and follow its instructions
-from there, including the first-run setup in SETUP.md. Ask me what areas of my
-life or work I want to track before creating anything, and do not create a
-workstation I did not ask for.
+Your workspace/
+  CLAUDE.md           Rules your AI follows, and the map of your areas
+  MEMORY.md           What it remembers across sessions
+  Dashboard.html      Your second brain in your browser
+  Work/               One folder per area of your life, each with
+  Finances/           its own CLAUDE.md (rules) and MEMORY.md (memory)
+  Health/
+  00_Skills/          The skills it uses, such as start-my-day
 ```
 
-What happens next depends on the tool, but the shape is the same everywhere: it fetches the repository, asks where to save it, saves the files there, reads `CLAUDE.md`, and starts asking you what to set up rather than assuming anything. The "where to save it" question matters more than it looks: some tools default to a temporary or per-session folder you cannot easily find again, so make sure you get a real, memorable answer before moving on. See `00_Resources/Using CoworkOS with Other AI Tools.md` if your tool is not Claude Cowork, for what to expect and what to check first, including whether your tool works from a stable folder at all.
+At the start of every chat, your AI reads `MEMORY.md`, finds the right area in the map in `CLAUDE.md`, and reads that area's own rules and memory. It does the work, then proposes anything worth remembering and saves it only when you say yes. Every rule lives in exactly one place, so nothing contradicts itself as your second brain grows.
 
-If you would rather do this by hand:
+You talk to it in your AI tool as usual. The files are the long-term memory behind the chat.
 
-1. Get the files onto your computer. If you don't use git: on this repository's GitHub page, click the green **Code** button, choose **Download ZIP**, then unzip it. If you do use git: `git clone https://github.com/theAnirudhKumar/CoworkOS.git`. Either way, end up with a folder your AI tool can read and write to. If you're not sure how to give your AI tool access to that folder, ask it directly, most tools have their own way to connect a local folder, and yours can walk you through its own steps better than a doc written to cover several tools at once.
-2. Look at `Example Workstation/` first. It is the fastest way to understand what "a workstation" actually means in practice, before you build your own.
-3. Start a session and say what you want to track. `CLAUDE.md` sends your AI tool to `SETUP.md`, the same first-run setup flow: your AI tool offers the full Starter Workstations list, 15 common life areas, not just a handful of examples, and asks which ones to remove. You can also add an area that is not on the list. Only what is left after that gets created.
-4. Rename or delete `Example Workstation/` once you have created your own, and remove its row from the Routing Map. Setup offers to do this for you.
-5. Work normally. Correct your AI tool when it gets something wrong, and it will propose a memory entry so the correction sticks.
+## Your dashboard
 
-### What setup leaves behind
+Double-click `Dashboard.html` in your workspace folder and choose the folder. You get your active projects, what is waiting on you, scheduled tasks and the health of your second brain, plus a tree of every file, search across all of them and a reader for any file. In Chrome and Edge you can edit files and mark items done, and it checks that a file has not changed elsewhere before saving. Other browsers show a read-only view.
 
-This repository holds two kinds of file: the workspace itself, and the material for maintaining the template (this README, `CHANGELOG.md`, `CONTRIBUTING.md`, `validate.py`, `.github/`). The last step of `SETUP.md` removes the second kind from your copy, clears the placeholder example entries, removes any git remote pointing back at this repository, offers to drop this repository's git history if you cloned it, and then deletes `SETUP.md` itself. What is left is yours alone, with no setup script in `CLAUDE.md` and nothing from the template's author except the `LICENSE` notice, which the license requires every copy to keep. If you set up a workspace before this step existed, `00_Resources/Troubleshooting.md` has the one-line request to give your AI tool to do the same cleanup now.
+It has light, dark and system themes, and it carries the name you gave it during setup. It runs entirely in your browser, with nothing to install and nothing uploaded. You can also open the same files in any notes app or editor that reads markdown.
 
-First-run setup also asks, once, whether you want this workspace synced to a GitHub repository you own. This is optional and off by default: see "Working away from your primary computer" below for what it is for.
+## Skills that come with it
 
-## Seeing your workspace in a browser
+Say the phrase in your AI tool and it follows the skill. Setup installs them where your tool supports skills.
 
-You do most of the work through chat, but you can also look at everything at once. Double-click `Dashboard.html` in your workspace folder, click **Open my workspace folder**, and choose the folder. You get a dashboard of your active projects, open items, scheduled tasks and workspace health, a tree of every file, search across all of them, and a reader for any file. In Chrome and Edge you can also edit files and mark open items done, and it checks that a file has not changed elsewhere before saving. Other browsers show a read-only view. It runs entirely on your computer: nothing is uploaded, and there is nothing to install. First-run setup asks you to give it a name of your own.
+| Skill | Say | What it does |
+| :--- | :--- | :--- |
+| start-my-day | "start my day" | A short daily brief: top three, waiting on you, coming up |
+| weekly-review | "weekly review" | A 20 to 30 minute tidy of your whole second brain |
+| session-audit | "close out the session" | Saves the corrections and decisions from today |
+| chat-context | "hand off this chat" | Lets a new chat pick up exactly where this one stopped |
+| make-a-skill | "make this a skill" | Turns work you repeat into a reusable skill |
+| optimize-tokens | "optimize tokens" | Gets the same result from a leaner request |
+| travel-mode | "travel mode" | Works from your synced copy when your computer is closed |
 
-You can still open the same files in any editor or note-taking app that reads markdown.
+## Works with your AI tool
 
-## Closing out a session properly
+CoworkOS was designed and tested on Claude Cowork, and it has also been tested on Codex. The files are plain markdown with no special format, so any AI tool that can read and write a folder on your computer can use them. A one-line `AGENTS.md` points tools that look for that file to `CLAUDE.md`. [Using CoworkOS with Other AI Tools](00_Resources/Using%20CoworkOS%20with%20Other%20AI%20Tools.md) has notes for specific tools and what to check first.
 
-The memory system above only works if `MEMORY.md` and `CLAUDE.md` stay current, and that depends on something noticing, mid-conversation, that a correction or a decision is worth saving. Plenty of what should be captured is not that explicit: a small correction that got fixed and moved past, a preference mentioned in passing, a decision buried inside an unrelated task. Nothing surfaces those unless something deliberately looks back over the whole conversation before it ends.
+## Your data stays yours
 
-`00_Skills/Custom/session-audit/SKILL.md` is that deliberate look back. Run it, or a skill like it, at the end of a session: it scans the conversation for uncaptured corrections, preferences, decisions, and new context, proposes exactly where each one belongs, writes only what you approve, and, if the workspace is a git repository, syncs everything to the remote as the last step. Trigger it with "audit this session," "session audit," "what did we miss," "end of session check," or "close out the session." Without a habit like this, the memory system slowly drifts out of date instead of actually staying current.
+Everything is plain text in a folder you choose. You can read every file, and nothing is hidden in an app or a database. Syncing is off by default. If you turn it on, your second brain goes to a private GitHub repository under your own account, which lets you reach it from your phone, and a pre-commit guard refuses any commit that contains something shaped like an ID or account number. See the [GitHub Sync Guide](00_Resources/GitHub%20Sync%20Guide.md).
 
-## Skills live on your account, not in this folder
+<details>
+<summary><strong>Set it up by hand instead</strong></summary>
 
-A skill runs from your AI tool's account, on tools that have this concept at all (Claude Cowork does; see `00_Resources/Using CoworkOS with Other AI Tools.md` for others). Nothing in `00_Skills/` is read as a live skill; invoking one always uses the account copy. So this folder is not where skills execute from, it is where you keep a copy of them so they are not lost if the account version is ever edited by accident or you switch machines. `00_Skills/Skills Inventory.md` is the index, `Custom/` holds skills you wrote yourself, and `Third-Party/` holds someone else's, kept with their original license. The rule is simple: when you build or change a skill on your account, archive it here in the same session.
+1. Get the files. On this page, click the green **Code** button, choose **Download ZIP**, and unzip it somewhere you will find again.
+2. Give your AI tool access to that folder. If you are not sure how, ask your AI tool directly, since each tool has its own way.
+3. Look at `Example Workstation/` to see what an area of your life looks like once it is filled in.
+4. Start a chat and say what you want to track. `CLAUDE.md` sends your AI tool to `SETUP.md`, which runs the same first-run setup as the quick start.
 
-Turning a file in this folder into an actual skill you can invoke is a separate step from having the file. The mechanics vary by tool, so rather than guess at yours, ask your AI tool directly: something like "read 00_Skills/Custom/session-audit/SKILL.md and set this up as a skill I can invoke going forward" works on tools that support the concept at all.
+</details>
 
-## Working away from your primary computer
+<details>
+<summary><strong>What setup removes from your copy</strong></summary>
 
-If you agreed to the optional GitHub sync during first-run setup, this workspace lives in a private GitHub repository you own, not only on the computer where you first set it up. `00_Resources/GitHub Sync Guide.md` covers what that involves and how to set it up if you skipped it initially.
+This repository holds two kinds of file: your second brain itself, and the material for maintaining the template (this README, `CHANGELOG.md`, `CONTRIBUTING.md`, `validate.py` and `.github/`). The last step of setup removes the second kind, clears the example entries, removes any link back to this repository, offers to drop this repository's git history if you cloned it, and then deletes `SETUP.md`. What is left is yours alone, apart from the `LICENSE` notice, which the license requires every copy to keep. If you set up before this step existed, [Troubleshooting](00_Resources/Troubleshooting.md) has the one-line request to give your AI tool to do the same now.
 
-The main reason to do this is reaching your workspace from somewhere else, most commonly your phone, when your AI tool has a way to work from a synced copy while you are away from your desktop. `00_Skills/Custom/travel-mode/SKILL.md` documents one way to do this: it clones just the workspace's markdown files, works from that copy, and pushes everything back so your next session on your primary computer can pull it down.
+</details>
 
-## Protecting what goes in here
+<details>
+<summary><strong>Using git? Protect what goes in</strong></summary>
 
-This template assumes you will eventually put real personal information into it: budgets, health notes, contact details, whatever your workstations end up tracking. If you keep this workspace under version control, that information ends up in git history too, and git history is permanent by default.
-
-`.gitignore` keeps common personal-document filenames out of the repository entirely. `.githooks/pre-commit` goes a step further: it scans every commit for the shape of a government ID number, a bank identifier, or a financial-account number, and refuses the commit if it finds one. It ships with a couple of example formats (Indian ID documents, a US Social Security Number) since those are what the author could write correctly; read the comments at the top of the file and adjust the patterns for whatever applies where you live. Neither of these does anything until you activate the hook once, from inside the workspace:
+Your second brain will hold real personal information. If you keep it under version control, that information ends up in git history too, and git history is permanent by default. `.gitignore` keeps common personal-document filenames out, and `.githooks/pre-commit` scans every commit for the shape of a government ID, a bank identifier or an account number and refuses the commit if it finds one. It ships with example formats for India and the United States; read the comments at the top of the file and adjust them for where you live. Turn it on once, from inside the workspace:
 
 ```bash
 git config core.hooksPath .githooks
 chmod +x .githooks/pre-commit
 ```
 
-Both are optional, and only relevant at all if you use git. If you never put this workspace under version control, neither file does anything, and you can delete them. This is the same activation step the optional GitHub sync in first-run setup walks you through.
+</details>
 
-## Structure
+<details>
+<summary><strong>Everything in the box</strong></summary>
 
 | Path | Purpose |
 | :--- | :--- |
-| `CLAUDE.md` | Memory system, routing protocol, governance |
+| `CLAUDE.md` | The rules your AI follows: memory, routing, governance, and the map of your areas |
 | `SETUP.md` | First-run setup; deletes itself and the template-maintainer files below when finished |
-| `MEMORY.md` | Template for persistent, cross-session facts |
+| `MEMORY.md` | What your second brain remembers across sessions |
 | `ARCHIVE.md` | The historical record: completed work, read only on demand |
-| `Dashboard.html` | Your workspace as a page in your browser: dashboard, every file, search, and edits. Double-click it and choose your workspace folder |
+| `Dashboard.html` | Your second brain as a page in your browser: dashboard, every file, search, and edits |
 | `AGENTS.md` | A one-line pointer to `CLAUDE.md` for AI tools that look for that name |
 | `98_Temp/`, `99_Archive/` | A holding folder for files with no clear home yet, and a folder for old files that are no longer current |
 | `00_Reference/Governance Rules.md` | Section ordering, size caps, and the rules for where content goes |
@@ -108,36 +170,38 @@ Both are optional, and only relevant at all if you use git. If you never put thi
 | `00_Reference/Memory System.md` | Full mechanics: capture triggers, entry format, archiving |
 | `00_Reference/Visual Standards.md` | Layout rules for steps, tables, diagrams and generated documents |
 | `00_Reference/CLAUDE.md Change Log.md` | The record of every substantive change to root `CLAUDE.md`, and what counts as one |
-| `00_Resources/Workstation Setup Guide.md` | How to create a new workstation, and the Starter Workstations menu |
+| `00_Resources/Workstation Setup Guide.md` | How to create a new area, and the Starter Workstations menu |
 | `00_Resources/Connectors Guide.md` | Which apps to connect first, what each unlocks, and the safety rules |
 | `00_Resources/Starter Rules.md` | An optional menu of proven working rules, offered once during setup |
 | `00_Resources/voice-principles.md` | Starter file for how written output should sound; fills in through use |
-| `00_Resources/Using CoworkOS with Other AI Tools.md` | Running this on ChatGPT Work Mode, Kimi Work, OpenClaw, Hermes Agent, or anything else |
+| `00_Resources/Using CoworkOS with Other AI Tools.md` | Running this on another AI tool, and what to check first |
 | `00_Resources/GitHub Sync Guide.md` | Setting up the optional GitHub sync |
 | `00_Resources/Troubleshooting.md` | Fixing common install and setup problems |
-| `00_Skills/Skills Inventory.md` | Index of skills archived from your account |
-| `00_Skills/Custom/session-audit/SKILL.md` | The session-audit skill itself, and the worked example of the registry pattern |
+| `00_Skills/Skills Inventory.md` | Index of the skills and where their copies live |
+| `00_Skills/Custom/session-audit/SKILL.md` | End-of-session capture and optional sync |
 | `00_Skills/Custom/travel-mode/SKILL.md` | Working from the GitHub copy when your primary computer is unreachable |
 | `00_Skills/Custom/chat-context/SKILL.md` | Handing a long chat off to a fresh one, and resuming from the handoff |
-| `00_Skills/Custom/weekly-review/SKILL.md` | A short weekly upkeep that keeps the workspace trustworthy |
-| `00_Skills/Custom/start-my-day/SKILL.md` | A daily brief built from the workspace, plus any connected apps, read-only |
+| `00_Skills/Custom/weekly-review/SKILL.md` | A short weekly upkeep that keeps your second brain trustworthy |
+| `00_Skills/Custom/start-my-day/SKILL.md` | A daily brief built from your files, plus any connected apps, read-only |
 | `00_Skills/Custom/make-a-skill/SKILL.md` | Turning a repeated piece of work into a reusable skill |
 | `00_Skills/Custom/optimize-tokens/SKILL.md` | Getting the same result from a leaner request |
 | `00_Skills/Third-Party/` | Where someone else's archived skill goes |
-| `Example Workstation/` | A filled-in sample workstation: `CLAUDE.md` and `MEMORY.md` with realistic content |
-| `.gitignore`, `.githooks/pre-commit` | Optional protection if you version-control this workspace |
-| `CONTRIBUTING.md` | How to propose a change to this repository itself (removed from your copy at the end of setup) |
+| `Example Workstation/` | A filled-in sample area: `CLAUDE.md` and `MEMORY.md` with realistic content |
+| `.gitignore`, `.githooks/pre-commit` | Optional protection if you version-control your second brain |
+| `CONTRIBUTING.md` | How to propose a change to this repository (removed from your copy at the end of setup) |
 | `CHANGELOG.md` | What changed in this template, release by release (removed at the end of setup) |
-| `validate.py`, `.github/workflows/validate.yml` | Structural checks run on every pull request (removed at the end of setup) |
+| `validate.py`, `.github/` | Structural checks and the README images (removed at the end of setup) |
 
-## Contributing
-
-This is a template meant for a stranger to adapt, so changes go through an issue and a pull request rather than a direct push, and the bar includes staying generic. See `CONTRIBUTING.md`.
+</details>
 
 ## Credits
 
-This architecture is adapted from Jeff Su's Claude Cowork tutorials, in particular ["Claude Cowork for Beginners: Build Your Own Jarvis"](https://www.jeffsu.org/claude-cowork-build-your-own-jarvis/) and the video ["Learn 80% of Claude Cowork in Under 20 Minutes"](https://www.youtube.com/watch?v=z9rdrNrkvDY). If you are new to this pattern, start there.
+The workstation architecture is adapted from Jeff Su's Claude Cowork tutorials, in particular ["Claude Cowork for Beginners: Build Your Own Jarvis"](https://www.jeffsu.org/claude-cowork-build-your-own-jarvis/) and the video ["Learn 80% of Claude Cowork in Under 20 Minutes"](https://www.youtube.com/watch?v=z9rdrNrkvDY). If you are new to the pattern, start there.
+
+## Contributing
+
+CoworkOS is a template meant for a stranger to adapt, so changes go through an issue and a pull request, and the bar includes staying generic. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 
-MIT. See `LICENSE`.
+MIT. See [LICENSE](LICENSE).

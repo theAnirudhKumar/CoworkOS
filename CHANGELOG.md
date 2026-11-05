@@ -4,6 +4,12 @@ All notable changes to this template are documented here. Format follows [Keep a
 
 ## [Unreleased]
 
+### Changed
+- README rewritten around what CoworkOS is to the person using it, an AI second brain: a one-line promise, a dashboard screenshot, the quick start, a "See it in action" section with illustrations of setup, the folder and a daily brief, what you get day to day, how it works, the skills, and the details folded away below. Light and dark images live in `.github/assets/`, which setup removes along with the rest of `.github/`.
+- Root `CLAUDE.md`, `SETUP.md` and the dashboard's welcome screen now describe the workspace as the user's AI second brain.
+- Dashboard: "1 file in 98_Temp needs a home" reads correctly, and dates in square brackets show without the brackets.
+
+
 ### Added
 - `Dashboard.html` at the workspace root: open it in a browser, choose the workspace folder once, and see a dashboard of active projects, open items, scheduled tasks, memory size, workstations, handoffs and workspace health, plus a tree of every file, search and a reader. In Chrome and Edge it can edit any file and mark open items done, checking first that the file has not changed on disk. Light, dark or system theme. Runs locally with nothing to install and no outside requests.
 - The dashboard carries a name the user chooses, saved as `Dashboard name:` in Core Memory. First-run setup has a new step 11 that introduces the dashboard and offers names (Atlas, Basecamp, Compass, Mission Control, North Star, Headquarters, The Desk, or the user's own). The about-me step now records `Name:` and `Time zone:` in a fixed form the dashboard reads. The hand-over is now step 12.

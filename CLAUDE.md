@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-This is a workstation-based AI workspace: each folder under the root represents one area of life or work, with its own identity, workflow, and accumulated context. It was designed and tested against Claude Cowork, but nothing about this file's format is Claude-specific; read this file at the start of every session, whichever AI tool is reading it. See 00_Resources/Using CoworkOS with Other AI Tools.md for notes on other tools.
+This is the user's AI second brain: a workstation-based workspace where each folder under the root represents one area of life or work, with its own identity, workflow, and accumulated context. It was designed and tested against Claude Cowork, but nothing about this file's format is Claude-specific; read this file at the start of every session, whichever AI tool is reading it. See 00_Resources/Using CoworkOS with Other AI Tools.md for notes on other tools.
 
 ---
 
