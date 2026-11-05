@@ -1,6 +1,6 @@
 # SETUP.md
 
-First-run setup for a fresh copy of the CoworkOS template. This file exists only until setup is finished: its last step deletes it, so a workspace that has been set up never carries these instructions, the starter menu, or anything else that belongs to the template rather than to the person using it. If this file is present, setup has not been finished yet; if it is gone, it has.
+First-run setup for a fresh copy of the CoworkOS template, which becomes the user's AI second brain. This file exists only until setup is finished: its last step deletes it, so a workspace that has been set up never carries these instructions, the starter menu, or anything else that belongs to the template rather than to the person using it. If this file is present, setup has not been finished yet; if it is gone, it has.
 
 Bootstrapping the workspace this way does not need a workstation identified first the way root CLAUDE.md's Routing Protocol otherwise requires, since none exists yet. The shipped Example Workstation row in the Routing Map does not count as a real workstation for this purpose.
 

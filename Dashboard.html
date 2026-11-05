@@ -269,7 +269,7 @@ function entriesOf(sec){
   return sec.lines.filter(function(l){ return /^\s*-\s+/.test(l.text) && !/Example entry:/i.test(l.text); }).map(function(l){
     var raw=l.text.replace(/^\s*-\s+/,"");
     var dm=raw.match(/^\[(\d{4}-\d{2}-\d{2})\]\s*/); var date=dm?dm[1]:null; if(dm) raw=raw.slice(dm[0].length);
-    var plain=raw.replace(/\*\*|__|`/g,"").replace(/\[([^\]]+)\]\([^)]+\)/g,"$1");
+    var plain=raw.replace(/\*\*|__|`/g,"").replace(/\[(\d{4}-\d{2}-\d{2})\]/g,"$1").replace(/\[([^\]]+)\]\([^)]+\)/g,"$1");
     var title=plain, detail="";
     var q=plain.match(/^"([^"]+)"\s*[-:]?\s*(.*)$/);
     if(q){ title=q[1]; detail=q[2]; }
@@ -374,8 +374,8 @@ function greeting(){ var h=new Date().getHours(); return h<12?"Good morning":h<1
 function renderWelcome(){
   var supportsWrite=!!window.showDirectoryPicker;
   $("main").innerHTML='<div class="top"><div></div><div class="actions">'+themeSwitch()+'</div></div>'+
-  '<div class="welcome"><h1>Your workspace, at a glance</h1>'+
-  '<p class="sub">This page reads the markdown files in your workspace folder and shows them as a dashboard you can click through. Everything stays on your computer. Nothing is uploaded.</p>'+
+  '<div class="welcome"><h1>Your second brain, at a glance</h1>'+
+  '<p class="sub">This page reads the markdown files in your second brain's folder and shows them as a dashboard you can click through. Everything stays on your computer. Nothing is uploaded.</p>'+
   '<ol><li>Click <strong>Open my workspace folder</strong>.</li><li>Choose the folder that holds <code>CLAUDE.md</code> and <code>MEMORY.md</code>.</li><li>Allow the browser to view'+(supportsWrite?' and save changes to':'')+' the folder when it asks.</li></ol>'+
   '<div class="actions" style="margin-top:18px"><button class="btn p" id="openBtn">Open my workspace folder</button><span id="reopenSlot"></span></div>'+
   (supportsWrite?'':'<div class="note">This browser can show your workspace but cannot save changes to it. To edit from here, open this file in Chrome or Edge.</div>')+
@@ -423,7 +423,7 @@ function health(M){
   var ghost=M.routed.filter(function(r){ return r && !/^example workstation$/i.test(r) && !M.ws[r] && !Object.keys(M.ws).some(function(n){return n.toLowerCase()===r.toLowerCase();}); });
   row(!missing.length, missing.length? esc(missing.join(", "))+" "+(missing.length>1?"have":"has")+" no Routing Map row" : "Every workstation has a Routing Map row");
   if(ghost.length) row(false, "Routing Map points to a missing folder: "+esc(ghost.join(", ")));
-  row(!M.temp.length, M.temp.length? M.temp.length+" file"+(M.temp.length>1?"s":"")+" in 98_Temp need a home" : "98_Temp is empty");
+  row(!M.temp.length, M.temp.length? M.temp.length+(M.temp.length>1?" files in 98_Temp need a home":" file in 98_Temp needs a home") : "98_Temp is empty");
   row(M.memLines<=150, M.memLines<=150? "MEMORY.md is within its 150-line limit" : "MEMORY.md is over its 150-line limit");
   var over=names.filter(function(n){ return M.ws[n].memLines>200; });
   if(over.length) row(false, esc(over.join(", "))+" MEMORY.md over 200 lines");
