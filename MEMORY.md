@@ -14,7 +14,7 @@ Workstation-specific memory lives in each workstation's own MEMORY.md, not here.
 
 ## Scheduled Tasks
 
-*Track every recurring or automated task: name, workstation, schedule or cadence, what it does, and the date it was created.*
+*Track every recurring or automated task: name, workstation, schedule or cadence, what it does, and the date it was created. Note where its instructions live, where its schedule lives, and whether it only runs while a particular computer or app is open.*
 
 (none yet)
 
@@ -23,3 +23,9 @@ Workstation-specific memory lives in each workstation's own MEMORY.md, not here.
 *Anything deliberately deferred rather than done: a first-run setup step you skipped for now, a decision you put off, a local fix your AI tool made to a shipped file that should really be reported upstream. State what was deferred, why, and what is lost by leaving it that way. Remove an entry once it is resolved, either by doing the thing or by deciding on purpose not to.*
 
 - [YYYY-MM-DD] Example entry: "Voice-principles interview skipped at setup" - offered during first-run setup and declined for now; until this is done, written output has no stated style to match, so it will read generic rather than like you.
+
+## Core Memory
+
+*Lasting facts about the user that do not belong to one workstation: things said with "remember this" when no single area fits. A fact about one area of life goes in that workstation's MEMORY.md instead.*
+
+(none yet)

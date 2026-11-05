@@ -94,9 +94,12 @@ Both are optional, and only relevant at all if you use git. If you never put thi
 | `SETUP.md` | First-run setup; deletes itself and the template-maintainer files below when finished |
 | `MEMORY.md` | Template for persistent, cross-session facts |
 | `ARCHIVE.md` | The historical record: completed work, read only on demand |
+| `AGENTS.md` | A one-line pointer to `CLAUDE.md` for AI tools that look for that name |
+| `98_Temp/`, `99_Archive/` | A holding folder for files with no clear home yet, and a folder for old files that are no longer current |
 | `00_Reference/Governance Rules.md` | Section ordering, size caps, and the rules for where content goes |
 | `00_Reference/File Creation Rules.md` | Naming, placement, and approval rules for new files |
 | `00_Reference/Memory System.md` | Full mechanics: capture triggers, entry format, archiving |
+| `00_Reference/CLAUDE.md Change Log.md` | The record of every substantive change to root `CLAUDE.md`, and what counts as one |
 | `00_Resources/Workstation Setup Guide.md` | How to create a new workstation, and the Starter Workstations menu |
 | `00_Resources/voice-principles.md` | Starter file for how written output should sound; fills in through use |
 | `00_Resources/Using CoworkOS with Other AI Tools.md` | Running this on ChatGPT Work Mode, Kimi Work, OpenClaw, Hermes Agent, or anything else |

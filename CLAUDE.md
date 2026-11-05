@@ -8,7 +8,7 @@ This is a workstation-based AI workspace: each folder under the root represents 
 
 At the start of every session: read MEMORY.md before responding. Use what you find to inform your work, without announcing it.
 
-Memory writes require approval. Propose an entry when something memory-worthy happens, but never write to MEMORY.md without confirmation first. Entries can also be triggered directly: phrases like "remember this," "make a note," "from now on," or "always."
+Memory writes require approval. Propose an entry when something memory-worthy happens, but never write to MEMORY.md without confirmation first. Entries can also be triggered directly: phrases like "remember this," "make a note," "don't forget," "log this," "from now on," or "always." Once a write is approved, make it right away and confirm it was done.
 
 All memory entries are persistent. They stay in MEMORY.md until the user asks to remove or change them.
 
@@ -25,6 +25,10 @@ At the end of a session, run the session-audit skill (00_Skills/Custom/session-a
 ## Routing Protocol
 
 Before starting any task, identify the relevant workstation from the Routing Map below, read its CLAUDE.md and MEMORY.md, and state which files were loaded before responding.
+
+Loading context is never skipped, and never shortened because the task looks small. Before the first draft, file or reply, also read every reference file those two files point to for that kind of work, such as 00_Resources/voice-principles.md before writing anything as or for the user, and 00_Reference/File Creation Rules.md before creating a file. This applies to a session continued from a summary too. If a file is too large to read in one go, read it in parts; a search inside a file is no substitute for reading it. Short requests are where this gets dropped, so start the first reply with the list of files loaded.
+
+If this workspace syncs to GitHub (see 00_Resources/GitHub Sync Guide.md), check it is current before changing anything: fetch, then check the status. If the remote has commits this copy has not seen, usually from working on another device, say so and stop before editing. Close any app that keeps files open in memory, such as a note-taking app, before pulling, because it can write its old copy back over the pulled files.
 
 ### First-time setup
 
@@ -55,6 +59,8 @@ All instructions, rules, and context in this workspace should be mutually exclus
 - **Workstation CLAUDE.md files** own: domain-specific identity and workflow. They layer on top of this file and never restate it.
 - **Workstation MEMORY.md files** own: domain-specific facts and decisions.
 - **ARCHIVE.md** owns: the permanent historical record of completed work, the Workspace Changelog. Never read at session start, only pulled up on demand.
+- **AGENTS.md** owns nothing. It is a one-line pointer to this file for AI tools that look for that name.
+- **98_Temp/ and 99_Archive/** own files, not rules: 98_Temp holds files whose home is not clear yet, and 99_Archive holds old files that are no longer current. Neither is a workstation.
 - **00_Skills/** owns: the record of what skills exist on your AI tool's account, and the archived source of the custom ones. It is a register and a recovery path, never a live skill directory; invoking a skill always uses the account copy.
 
 When adding a new rule, decide where it belongs using the two tests in the Memory System section. If unsure, ask.
@@ -78,6 +84,8 @@ When adding a new rule, decide where it belongs using the two tests in the Memor
 | 00_Reference/Governance Rules.md | Modifying this file, adding a new section, or deciding where a rule belongs |
 | 00_Reference/File Creation Rules.md | Creating any new file in the workspace |
 | 00_Reference/Memory System.md | Writing a memory entry, running an archive pass, or handling a contradiction |
+| 00_Reference/CLAUDE.md Change Log.md | Changing this file, or finding out why one of its rules says what it says |
+| 00_Resources/voice-principles.md | Writing anything as or for the user |
 | 00_Resources/Workstation Setup Guide.md | Creating a new workstation |
 | 00_Skills/Skills Inventory.md | Closing out a session (points to the session-audit skill), or understanding how account skills are archived in this workspace |
 | 00_Resources/Using CoworkOS with Other AI Tools.md | Running this workspace on an AI tool other than Claude Cowork |
