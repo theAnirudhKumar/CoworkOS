@@ -105,6 +105,8 @@ Both are optional, and only relevant at all if you use git. If you never put thi
 | `00_Skills/Skills Inventory.md` | Index of skills archived from your account |
 | `00_Skills/Custom/session-audit/SKILL.md` | The session-audit skill itself, and the worked example of the registry pattern |
 | `00_Skills/Custom/travel-mode/SKILL.md` | Working from the GitHub copy when your primary computer is unreachable |
+| `00_Skills/Custom/chat-context/SKILL.md` | Handing a long chat off to a fresh one, and resuming from the handoff |
+| `00_Skills/Custom/optimize-tokens/SKILL.md` | Getting the same result from a leaner request |
 | `00_Skills/Third-Party/` | Where someone else's archived skill goes |
 | `Example Workstation/` | A filled-in sample workstation: `CLAUDE.md` and `MEMORY.md` with realistic content |
 | `.gitignore`, `.githooks/pre-commit` | Optional protection if you version-control this workspace |

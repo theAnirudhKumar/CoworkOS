@@ -4,6 +4,14 @@ All notable changes to this template are documented here. Format follows [Keep a
 
 ## [Unreleased]
 
+### Added
+- `chat-context` skill: hands a long chat off to a fresh one through a structured handoff file in the workstation's `Chat Context/` folder, registered in `00_Resources/Chat Context Index.md`, and resumes from it in the next chat.
+- `optimize-tokens` skill: flags requests that will cost far more than they need to and suggests a leaner version, with quality gates so published output is never cut.
+
+### Changed
+- `session-audit` now reads every file in full before filtering, counts the AI's own breach of an existing rule as a correction, quotes the stale line when a finding replaces an entry, checks root MEMORY.md against its line ceiling, checks that no other session is mid-write before writing or committing, backs up each file before editing, and dates entries in the user's own time zone. Its sync step gained a commit message format, a report format, identity-guard handling, a failure table and stronger safety rules.
+- `travel-mode` accepts the token in the trigger message, handles refused pushes and degraded mode more clearly, checks every turn that nothing lives only in the chat, runs `chat-context` before close-out when the session carried a lot of thinking, and never tells the user to change a setting nobody has checked exists.
+
 ## [1.1.0] - 2026-09-25
 
 Setup now hands over a clean workspace, and offers a full starter menu of life areas.
