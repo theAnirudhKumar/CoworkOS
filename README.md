@@ -104,9 +104,9 @@ At the start of every chat, your AI reads `MEMORY.md`, finds the right area in t
 
 You talk to it in your AI tool as usual. The files are the long-term memory behind the chat.
 
-## Your dashboard
+## Your command center
 
-Double-click `Dashboard.html` in your workspace folder and choose the folder. You get this week's plan, with your focus outcomes and a seven-day strip of time blocks and due dates, then your next actions, your inbox with a box to jot something down, active projects, deferred items and the health of your second brain, plus a tree of every file, search across all of them and a reader for any file. In Chrome and Edge you can tick off tasks, capture to your inbox, edit files and mark items done, and it checks that a file has not changed elsewhere before saving. Other browsers show a read-only view.
+Double-click `Dashboard.html` in your workspace folder and choose the folder. It is a place to work, not just to look. A **Board** shows every task from every area in To do, Started, Waiting and Done columns, and you drag a card to move it, change its date or add a task. An **Inbox** turns each quick capture into a task in the right area, or drops it. Each area has its own page, and Projects and Goals have views of their own. A **Notion** view exports your tasks, projects, goals and inbox as files that import into Notion as databases, and the notion-sync skill keeps the two in step when you ask. Everything saves straight to your files. The dashboard also gives you this week's plan, with your focus outcomes and a seven-day strip of time blocks and due dates, then your next actions, your inbox with a box to jot something down, active projects, deferred items and the health of your second brain, plus a tree of every file, search across all of them and a reader for any file. In Chrome and Edge you can tick off tasks, capture to your inbox, edit files and mark items done, and it checks that a file has not changed elsewhere before saving. Other browsers show a read-only view.
 
 It has light, dark and system themes, and it carries the name you gave it during setup. It runs entirely in your browser, with nothing to install and nothing uploaded. You can also open the same files in any notes app or editor that reads markdown.
 
@@ -119,6 +119,7 @@ Say the phrase in your AI tool and it follows the skill. Setup installs them whe
 | start-my-day | "start my day" | A short daily brief: top three, waiting on you, coming up |
 | plan-my-week | "plan my week" | Focus outcomes and time blocks around your calendar |
 | wrap-up-my-day | "wrap up my day" | Closes the day in five minutes and sets tomorrow's first thing |
+| notion-sync | "sync with Notion" | Builds a Notion Command Center from your files and carries changes both ways, never deleting |
 | set-goals | "set my goals" | Yearly goals, quarter milestones and a quarterly review |
 | weekly-review | "weekly review" | A 20 to 30 minute tidy of your whole second brain |
 | session-audit | "close out the session" | Saves the corrections and decisions from today |
@@ -184,6 +185,7 @@ chmod +x .githooks/pre-commit
 | `00_Resources/Workstation Setup Guide.md` | How to create a new area, and the Starter Workstations menu |
 | `00_Resources/Planning Methods.md` | Planning styles to choose from, and the rules every week plan follows |
 | `00_Resources/Mobile Capture Guide.md` | Jotting things down from your phone: a synced folder, email to yourself, or travel mode |
+| `00_Resources/Notion Command Center Guide.md` | The five Notion databases that match the dashboard, how to import them, and which side wins |
 | `00_Resources/Connectors Guide.md` | Which apps to connect first, what each unlocks, and the safety rules |
 | `00_Resources/Starter Rules.md` | An optional menu of proven working rules, offered once during setup |
 | `00_Resources/voice-principles.md` | Starter file for how written output should sound; fills in through use |

@@ -135,7 +135,22 @@ dialog::backdrop{background:rgba(0,0,0,.35)}
 .names button.on{border-color:var(--accent);color:var(--accent);background:var(--soft)}
 .field{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit}
 .menu{display:none}
+.board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;align-items:start}
+.col{background:var(--side);border:1px solid var(--line);border-radius:12px;padding:10px;min-height:150px}
+.col.over{background:var(--soft);border-color:var(--accent)}
+.col h3{font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin:0 0 8px;display:flex;justify-content:space-between}
+.tcard{background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:9px 10px;margin-bottom:8px;box-shadow:var(--shadow);cursor:grab}
+.tcard.dragging{opacity:.5}
+.tcard .tt{font-weight:560;overflow-wrap:anywhere}
+.tcard .tools{display:flex;gap:4px;margin-top:7px;flex-wrap:wrap;align-items:center}
+.tcard input[type=date]{font:inherit;font-size:12px;padding:2px 4px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0 0 12px}
+.chips select,.chips .field{width:auto}
+.dl{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
+.dl:first-of-type{border-top:0}
+dialog label{display:block;margin:10px 0 4px;color:var(--muted);font-size:12.5px}
 @media (max-width:860px){
+  .board{grid-template-columns:1fr}
   .app{grid-template-columns:1fr}
   aside{display:none;position:fixed;inset:0 25% 0 0;z-index:5;box-shadow:0 0 40px rgba(0,0,0,.3)}
   aside.open{display:block}
@@ -155,8 +170,13 @@ dialog::backdrop{background:rgba(0,0,0,.35)}
     <input class="search" id="search" type="search" placeholder="Search all files" autocomplete="off">
     <div class="nav">
       <button data-view="dashboard" class="on">Dashboard</button>
+      <button data-view="board">Board</button>
+      <button data-view="inbox">Inbox<span class="badge" id="inboxBadge" hidden></span></button>
+      <button data-view="projects">Projects</button>
+      <button data-view="goals">Goals</button>
       <button data-view="files">All files</button>
       <button data-open="MEMORY.md">Memory</button>
+      <button data-view="notion">Notion</button>
     </div>
     <div class="sec">Workstations</div>
     <div class="tree" id="wsTree"></div>
@@ -174,6 +194,19 @@ dialog::backdrop{background:rgba(0,0,0,.35)}
   <div class="actions" style="justify-content:flex-end;margin-top:16px">
     <button class="btn" id="nameSkip">Not now</button>
     <button class="btn p" id="nameSave">Save name</button>
+  </div>
+</dialog>
+<dialog id="taskDialog">
+  <h2 style="display:block;font-size:17px" id="taskDlgTitle">New task</h2>
+  <label for="taskText">Task</label>
+  <input class="field" id="taskText" maxlength="200" autocomplete="off" placeholder="What needs doing?">
+  <label for="taskWs">Workstation</label>
+  <select class="field" id="taskWs"></select>
+  <label for="taskDue">Due date (optional)</label>
+  <input class="field" type="date" id="taskDue">
+  <div class="actions" style="justify-content:flex-end;margin-top:16px">
+    <button class="btn" id="taskCancel">Cancel</button>
+    <button class="btn p" id="taskSave">Add task</button>
   </div>
 </dialog>
 <div class="toast" id="toast"></div>
@@ -339,21 +372,23 @@ function model(){
   var temp=Object.keys(F).filter(function(p){ return /^98_Temp\//.test(p) && !/98_Temp\.md$/.test(p) && !/98_Temp\/(Phone )?Inbox\.md$/.test(p); });
   var chat=(F["00_Resources/Chat Context Index.md"]||{}).text;
   var handoffs=chat ? tableRows(chat).filter(function(r){ return /active/i.test(r[4]||""); }).map(function(r){ return {date:r[0],ws:r[1],topic:r[2],file:(r[3]||"").replace(/`/g,"")}; }) : [];
-  var tasks=[], doneCount=0, today=todayISO();
+  var tasks=[], doneTasks=[], doneCount=0, today=todayISO();
   Object.keys(F).forEach(function(p){
     var top=p.split("/")[0]; if(p.indexOf("/")<0 || /^(00_|98_|99_)/.test(top) || !F[top+"/CLAUDE.md"]) return;
     F[p].text.split("\n").forEach(function(line,i){
-      var m=line.match(/^\s*-\s*\[([ xX])\]\s+(.*)$/); if(!m) return; if(m[1]!==" "){ if(!/Example task:/i.test(m[2])) doneCount++; return; }
+      var m=line.match(/^\s*-\s*\[([ \/>xX])\]\s+(.*)$/); if(!m) return;
       if(/Example task:/i.test(m[2])) return;
       var dm=m[2].match(/\(due\s+(\d{4}-\d{2}-\d{2})\)/i);
-      tasks.push({ path:p, line:i, text:m[2].replace(/\s*\(due\s+\d{4}-\d{2}-\d{2}\)/i,"").replace(/\*\*|`/g,"").trim(), due:dm?dm[1]:null, ws:top });
+      var tk={ path:p, line:i, text:m[2].replace(/\s*\(due\s+\d{4}-\d{2}-\d{2}\)/i,"").replace(/\*\*|`/g,"").trim(), due:dm?dm[1]:null, ws:top, st:m[1]==="X"?"x":m[1] };
+      if(tk.st==="x"){ doneCount++; doneTasks.push(tk); return; }
+      tasks.push(tk);
     });
   });
   tasks.sort(function(a,b){ if(a.due&&b.due) return a.due<b.due?-1:a.due>b.due?1:0; return a.due?-1:b.due?1:0; });
   var weekAhead=new Date(Date.now()+7*86400000), wk=weekAhead.getFullYear()+"-"+String(weekAhead.getMonth()+1).padStart(2,"0")+"-"+String(weekAhead.getDate()).padStart(2,"0");
   function captures(path,phone){
     var txt=(F[path]||{}).text||"";
-    return txt.split("\n").map(function(l,i){ return {raw:l,line:i}; }).filter(function(x){ return /^\s*-\s+/.test(x.raw); }).map(function(x){ var t=x.raw.replace(/^\s*-\s+/,""); var d=t.match(/^\[(\d{4}-\d{2}-\d{2})\]\s*/); return {path:path, phone:phone, line:x.line, date:d?d[1]:null, text:d?t.slice(d[0].length):t}; });
+    return txt.split("\n").map(function(l,i){ return {raw:l,line:i}; }).filter(function(x){ return /^\s*-\s+/.test(x.raw); }).map(function(x){ var t=x.raw.replace(/^\s*-\s+/,""); var d=t.match(/^\[(\d{4}-\d{2}-\d{2})\]\s*/); return {path:path, raw:x.raw, phone:phone, line:x.line, date:d?d[1]:null, text:d?t.slice(d[0].length):t}; });
   }
   var inbox=captures("98_Temp/Inbox.md",false).concat(captures("98_Temp/Phone Inbox.md",true));
   inbox.sort(function(a,b){ return (a.date||"")<(b.date||"")?-1:(a.date||"")>(b.date||"")?1:0; });
@@ -378,7 +413,7 @@ function model(){
   var wr=null, wrSetup=null; sched.forEach(function(e){ var m=e.raw.match(/weekly review.*?last run\s*\[?(\d{4}-\d{2}-\d{2})/i); if(m) wr=m[1]; var n=e.raw.match(/weekly review.*?set up\s*\[?(\d{4}-\d{2}-\d{2})/i); if(n) wrSetup=n[1]; });
   return {
     projects:entriesOf(sec["Active Projects"]), open:entriesOf(sec["Open Items"]), sched:sched, core:core,
-    tasks:tasks, done:doneCount, today:today, weekEnd:wk, inbox:inbox, week:week, goals:goals,
+    tasks:tasks, doneTasks:doneTasks, done:doneCount, today:today, weekEnd:wk, inbox:inbox, week:week, goals:goals,
     memLines: mem ? mem.split("\n").length : 0, ws:ws, routed:routed, temp:temp, handoffs:handoffs, weekly:wr, weeklySetup:wrSetup,
     dashName: nameFrom(/Dashboard name:\s*(.+)$/i), userName: nameFrom(/^\s*-\s*(?:\[[^\]]*\]\s*)?Name:\s*([^.;,]+)/i), hasMemory: !!F["MEMORY.md"]
   };
@@ -433,7 +468,7 @@ function setView(v, path){
 }
 function header(title, sub){
   return '<div class="top"><div><button class="btn sm menu" id="menuBtn">Menu</button><h1>'+title+'</h1><div class="sub">'+sub+'</div></div>'+
-    '<div class="actions">'+themeSwitch()+(S.loadedAt?'<button class="btn" id="refreshBtn">Refresh</button>':'')+'</div></div>';
+    '<div class="actions">'+themeSwitch()+(S.loadedAt&&S.canWrite?'<button class="btn p" data-newtask="1">+ Task</button>':'')+(S.loadedAt?'<button class="btn" id="refreshBtn">Refresh</button>':'')+'</div></div>';
 }
 function greeting(){ var h=new Date().getHours(); try{ h=parseInt(new Intl.DateTimeFormat("en-GB",tzOpt({hour:"2-digit",hourCycle:"h23"})).format(new Date()),10); }catch(e){} return h<12?"Good morning":h<18?"Good afternoon":"Good evening"; }
 
@@ -441,7 +476,7 @@ function renderWelcome(){
   var supportsWrite=!!window.showDirectoryPicker;
   $("main").innerHTML='<div class="top"><div></div><div class="actions">'+themeSwitch()+'</div></div>'+
   '<div class="welcome"><h1>Your second brain, at a glance</h1>'+
-  '<p class="sub">This page reads the markdown files in your second brain\'s folder and shows them as a dashboard you can click through. Everything stays on your computer. Nothing is uploaded.</p>'+
+  '<p class="sub">This page reads the markdown files in your second brain\'s folder and turns them into a command center you can work in: a task board, an inbox to triage, a page for each workstation and a way to move it all into Notion. Everything stays on your computer. Nothing is uploaded.</p>'+
   '<ol><li>Click <strong>Open my workspace folder</strong>.</li><li>Choose the folder that holds <code>CLAUDE.md</code> and <code>MEMORY.md</code>.</li><li>Allow the browser to view'+(supportsWrite?' and save changes to':'')+' the folder when it asks.</li></ol>'+
   '<div class="actions" style="margin-top:18px"><button class="btn p" id="openBtn">Open my workspace folder</button><span id="reopenSlot"></span></div>'+
   (supportsWrite?'':'<div class="note">This browser can show your workspace but cannot save changes to it. To edit from here, open this file in Chrome or Edge.</div>')+
@@ -504,7 +539,7 @@ async function moveItem(ref,day){
   if(!rec){ render(); return; }
   var lines=rec.text.split("\n"), line=lines[idx]||"", nl;
   if(kind==="b"){ if(!/^\s*-\s*Block:\s*\d{4}-\d{2}-\d{2}/i.test(line)){ toast("That block moved. Refresh and try again."); return; } nl=line.replace(/(Block:\s*)\d{4}-\d{2}-\d{2}/i,"$1"+day); }
-  else { if(!/^\s*-\s*\[ \].*\(due\s+\d{4}-\d{2}-\d{2}\)/i.test(line)){ toast("That task moved. Refresh and try again."); return; } nl=line.replace(/(\(due\s+)\d{4}-\d{2}-\d{2}/i,"$1"+day); }
+  else { if(!/^\s*-\s*\[[ \/>]\].*\(due\s+\d{4}-\d{2}-\d{2}\)/i.test(line)){ toast("That task moved. Refresh and try again."); return; } nl=line.replace(/(\(due\s+)\d{4}-\d{2}-\d{2}/i,"$1"+day); }
   if(nl===line){ render(); return; }
   lines[idx]=nl;
   try{ await writeFile(path, lines.join("\n"), rec.mtime); toast("Moved to "+dayLabel(day)+"."+(kind==="b"?" Your calendar is unchanged.":"")); render(); }
@@ -524,9 +559,9 @@ function renderDashboard(){
     stat(M.tasks.filter(function(t){ return t.due && t.due<=M.weekEnd; }).length,"Tasks due in the next 7 days")+stat(M.projects.length,"Active projects")+stat(M.open.length,"Deferred open items")+stat(M.inbox.length,"Quick captures in your inbox")+'</div>';
   h+=weekCard(M);
   h+='<div class="grid">';
-  h+='<div class="card"><h2>Next actions <span>'+M.tasks.length+' open'+(M.done?' &middot; '+M.done+' done':'')+'</span></h2>'+(M.tasks.length?M.tasks.slice(0,8).map(function(t){
+  h+='<div class="card"><h2>Next actions <span>'+M.tasks.length+' open'+(M.done?' &middot; '+M.done+' done':'')+' &middot; <a href="#" data-view="board">Open the board</a></span></h2>'+(M.tasks.length?M.tasks.slice(0,8).map(function(t){
       var over=t.due && t.due<M.today, soon=t.due && !over && t.due<=M.weekEnd;
-      return '<div class="row">'+(S.canWrite?'<button class="btn sm" data-task="'+esc(t.path)+'|'+t.line+'" title="Mark done">&#10003;</button>':'')+'<div class="body"><div class="t">'+esc(t.text)+'</div><div class="m">'+esc(t.ws)+'</div></div>'+(t.due?'<span class="tag'+(over||soon?" w":"")+'">'+(over?"overdue, ":"")+esc(t.due)+'</span>':'')+'</div>';
+      return '<div class="row">'+(S.canWrite?'<button class="btn sm" data-task="'+esc(t.path)+'|'+t.line+'" title="Mark done">&#10003;</button>':'')+'<div class="body"><div class="t">'+esc(t.text)+'</div><div class="m">'+esc(t.ws)+(t.st==="/"?" &middot; started":t.st===">"?" &middot; waiting":"")+'</div></div>'+(t.due?'<span class="tag'+(over||soon?" w":"")+'">'+(over?"overdue, ":"")+esc(t.due)+'</span>':'')+'</div>';
     }).join("")+(M.tasks.length>8?'<div class="m" style="padding-top:6px">and '+(M.tasks.length-8)+' more in your workstations</div>':''):'<div class="empty">No open tasks. Tell your AI what you need to do, with a date, and it lands here.</div>')+'</div>';
   h+='<div class="card"><h2>Inbox <span>quick captures</span></h2>'+(S.canWrite?'<form id="captureForm" style="display:flex;gap:8px;margin-bottom:6px"><input class="field" id="captureInput" placeholder="Jot something down" autocomplete="off"><button class="btn p" type="submit">Add</button></form>':'')+(M.inbox.length?M.inbox.slice(-5).reverse().map(function(x){
       return '<div class="row"><div class="body"><div class="t">'+esc(x.text)+'</div>'+((x.date||x.phone)?'<div class="m">'+esc([x.date,x.phone?"from your phone":""].filter(Boolean).join(" \u00b7 "))+'</div>':'')+'</div></div>';
@@ -541,7 +576,7 @@ function renderDashboard(){
         (S.canWrite?'<button class="btn sm" data-done="'+e.line+'" title="Mark as done and remove it from Open Items">Done</button>':'')+'</div>';
     }).join(""):'<div class="empty">Nothing deferred. Anything you put off lands here.</div>')+'</div>';
   h+='<div class="card"><h2>Workstations <span>'+wsNames.length+'</span></h2>'+(wsNames.length?'<div class="ws">'+wsNames.map(function(n,i){
-      var w=M.ws[n]; return '<button class="wsc" data-open="'+esc(n)+'/CLAUDE.md"><div class="nm"><span class="dot" style="background:'+COLORS[i%COLORS.length]+'"></span>'+esc(n)+'</div><div class="m">'+w.files.length+' files, '+(ago(w.latest)||"no dates")+'</div></button>';
+      var w=M.ws[n]; return '<button class="wsc" data-ws="'+esc(n)+'"><div class="nm"><span class="dot" style="background:'+COLORS[i%COLORS.length]+'"></span>'+esc(n)+'</div><div class="m">'+w.files.length+' files, '+(ago(w.latest)||"no dates")+'</div></button>';
     }).join("")+'</div>':'<div class="empty">No workstations yet. Ask your AI tool to create one, or finish first-run setup.</div>')+'</div>';
   h+='<div class="card"><h2>Workspace health</h2>'+health(M).join("")+'</div>';
   h+='<div class="card"><h2>Scheduled tasks <span>from MEMORY.md</span></h2>'+(M.sched.length?M.sched.map(function(e){ return '<div class="row"><div class="body"><div class="t">'+esc(e.title)+'</div>'+(e.detail?'<div class="m">'+esc(e.detail)+'</div>':'')+'</div></div>'; }).join(""):'<div class="empty">No scheduled tasks recorded.</div>')+'</div>';
@@ -612,6 +647,7 @@ function renderSearch(q){
 function renderTrees(){
   if(!S.loadedAt){ $("wsTree").innerHTML='<div class="empty" style="padding:4px 9px">Open your folder to see them.</div>'; $("sysTree").innerHTML=""; return; }
   var M=model(), paths=Object.keys(S.files).sort();
+  var ib=$("inboxBadge"); if(ib){ ib.textContent=M.inbox.length; ib.hidden=!M.inbox.length; }
   function tree(prefix, list){
     var dirs={}, files=[];
     list.forEach(function(p){ var rest=p.slice(prefix.length); var k=rest.indexOf("/"); if(k>0){ var d=rest.slice(0,k); (dirs[d]=dirs[d]||[]).push(p);} else files.push(p); });
@@ -628,6 +664,175 @@ function renderTrees(){
   $("sysTree").innerHTML=tree("",sys).replace('<summary>98_Temp</summary>','<summary>98_Temp'+(tempCount?'<span class="badge">'+tempCount+'</span>':'')+'</summary>');
 }
 
+
+/* ---------- the working layer: board, inbox, workstation pages, Notion export ---------- */
+var STATES={" ":"To do","/":"Started",">":"Waiting","x":"Done"};
+var ORDER=[" ","/",">","x"];
+function taskRef(t){ return t.path+"|"+t.line; }
+function splitRef(ref){ var k=ref.lastIndexOf("|"); return { path:ref.slice(0,k), idx:parseInt(ref.slice(k+1),10) }; }
+async function editLine(ref, fn, okMsg){
+  var r=splitRef(ref), rec=S.files[r.path];
+  if(!rec){ toast("That file is not loaded. Refresh and try again."); return false; }
+  var lines=rec.text.split("\n"), line=lines[r.idx];
+  if(line===undefined || !/^\s*-\s*\[[ \/>xX]\]/.test(line)){ toast("That task moved. Refresh and try again."); return false; }
+  var nl=fn(line);
+  if(nl===null) lines.splice(r.idx,1); else if(nl===line) return false; else lines[r.idx]=nl;
+  try{ await writeFile(r.path, lines.join("\n"), rec.mtime); if(okMsg) toast(okMsg); render(); return true; }
+  catch(e){ handleWriteError(e); return false; }
+}
+function setState(ref,ch){ return editLine(ref,function(l){ return l.replace(/\[[ \/>xX]\]/,"["+ch+"]"); }, ch==="x"?"Done. The weekly review clears finished tasks.":null); }
+function setDue(ref,date){
+  return editLine(ref,function(l){
+    var any=/\s*\(due\s+\d{4}-\d{2}-\d{2}\)/i;
+    if(!date) return l.replace(any,"");
+    if(any.test(l)) return l.replace(/\(due\s+\d{4}-\d{2}-\d{2}\)/i,"(due "+date+")");
+    return l.replace(/\s*$/," (due "+date+")");
+  }, date?"Due date set to "+date+".":"Due date cleared.");
+}
+async function dropTask(ref){
+  var r=splitRef(ref), rec=S.files[r.path], line=rec&&rec.text.split("\n")[r.idx]; if(!line) return;
+  if(!confirm("Remove this task from "+r.path+"?\n\n"+line.replace(/^\s*-\s*\[.\]\s*/,""))) return;
+  await editLine(ref,function(){ return null; },"Task removed.");
+}
+async function addTask(ws,text,due){
+  text=text.trim().replace(/[\r\n]+/g," "); if(!text) throw new Error("Write the task first.");
+  var path=ws+"/MEMORY.md", rec=S.files[path]; if(!rec) throw new Error(ws+" has no MEMORY.md yet.");
+  var entry="- [ ] "+text+(due?" (due "+due+")":"");
+  var lines=rec.text.split("\n"), h=lines.findIndex(function(l){ return /^##\s+Next Actions\s*$/.test(l); });
+  if(h<0){
+    var ld=lines.findIndex(function(l){ return /^##\s+Linked Docs/i.test(l); });
+    if(ld>=0){ var at=ld; while(at>0 && (!lines[at-1].trim() || /^---\s*$/.test(lines[at-1]))) at--; lines.splice(at,ld-at,"","## Next Actions","",entry,"","---",""); }
+    else { while(lines.length && !lines[lines.length-1].trim()) lines.pop(); lines.push("","## Next Actions","",entry,""); }
+  }
+  else {
+    var end=h+1; while(end<lines.length && !/^##\s/.test(lines[end])) end++;
+    var noneAt=-1; for(var i=h+1;i<end;i++) if(/^\(none yet\)\s*$/.test(lines[i])) noneAt=i;
+    if(noneAt>=0) lines[noneAt]=entry;
+    else { var ins=end; while(ins>h+1 && (!lines[ins-1].trim() || /^---\s*$/.test(lines[ins-1]))) ins--; lines.splice(ins,0,entry); }
+  }
+  await writeFile(path, lines.join("\n"), rec.mtime);
+}
+async function removeCapture(cap){
+  var rec=S.files[cap.path]; if(!rec) throw new Error("CHANGED");
+  var lines=rec.text.split("\n"); if(lines[cap.line]!==cap.raw) throw new Error("CHANGED");
+  lines.splice(cap.line,1); await writeFile(cap.path, lines.join("\n"), rec.mtime);
+}
+function wsWithMemory(M){ return Object.keys(M.ws).filter(function(n){ return S.files[n+"/MEMORY.md"]; }).sort(); }
+function openTaskDialog(o){
+  o=o||{}; var M=model(), names=wsWithMemory(M);
+  if(!names.length){ toast("No workstation with a MEMORY.md yet. Create one first."); return; }
+  var pick=o.ws||store.get("cw-last-ws")||names[0]; if(names.indexOf(pick)<0) pick=names[0];
+  $("taskWs").innerHTML=names.map(function(n){ return '<option value="'+esc(n)+'"'+(n===pick?" selected":"")+'>'+esc(n)+'</option>'; }).join("");
+  $("taskText").value=o.text||""; $("taskDue").value=o.due||""; S.cap=o.cap||null;
+  $("taskDlgTitle").textContent=o.cap?"Turn this capture into a task":"New task";
+  $("taskSave").textContent=o.cap?"Make task":"Add task";
+  $("taskDialog").showModal(); setTimeout(function(){ $("taskText").focus(); },30);
+}
+async function saveTaskDialog(){
+  var ws=$("taskWs").value, text=$("taskText").value, due=$("taskDue").value, cap=S.cap;
+  try{
+    await addTask(ws,text,due);
+    if(cap) await removeCapture(cap);
+    store.set("cw-last-ws",ws); $("taskDialog").close();
+    toast("Added to "+ws+(cap?" and cleared from your inbox.":".")); render();
+  }catch(e){ if(e && /Write the task/.test(e.message)) toast(e.message); else { $("taskDialog").close(); handleWriteError(e); } }
+}
+async function dropCapture(cap){
+  if(!confirm("Remove this capture?\n\n"+cap.text)) return;
+  try{ await removeCapture(cap); toast("Capture removed."); render(); }catch(e){ handleWriteError(e); }
+}
+
+function taskCard(t){
+  var ref=taskRef(t), i=ORDER.indexOf(t.st), over=t.due && t.st!=="x" && t.due<todayISO();
+  var h='<div class="tcard" draggable="'+(S.canWrite?"true":"false")+'" data-card="'+esc(ref)+'"><div class="tt">'+esc(t.text)+'</div><div class="m">'+esc(t.ws)+(over?' &middot; <span class="tag w">overdue</span>':'')+'</div>';
+  if(S.canWrite){
+    h+='<div class="tools">';
+    if(i>0) h+='<button class="btn sm" data-ref="'+esc(ref)+'" data-to="'+ORDER[i-1]+'" title="Move to '+STATES[ORDER[i-1]]+'">&larr;</button>';
+    if(i<ORDER.length-1) h+='<button class="btn sm" data-ref="'+esc(ref)+'" data-to="'+ORDER[i+1]+'" title="Move to '+STATES[ORDER[i+1]]+'">&rarr;</button>';
+    if(t.st!=="x") h+='<input type="date" value="'+esc(t.due||"")+'" data-due="'+esc(ref)+'" title="Due date">';
+    h+='<button class="btn sm" data-tdrop="'+esc(ref)+'" title="Remove this task">&times;</button></div>';
+  } else if(t.due) h+='<div class="m">due '+esc(t.due)+'</div>';
+  return h+'</div>';
+}
+function renderBoard(){
+  var M=model(), f=S.boardWs||"", names=Object.keys(M.ws).filter(function(n){ return S.files[n+"/MEMORY.md"]; }).sort();
+  var all=M.tasks.concat(M.doneTasks.slice(-15)).filter(function(t){ return !f || t.ws===f; });
+  var h=header("Board","Every task from every workstation. "+(S.canWrite?"Drag a card to another column, or use the arrows. Changes save to your files.":"Read-only in this browser."));
+  h+='<div class="chips"><select class="field" id="boardWs"><option value="">All workstations</option>'+names.map(function(n){ return '<option value="'+esc(n)+'"'+(n===f?" selected":"")+'>'+esc(n)+'</option>'; }).join("")+'</select><span class="m">Cards are sorted by due date. The Done column shows the 15 most recent.</span></div>';
+  h+='<div class="board">'+ORDER.map(function(ch){
+    var list=all.filter(function(t){ return t.st===ch; });
+    if(ch!=="x") list.sort(function(a,b){ if(a.due&&b.due) return a.due<b.due?-1:a.due>b.due?1:0; return a.due?-1:b.due?1:0; });
+    return '<div class="col" data-col="'+ch+'"><h3><span>'+STATES[ch]+'</span><span>'+list.length+'</span></h3>'+(list.length?list.map(taskCard).join(""):'<div class="empty">Nothing here.</div>')+'</div>';
+  }).join("")+'</div>';
+  $("main").innerHTML=h;
+}
+function renderInbox(){
+  var M=model(), h=header("Inbox","Quick captures from every source. Turn each one into a task, or drop it, so this stays empty.");
+  h+='<div class="card">'+(S.canWrite?'<form id="captureForm" style="display:flex;gap:8px;margin-bottom:8px"><input class="field" id="captureInput" placeholder="Jot something down" autocomplete="off"><button class="btn p" type="submit">Add</button></form>':'')+
+  (M.inbox.length?M.inbox.slice().reverse().map(function(x,i){
+    return '<div class="row"><div class="body"><div class="t">'+esc(x.text)+'</div><div class="m">'+esc([x.date,x.phone?"from your phone":""].filter(Boolean).join(" · "))+'</div></div>'+(S.canWrite?'<button class="btn sm" data-captotask="'+(M.inbox.length-1-i)+'">Make task</button><button class="btn sm" data-capdrop="'+(M.inbox.length-1-i)+'">Drop</button>':'')+'</div>';
+  }).join(""):'<div class="empty">Empty. Nothing is waiting to be filed.</div>')+'</div>';
+  $("main").innerHTML=h;
+}
+function renderProjects(){
+  var M=model(), h=header("Projects","Active Projects from MEMORY.md. A project is a result with an end, so finished ones leave this list.");
+  h+='<div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(300px,1fr))">'+(M.projects.length?M.projects.map(function(e){
+    var d=daysSince(e.date), quiet=d!==null && d>14;
+    return '<div class="card"><h2 style="display:block">'+esc(e.title)+'</h2>'+(e.detail?'<div class="m" style="margin-bottom:8px">'+esc(e.detail)+'</div>':'')+(e.date?'<span class="tag'+(quiet?" w":"")+'">'+(quiet?d+" days quiet":"last active "+esc(e.date))+'</span>':'')+'</div>';
+  }).join(""):'<div class="card"><div class="empty">No active projects yet. Projects appear as you work, under Active Projects in MEMORY.md.</div></div>')+'</div>'+
+  '<div class="m" style="margin-top:12px">Add or finish a project by telling your AI, or <a href="#" data-open="MEMORY.md">edit MEMORY.md</a>.</div>';
+  $("main").innerHTML=h;
+}
+function renderGoals(){
+  var M=model(), h=header("Goals","Results you want by a date, each cut into a milestone for this quarter.");
+  h+='<div style="max-width:720px">'+goalsCard(M)+'</div><div class="m" style="margin-top:12px">Say "set my goals" or "quarterly review" to your AI to change these, or <a href="#" data-open="MEMORY.md">edit MEMORY.md</a>.</div>';
+  $("main").innerHTML=h;
+}
+function renderWs(){
+  var M=model(), n=S.wsName, w=M.ws[n];
+  if(!w){ $("main").innerHTML=header("Not found",esc(n||"")); return; }
+  var tasks=M.tasks.filter(function(t){ return t.ws===n; }), done=M.doneTasks.filter(function(t){ return t.ws===n; });
+  var h=header(esc(n), w.files.length+" files, last changed "+(ago(w.latest)||"on an unknown date")+".");
+  h+='<div class="actions" style="margin-bottom:14px">'+(S.canWrite&&S.files[n+"/MEMORY.md"]?'<button class="btn p" data-newtask="'+esc(n)+'">+ Task in '+esc(n)+'</button>':'')+'<button class="btn" data-open="'+esc(n)+'/CLAUDE.md">Open CLAUDE.md</button>'+(S.files[n+"/MEMORY.md"]?'<button class="btn" data-open="'+esc(n)+'/MEMORY.md">Open MEMORY.md</button>':'')+'</div>';
+  h+='<div class="grid">';
+  h+='<div class="card"><h2>Next actions <span>'+tasks.length+' open'+(done.length?' &middot; '+done.length+' done':'')+'</span></h2>'+(tasks.length?tasks.map(function(t){
+    var over=t.due && t.due<M.today;
+    return '<div class="row">'+(S.canWrite?'<button class="btn sm" data-task="'+esc(taskRef(t))+'" title="Mark done">&#10003;</button>':'')+'<div class="body"><div class="t">'+esc(t.text)+'</div>'+(t.st!==" "?'<div class="m">'+STATES[t.st].toLowerCase()+'</div>':'')+'</div>'+(t.due?'<span class="tag'+(over?" w":"")+'">'+(over?"overdue, ":"")+esc(t.due)+'</span>':'')+'</div>';
+  }).join(""):'<div class="empty">No open tasks here.</div>')+'</div>';
+  var related=M.projects.filter(function(e){ return (e.title+" "+e.detail).toLowerCase().indexOf(n.toLowerCase())>=0; });
+  h+='<div class="card"><h2>Projects <span>that mention '+esc(n)+'</span></h2>'+(related.length?related.map(function(e){ return '<div class="row"><div class="body"><div class="t">'+esc(e.title)+'</div>'+(e.detail?'<div class="m">'+esc(e.detail)+'</div>':'')+'</div></div>'; }).join(""):'<div class="empty">None recorded.</div>')+'</div>';
+  h+='<div class="card" style="grid-column:1/-1"><h2>Files <span>'+w.files.length+'</span></h2>'+w.files.slice().sort(function(a,b){ return (S.files[b].mtime||0)-(S.files[a].mtime||0); }).slice(0,40).map(function(p){
+    return '<div class="row"><div class="body"><a href="#" data-open="'+esc(p)+'">'+esc(p.slice(n.length+1))+'</a></div><span class="m">'+ago(S.files[p].mtime)+'</span></div>';
+  }).join("")+'</div>';
+  h+='</div>';
+  $("main").innerHTML=h;
+}
+
+/* ---------- Notion: CSV files that import as databases ---------- */
+function csv(rows){ return rows.map(function(r){ return r.map(function(c){ c=c==null?"":String(c); return /[",\n]/.test(c)?'"'+c.replace(/"/g,'""')+'"':c; }).join(","); }).join("\n")+"\n"; }
+function download(name,text){
+  var a=document.createElement("a"); a.href=URL.createObjectURL(new Blob([text],{type:"text/csv"})); a.download=name;
+  document.body.appendChild(a); a.click(); setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); },500);
+}
+function notionTables(M){
+  var tk=M.tasks.concat(M.doneTasks);
+  return [
+    { name:"Tasks", rows:[["Name","Status","Due","Workstation"]].concat(tk.map(function(t){ return [t.text,STATES[t.st],t.due||"",t.ws]; })) },
+    { name:"Projects", rows:[["Name","Notes","Last active"]].concat(M.projects.map(function(e){ return [e.title,e.detail,e.date||""]; })) },
+    { name:"Goals", rows:[["Goal","Target date","Quarter milestone","Milestone date","If-then plan","Workstation"]].concat(M.goals.map(function(g){ return [g.text,g.by||"",g.quarter||"",g.qby||"",g.plan||"",g.ws||""]; })) },
+    { name:"Inbox", rows:[["Capture","Captured","Source"]].concat(M.inbox.map(function(x){ return [x.text,x.date||"",x.phone?"Phone":"Inbox"]; })) },
+    { name:"Workstations", rows:[["Name","Files"]].concat(Object.keys(M.ws).sort().map(function(n){ return [n,M.ws[n].files.length]; })) }
+  ];
+}
+function renderNotion(){
+  var M=model(), T=notionTables(M);
+  var h=header("Notion","The same second brain as Notion databases, for when you want to work in Notion.");
+  h+='<div class="grid"><div class="card"><h2>Export for Notion <span>CSV files</span></h2><div class="m" style="margin-bottom:6px">Each file imports as one Notion database, with column names that match the Command Center layout in your guide.</div>'+T.map(function(t){
+    return '<div class="dl"><div><div class="t">'+t.name+'</div><div class="m">'+(t.rows.length-1)+' row'+(t.rows.length===2?"":"s")+' &middot; '+esc(t.rows[0].join(", "))+'</div></div><button class="btn sm" data-csv="'+t.name+'">Download</button></div>';
+  }).join("")+'</div><div class="card"><h2>How to bring them in</h2><ol style="padding-left:20px;margin:0"><li>In Notion, open the page that will hold your Command Center.</li><li>Type <code>/import</code>, choose <strong>CSV</strong>, and pick one downloaded file. Repeat for each.</li><li>Set the <strong>Status</strong> column of Tasks to a Select or Status property if Notion reads it as text.</li><li>To keep the two in step afterwards, say "sync with Notion" to your AI. Your markdown files stay the source of truth.</li></ol>'+(S.files["00_Resources/Notion Command Center Guide.md"]?'<div style="margin-top:12px"><button class="btn" data-open="00_Resources/Notion Command Center Guide.md">Open the full guide</button></div>':'')+'</div></div>';
+  $("main").innerHTML=h;
+}
+
 function render(){
   var M=S.loadedAt?model():null, name=(M&&M.dashName)||"My Workspace";
   $("brandName").textContent=name; $("logo").textContent=name.trim().charAt(0).toUpperCase()||"W";
@@ -636,6 +841,12 @@ function render(){
   if(!S.loadedAt) renderWelcome();
   else if(S.view==="file") renderFile();
   else if(S.view==="files") renderFiles();
+  else if(S.view==="board") renderBoard();
+  else if(S.view==="inbox") renderInbox();
+  else if(S.view==="projects") renderProjects();
+  else if(S.view==="goals") renderGoals();
+  else if(S.view==="ws") renderWs();
+  else if(S.view==="notion") renderNotion();
   else renderDashboard();
 }
 
@@ -653,8 +864,8 @@ async function toggleTask(ref){
   var k=ref.lastIndexOf("|"), path=ref.slice(0,k), idx=parseInt(ref.slice(k+1),10), rec=S.files[path];
   if(!rec) return;
   var lines=rec.text.split("\n"), line=lines[idx];
-  if(!line || !/^\s*-\s*\[ \]/.test(line)){ toast("That task moved. Refresh and try again."); return; }
-  lines[idx]=line.replace(/\[ \]/,"[x]");
+  if(!line || !/^\s*-\s*\[[ \/>]\]/.test(line)){ toast("That task moved. Refresh and try again."); return; }
+  lines[idx]=line.replace(/\[[ \/>]\]/,"[x]");
   try{ await writeFile(path, lines.join("\n"), rec.mtime); toast("Done. The weekly review clears finished tasks."); render(); }
   catch(e){ handleWriteError(e); }
 }
@@ -717,10 +928,19 @@ async function saveName(name){
 document.addEventListener("click", function(ev){
   var t=ev.target.closest("button, a"); if(!t) return;
   if(t.dataset.themeBtn){ themeMode=t.dataset.themeBtn; applyTheme(themeMode); return; }
+  if(t.dataset.newtask){ ev.preventDefault(); openTaskDialog({ws:t.dataset.newtask==="1"?null:t.dataset.newtask}); return; }
+  if(t.dataset.ws){ S.wsName=t.dataset.ws; setView("ws"); return; }
+  if(t.dataset.to!==undefined && t.dataset.ref){ setState(t.dataset.ref,t.dataset.to); return; }
+  if(t.dataset.tdrop){ dropTask(t.dataset.tdrop); return; }
+  if(t.dataset.captotask!==undefined){ var cp=model().inbox[parseInt(t.dataset.captotask,10)]; if(cp) openTaskDialog({text:cp.text,cap:cp}); return; }
+  if(t.dataset.capdrop!==undefined){ var cd=model().inbox[parseInt(t.dataset.capdrop,10)]; if(cd) dropCapture(cd); return; }
+  if(t.dataset.csv){ var tb=notionTables(model()).filter(function(x){ return x.name===t.dataset.csv; })[0]; if(tb){ download(tb.name+".csv",csv(tb.rows)); toast("Downloaded "+tb.name+".csv"); } return; }
+  if(t.id==="taskCancel"){ $("taskDialog").close(); return; }
+  if(t.id==="taskSave"){ saveTaskDialog(); return; }
   if(t.id==="openBtn"){ openWithPicker(); return; }
   if(t.id==="refreshBtn"){ refresh(); return; }
   if(t.id==="menuBtn"){ $("side").classList.toggle("open"); return; }
-  if(t.dataset.view){ if(!S.loadedAt){ renderWelcome(); return; } setView(t.dataset.view); return; }
+  if(t.dataset.view){ ev.preventDefault(); if(!S.loadedAt){ renderWelcome(); return; } setView(t.dataset.view); return; }
   if(t.dataset.open){ ev.preventDefault(); if(!S.loadedAt) return; setView("file", t.dataset.open); return; }
   if(t.dataset.link){ ev.preventDefault(); var base=S.current&&S.current.indexOf("/")>0?S.current.slice(0,S.current.lastIndexOf("/")+1):""; var target=decodeURIComponent(t.dataset.link.split("#")[0]);
     var cand=[base+target, target].map(function(x){ return x.replace(/^\.\//,""); }); for(var i=0;i<cand.length;i++){ if(S.files[cand[i]]){ setView("file",cand[i]); return; } } toast("That file is not in this folder."); return; }
@@ -739,6 +959,11 @@ document.addEventListener("click", function(ev){
   if(t.id==="brandName"||t.id==="logo"){ if(S.loadedAt) openNameDialog(); }
 });
 document.addEventListener("dragstart",function(e){ var b=e.target.closest&&e.target.closest("[data-move]"); if(!b) return; e.dataTransfer.setData("text/plain",b.dataset.move); e.dataTransfer.effectAllowed="move"; });
+document.addEventListener("dragstart",function(e){ var c=e.target.closest&&e.target.closest("[data-card]"); if(!c) return; e.dataTransfer.setData("text/plain","card|"+c.dataset.card); e.dataTransfer.effectAllowed="move"; c.classList.add("dragging"); });
+document.addEventListener("dragend",function(e){ var c=e.target.closest&&e.target.closest("[data-card]"); if(c) c.classList.remove("dragging"); document.querySelectorAll(".col.over").forEach(function(x){ x.classList.remove("over"); }); });
+document.addEventListener("dragover",function(e){ var c=e.target.closest&&e.target.closest("[data-col]"); if(!c) return; e.preventDefault(); document.querySelectorAll(".col.over").forEach(function(x){ if(x!==c) x.classList.remove("over"); }); c.classList.add("over"); });
+document.addEventListener("drop",function(e){ var c=e.target.closest&&e.target.closest("[data-col]"); if(!c) return; e.preventDefault(); c.classList.remove("over"); var v=e.dataTransfer.getData("text/plain"); if(v.indexOf("card|")===0) setState(v.slice(5),c.dataset.col); });
+document.addEventListener("change",function(e){ if(e.target.dataset && e.target.dataset.due!==undefined && e.target.dataset.due){ setDue(e.target.dataset.due,e.target.value); return; } if(e.target.id==="boardWs"){ S.boardWs=e.target.value; render(); } });
 document.addEventListener("dragover",function(e){ var d=e.target.closest&&e.target.closest("[data-day]"); if(!d) return; e.preventDefault(); document.querySelectorAll(".day.over").forEach(function(x){ if(x!==d) x.classList.remove("over"); }); d.classList.add("over"); });
 document.addEventListener("dragleave",function(e){ var d=e.target.closest&&e.target.closest("[data-day]"); if(d && !d.contains(e.relatedTarget)) d.classList.remove("over"); });
 document.addEventListener("drop",function(e){ var d=e.target.closest&&e.target.closest("[data-day]"); if(!d) return; e.preventDefault(); d.classList.remove("over"); var ref=e.dataTransfer.getData("text/plain"); if(ref) moveItem(ref,d.dataset.day); });
