@@ -4,6 +4,22 @@ All notable changes to this template are documented here. Format follows [Keep a
 
 ## [Unreleased]
 
+## [1.6.0] - 2026-11-10
+
+The dashboard becomes a command center you work in, and links to Notion for people who prefer it.
+
+### Added
+- Dashboard: a Board view with every task from every workstation in To do, Started, Waiting and Done columns. Drag a card to another column or use the arrows, set or clear a due date, or remove a task. A workstation filter narrows it. Changes save to the files.
+- Dashboard: a "+ Task" button on every view opens a dialog to add a task to any workstation. It goes under Next Actions, creating the section if it is missing.
+- Dashboard: an Inbox view that turns each quick capture into a task in a chosen workstation, or drops it, with a count badge in the sidebar.
+- Dashboard: a page for each workstation, with its tasks, files, related projects and an add-task button, plus Projects and Goals views.
+- Dashboard: a Notion view that downloads Tasks, Projects, Goals, Inbox and Workstations as CSV files whose columns match the Notion databases described in the new guide.
+- `00_Resources/Notion Command Center Guide.md`: the five databases, the Command Center page layout, which side wins on a conflict, and the safety rules.
+- `notion-sync` skill: builds or updates a Notion Command Center from the files and carries changes both ways on request. It searches for an existing page first, shows a table before changing more than three items, never deletes, and falls back to the CSV export when no connector is available.
+
+### Changed
+- Tasks can now be Started (`- [/]`) or Waiting (`- [>]`) as well as open and done. The dashboard reads and writes all four marks, and the weekly review treats Started and Waiting as open.
+
 ## [1.5.0] - 2026-11-05
 
 Your second brain now helps you plan, not just remember: goals that reach the week, a week that fits your calendar, a day with a clear end, and capture from your phone.

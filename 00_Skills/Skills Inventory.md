@@ -22,6 +22,7 @@ Codex CLI specifically has a documented, literal answer rather than only "ask yo
 | weekly-review | Custom | `Custom/weekly-review/SKILL.md` | A 20 to 30 minute weekly upkeep: files 98_Temp, decides Open Items, archives finished projects, checks memory size and drift. |
 | start-my-day | Custom | `Custom/start-my-day/SKILL.md` | A short daily brief from workspace files, plus any connected calendar, email or task tool, read-only. |
 | plan-my-week | Custom | `Custom/plan-my-week/SKILL.md` | A draft week plan: three focus outcomes, if-then plans and time blocks around the calendar, in the user's planning style. Writes This Week in root MEMORY.md and creates calendar events only on a yes. |
+| notion-sync | Custom | `Custom/notion-sync/SKILL.md` | Builds a Notion Command Center from the workspace files and carries changes both ways on request, never deleting and never touching other Notion pages. |
 | wrap-up-my-day | Custom | `Custom/wrap-up-my-day/SKILL.md` | A five-minute end-of-day routine: ticks off what got done, moves or drops the rest, captures loose thoughts, and sets tomorrow's first thing. |
 | set-goals | Custom | `Custom/set-goals/SKILL.md` | A few yearly goals, each with a measurable quarter milestone, an if-then plan for the likely obstacle and a next action; plus the quarterly review. Writes the Goals section of root MEMORY.md. |
 | make-a-skill | Custom | `Custom/make-a-skill/SKILL.md` | Turns a repeated piece of work into a reusable skill, archived here with an inventory row. |

@@ -57,7 +57,7 @@ If 98_Temp is empty, say so in one line and move on.
 
 ## Step 2b: Clear finished tasks and face overdue ones
 
-In every workstation's Next Actions, remove tasks marked `- [x]`, and add one line to ARCHIVE.md for any that mark something worth remembering, such as a milestone. Then list every open task whose due date has passed, and ask for each: do it this week with a new date, or drop it on purpose. An overdue list that nobody looks at teaches the user to ignore the whole system.
+In every workstation's Next Actions, remove tasks marked `- [x]`, and add one line to ARCHIVE.md for any that mark something worth remembering, such as a milestone. Then list every open task, meaning one marked `- [ ]`, `- [/]` (started) or `- [>]` (waiting), whose due date has passed, and ask for each: do it this week with a new date, or drop it on purpose. An overdue list that nobody looks at teaches the user to ignore the whole system.
 
 ## Step 3: Decide each Open Item
 

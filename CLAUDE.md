@@ -20,7 +20,7 @@ At the end of a session, run the session-audit skill (00_Skills/Custom/session-a
 
 **Capture.** When the user wants something written down fast, such as "jot this down," "capture this," "add to my inbox," or a thought that has no clear home yet, append it to `98_Temp/Inbox.md` straight away, as one line in exactly this form, `- [YYYY-MM-DD] the thought`, and confirm in a few words. Their request is the approval, and filing can wait for the weekly review. Captures sent from a phone land in `98_Temp/Phone Inbox.md` or arrive by email instead (see 00_Resources/Mobile Capture Guide.md); leave that file to the phone, and let the weekly review empty it. Never let a passing thought get lost because the right place was unclear.
 
-**Tasks.** When the user names something to do, especially with a date ("get three quotes by Friday," "remind me to call the bank"), write it as a task in the Next Actions section of the right workstation's MEMORY.md, in exactly this form: `- [ ] What to do (due YYYY-MM-DD)`. Leave out the due part if there is no date, and turn words like "Friday" into a real date in the user's time zone. Confirm where it went. A finished task becomes `- [x]`; the weekly review clears those out. The daily brief and the dashboard both read this form, so keep to it.
+**Tasks.** When the user names something to do, especially with a date ("get three quotes by Friday," "remind me to call the bank"), write it as a task in the Next Actions section of the right workstation's MEMORY.md, in exactly this form: `- [ ] What to do (due YYYY-MM-DD)`. Leave out the due part if there is no date, and turn words like "Friday" into a real date in the user's time zone. Confirm where it went. A task being worked on can be `- [/]`, one waiting on someone else `- [>]`, and a finished one `- [x]`; the weekly review clears those out. The daily brief and the dashboard both read this form, so keep to it.
 
 **Recall.** Before answering any question about the user's own past, such as what they decided, planned, prefer or were told, search the whole workspace first, not only the files already loaded: root MEMORY.md, every workstation's files, chat handoffs and ARCHIVE.md. Try a few likely words, since "running plan" may be written as "training plan." Answer from what is written, and name the file it came from. If nothing is written down, say so plainly, never fill the gap with a guess, and offer to record the answer now. An honest "I have nothing on that" is worth more than a confident wrong memory.
 
@@ -49,6 +49,7 @@ When the user says one of these phrases, read the skill file and follow it, even
 | "plan my week," "time block my week," "help me plan my calendar" | 00_Skills/Custom/plan-my-week/SKILL.md |
 | "wrap up my day," "shut down for the day," "end my day" | 00_Skills/Custom/wrap-up-my-day/SKILL.md |
 | "set my goals," "review my goals," "quarterly review" | 00_Skills/Custom/set-goals/SKILL.md |
+| "sync with Notion," "set up my Notion command center," "update Notion" | 00_Skills/Custom/notion-sync/SKILL.md |
 | "close out the session," "session audit," "what did we miss" | 00_Skills/Custom/session-audit/SKILL.md |
 | "hand off this chat," "resume," "pick up where we left off" | 00_Skills/Custom/chat-context/SKILL.md |
 | "make this a skill," "save this as a skill" | 00_Skills/Custom/make-a-skill/SKILL.md |
@@ -119,6 +120,7 @@ When adding a new rule, decide where it belongs using the two tests in the Memor
 | 00_Resources/voice-principles.md | Writing anything as or for the user |
 | 00_Resources/Planning Methods.md | The user wants to plan their week or day, follow a productivity method, or choose a planning style |
 | 00_Resources/Mobile Capture Guide.md | The user wants to jot things down from their phone, or reach their second brain away from the computer |
+| 00_Resources/Notion Command Center Guide.md | The user wants to work in Notion as well as in the dashboard, or asks for a Notion version of their second brain |
 | 00_Resources/Connectors Guide.md | Connecting another app such as a calendar, email or file storage, or deciding what a connector may do |
 | 00_Resources/Starter Rules.md | The user asks how to make their AI tool more reliable, or wants to adopt more working rules |
 | 00_Resources/Workstation Setup Guide.md | Creating a new workstation |
