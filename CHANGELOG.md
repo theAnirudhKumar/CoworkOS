@@ -4,6 +4,13 @@ All notable changes to this template are documented here. Format follows [Keep a
 
 ## [Unreleased]
 
+### Added
+- Starter Rules: rules 32 to 38 for confirming a big task before starting, a scorecard for choices, preferring an example to a long description, approving a small sample before a batch, a second check on important work, never asking for or storing an API key, and keeping private files out of public repositories.
+- Connectors Guide: safety rule 9, a "Use an API key safely" section with steps for the Mac Keychain and Windows Credential Manager, and a section on giving each connected tool its own rulebook.
+- `00_Reference/Global Conventions/`: an index with the steps for adding a rulebook, and a sample Calendar rulebook. Root CLAUDE.md gets a Rulebooks table that says when to read each one.
+- Workstation Setup Guide: a Folder map table for index notes.
+- Weekly review: two drift checks, for stale folder maps and for rules a newer AI model may no longer need.
+
 ## [1.7.0] - 2026-11-12
 
 The dashboard gets a designed look and a command palette. Press Cmd+K (Ctrl+K on Windows and Linux) to do things and go places without leaving the keyboard.

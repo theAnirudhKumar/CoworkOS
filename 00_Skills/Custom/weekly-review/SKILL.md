@@ -1,7 +1,7 @@
 ---
 name: weekly-review
 description: >
-  Use when the user says "weekly review," "review my week," "tidy the workspace," or "workspace check-up." Also offer it once, without running it, when a session starts and the last review recorded in root MEMORY.md is more than about seven days old. It is a 20 to 30 minute upkeep ritual for a CoworkOS-style workspace. It empties the quick-capture inbox, files what is sitting in 98_Temp, clears finished tasks and flags overdue ones, asks about each Open Item, flags quiet or finished Active Projects, checks MEMORY.md files for stale or conflicting entries and size, and looks for drift such as broken routing rows, missing files and rules written in two places. Every change is proposed first and only what the user approves is applied. It ends with one ARCHIVE.md line, a short report and one suggestion for the coming week. It does not reorganise the workspace, add structure or rewrite rules.
+  Use when the user says "weekly review," "review my week," "tidy the workspace," or "workspace check-up." Also offer it once, without running it, when a session starts and the last review recorded in root MEMORY.md is more than about seven days old. It is a 20 to 30 minute upkeep ritual for a CoworkOS-style workspace. It empties the quick-capture inbox, files what is sitting in 98_Temp, clears finished tasks and flags overdue ones, asks about each Open Item, flags quiet or finished Active Projects, checks MEMORY.md files for stale or conflicting entries and size, and looks for drift such as broken routing rows, missing files, rules written in two places, stale folder maps and rules a newer model may no longer need. Every change is proposed first and only what the user approves is applied. It ends with one ARCHIVE.md line, a short report and one suggestion for the coming week. It does not reorganise the workspace, add structure or rewrite rules.
 ---
 
 # Weekly Review
@@ -103,6 +103,8 @@ Look for places where the workspace no longer matches itself. Report each findin
 - **References to missing files.** A path named in any file loaded in Step 1, or in the Memory & Governance table of root CLAUDE.md, that does not exist on disk.
 - **The same rule in two places.** A rule written in more than one file, which breaks the MECE principle in root CLAUDE.md. Propose keeping it in the one place it belongs, using the placement tests in root CLAUDE.md, and removing the other copy.
 - **Old handoffs.** If `00_Resources/Chat Context Index.md` exists, any row marked Active whose date is more than about a month old. Ask whether the work is finished. If so, propose marking it Closed in both the index row and the handoff file header, as the chat-context skill describes.
+- **Folder maps gone stale.** For each workstation index note that has a Folder map table, compare its rows with the folders that exist now. Report any folder with no row, any row whose folder is gone, and any description that no longer matches what is inside. Propose the corrected rows. Apply only what the user approves.
+- **Rules the newest model may no longer need.** Ask whether a new AI model has been released since the last review recorded in root MEMORY.md. If yes, list the skills and the longest rules in root CLAUDE.md and the workstation CLAUDE.md files. For each, ask whether it exists only to stop an older model from making a mistake the newer one does not make. Propose trims for those, one at a time. Instructions written for older models can hold newer ones back.
 
 If nothing turns up, say "No drift found" and move on.
 

@@ -38,6 +38,14 @@ Loading context is never skipped, and never shortened because the task looks sma
 
 If this workspace syncs to GitHub (see 00_Resources/GitHub Sync Guide.md), check it is current before changing anything: fetch, then check the status. If the remote has commits this copy has not seen, usually from working on another device, say so and stop before editing. Close any app that keeps files open in memory, such as a note-taking app, before pulling, because it can write its old copy back over the pulled files.
 
+### Rulebooks
+
+Each connected tool, connector or plugin has its own rulebook in 00_Reference/Global Conventions/. Read the rulebook before using the tool. When you connect a new tool, create its rulebook and add its row here in the same session, following 00_Reference/Global Conventions/Global Conventions.md.
+
+| Tool | Rulebook | Read when... |
+| :--- | :--- | :--- |
+| Calendar (example row) | 00_Reference/Global Conventions/Calendar.md | Reading or writing the calendar. Replace this row with your own tools, or remove it. |
+
 ### Skills
 
 When the user says one of these phrases, read the skill file and follow it, even if the skill is not installed in the AI tool. This table is how every session finds the skills.
@@ -82,7 +90,7 @@ All instructions, rules, and context in this workspace should be mutually exclus
 
 - **This file (CLAUDE.md)** owns: workspace identity, routing, and behavior rules.
 - **MEMORY.md** owns: cross-cutting facts that accumulate over time (decisions, preferences, status).
-- **00_Reference/** owns: detailed, stable reference material and governance mechanics, loaded on demand.
+- **00_Reference/** owns: detailed, stable reference material and governance mechanics, loaded on demand. Its Global Conventions folder holds one rulebook per connected tool.
 - **00_Resources/** owns: supporting material loaded on demand, such as setup guides, templates, the tool-compatibility notes, and the GitHub sync guide.
 - **Workstation CLAUDE.md files** own: domain-specific identity and workflow. They layer on top of this file and never restate it.
 - **Workstation MEMORY.md files** own: domain-specific facts and decisions.
@@ -115,6 +123,7 @@ When adding a new rule, decide where it belongs using the two tests in the Memor
 | 00_Reference/Governance Rules.md | Modifying this file, adding a new section, or deciding where a rule belongs |
 | 00_Reference/File Creation Rules.md | Creating any new file in the workspace |
 | 00_Reference/Memory System.md | Writing a memory entry, running an archive pass, or handling a contradiction |
+| 00_Reference/Global Conventions/Global Conventions.md | Connecting a new tool, connector or plugin, or adding a rule about how a connected tool should be used |
 | 00_Reference/Visual Standards.md | Producing anything with visual structure: steps, tables, diagrams, or a generated PDF, Word file or deck |
 | 00_Reference/CLAUDE.md Change Log.md | Changing this file, or finding out why one of its rules says what it says |
 | 00_Resources/voice-principles.md | Writing anything as or for the user |

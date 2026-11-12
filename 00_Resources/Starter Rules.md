@@ -65,6 +65,19 @@ Once copied, a rule's live version is the one in root CLAUDE.md, and this menu i
 30. **Keep personal details out of public commits.** Use the no-reply email address your code host provides for commits to public repositories, and keep private links, such as links to an AI chat session, out of public commit messages and pull request descriptions.
 31. **Check where something came from before calling it your own.** A permissive licence still requires the original copyright notice to travel with any copy.
 
+## Before big work and choices
+
+32. **Confirm what a big task means before starting it.** When a task is large, costly to redo or has several parts, say back in one or two sentences what you understand the goal to be, propose a plan sized to that goal, and wait for the answer. A small task that is easy to undo needs no plan.
+33. **A choice between options comes with a scorecard.** Score each option out of 10 on the few things that matter for this decision, give the reason for each score in a few words, and name the option you recommend. Leave the final choice to the user.
+34. **An example beats a long description.** When the user shares an example of what they want, copy its structure and tone before asking for more detail.
+35. **Approve a small sample before a batch.** When a task covers more than 20 items, do the first five, show them, and wait for approval before doing the rest.
+36. **Offer a second check on important work.** When a mistake would be costly, offer to have a separate agent or session that did not produce the work read it for errors before it goes out.
+
+## Secrets and private material
+
+37. **Never ask for, print or store an API key.** Ask the user to keep it in their computer's secure store and to pass it at run time. 00_Resources/Connectors Guide.md shows how. A key that appears in a chat, a file or a commit is treated as exposed and replaced.
+38. **Private files and private context never enter a public repository.** Before working in a public repository, write its content fresh rather than copying from this workspace. Add files by name, never with a bulk command. Read the whole staged change before every commit. If anything private shows up, stop and tell the user, and never hide it by rewriting history.
+
 ---
 
 ## Plain language, for voice-principles.md

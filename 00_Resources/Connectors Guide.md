@@ -40,6 +40,22 @@ A connector gives the AI real access to your life. These rules keep that access 
 6. **Check the result where you will see it.** After the AI changes something in a connected app, look at it in that app. A success message from the tool is not proof. This matches rule 11 in 00_Resources/Starter Rules.md.
 7. **Remove a connector you no longer use.** Unused access is still access. Remove it in your AI tool's settings, and update the record described below.
 8. **Private details stay where they live.** The AI reads private details through a connector without copying them into this workspace. It copies a detail only when the work needs it. Identity documents are never copied in. That includes a passport, an ID card and a bank statement. The identity guard in `.githooks/pre-commit` is the backstop. It blocks a commit that adds something shaped like an ID or account number. It only catches the patterns it was written to catch, so it is a last check and the rule above still applies.
+9. **Never paste an API key into the chat or a file.** Some tools connect with a key instead of a sign-in. Keep the key in your computer's secure store and read it when needed. See "Use an API key safely" below. The AI should never ask you to paste a key, and never print or save one.
+
+## Use an API key safely
+
+An API key is a long secret text that works like a password for a tool. Anyone who sees it can act as you in that tool. So it stays out of chats, files and commits.
+
+The steps differ by system and change over time, so ask your AI tool to confirm them for your version. The usual route is the secure store that comes with your computer.
+
+1. On a Mac, open Keychain Access, choose File, then New Password Item. Give it a name you will recognise, such as the tool's name followed by "API key". Paste the key into the password field and save. Or, in Terminal, run `security add-generic-password -s "Tool name API key" -a "$USER" -w`. Terminal asks for the key, so it never appears in the command.
+2. On Windows, open Credential Manager, choose Windows Credentials, then Add a generic credential. Use the tool's name as the address, any user name, and the key as the password.
+3. When a script needs the key, it reads it from the store at run time. On a Mac, `security find-generic-password -s "Tool name API key" -w` prints it to the script that asked, not to the chat.
+4. If a key is ever shown in a chat, a file or a commit, replace it in the tool's own settings at once. Deleting the message does not make it safe.
+
+## Give each connected tool its own rulebook
+
+A connector only gives your AI tool access. The rules for how you want that access used belong in a separate file per tool, in `00_Reference/Global Conventions/`. Root CLAUDE.md keeps a short Rulebooks table that says when to read each one, so a session loads only what the task needs and root CLAUDE.md does not grow with every app you connect. When a correction about a tool comes up, it goes into that tool's rulebook. `00_Reference/Global Conventions/Global Conventions.md` has the steps for adding one.
 
 ## Record which connectors you use
 

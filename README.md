@@ -186,6 +186,7 @@ chmod +x .githooks/pre-commit
 | `00_Reference/Governance Rules.md` | Section ordering, size caps, and the rules for where content goes |
 | `00_Reference/File Creation Rules.md` | Naming, placement, and approval rules for new files |
 | `00_Reference/Memory System.md` | Full mechanics: capture triggers, entry format, archiving |
+| `00_Reference/Global Conventions/Global Conventions.md` | One rulebook per connected tool, with the steps for adding one |
 | `00_Reference/Visual Standards.md` | Layout rules for steps, tables, diagrams and generated documents |
 | `00_Reference/CLAUDE.md Change Log.md` | The record of every substantive change to root `CLAUDE.md`, and what counts as one |
 | `00_Resources/Workstation Setup Guide.md` | How to create a new area, and the Starter Workstations menu |
