@@ -4,7 +4,7 @@
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset=".github/assets/dashboard-dark.png">
-  <img alt="The CoworkOS dashboard: active projects, open items, workstations and workspace health for a sample workspace" src=".github/assets/dashboard-light.png">
+  <img alt="The CoworkOS dashboard for a sample workspace: a greeting, a write-it-down line, today's tasks, this week's outcomes, a goal and the inbox" src=".github/assets/dashboard-light.png">
 </picture>
 
 <sub>The dashboard that ships with CoworkOS, shown with sample data. It reads your files in your browser and nothing leaves your computer.</sub>
@@ -106,7 +106,13 @@ You talk to it in your AI tool as usual. The files are the long-term memory behi
 
 ## Your command center
 
-Double-click `Dashboard.html` in your workspace folder and choose the folder. It is a place to work, not just to look. A **Board** shows every task from every area in To do, Started, Waiting and Done columns, and you drag a card to move it, change its date or add a task. An **Inbox** turns each quick capture into a task in the right area, or drops it. Each area has its own page, and Projects and Goals have views of their own. A **Notion** view exports your tasks, projects, goals and inbox as files that import into Notion as databases, and the notion-sync skill keeps the two in step when you ask. Everything saves straight to your files. The dashboard also gives you this week's plan, with your focus outcomes and a seven-day strip of time blocks and due dates, then your next actions, your inbox with a box to jot something down, active projects, deferred items and the health of your second brain, plus a tree of every file, search across all of them and a reader for any file. In Chrome and Edge you can tick off tasks, capture to your inbox, edit files and mark items done, and it checks that a file has not changed elsewhere before saving. Other browsers show a read-only view.
+Double-click `Dashboard.html` in your workspace folder and choose the folder. It is a place to work, not just to look. Press **Cmd+K** (Ctrl+K on Windows and Linux) from anywhere to open the quick actions and jump to anything.
+
+<img alt="The command palette open over the dashboard, listing quick actions such as capture a thought, new task, log a decision and save an article, each with a one-key shortcut" src=".github/assets/palette-light.png">
+
+The palette does two jobs. As **quick actions**, it captures a thought, adds a task with a due date, logs a decision, remembers a fact, saves an article as a short note, starts a note, adds or finishes a project, sets the week and adds time blocks, defers something, records the weekly review, creates a new area, and copies today's brief to paste into your AI chat. Each one writes straight to your markdown files and offers an Undo for a few seconds. As **quick navigation**, it jumps to any view, any area or any file. The common actions also have single-key shortcuts: `c` capture, `t` task, `d` decision, `m` remember, `a` article, `n` note, `p` project, `w` week, `b` time block.
+
+More of it: A **Board** shows every task from every area in To do, Started, Waiting and Done columns, and you drag a card to move it, change its date or add a task. An **Inbox** turns each quick capture into a task in the right area, or drops it. Each area has its own page, and Projects and Goals have views of their own. A **Notion** view exports your tasks, projects, goals and inbox as files that import into Notion as databases, and the notion-sync skill keeps the two in step when you ask. Everything saves straight to your files. The dashboard also gives you this week's plan, with your focus outcomes and a seven-day strip of time blocks and due dates, then your next actions, your inbox with a box to jot something down, active projects, deferred items and the health of your second brain, plus a tree of every file, search across all of them and a reader for any file. In Chrome and Edge you can tick off tasks, capture to your inbox, edit files and mark items done, and it checks that a file has not changed elsewhere before saving. Other browsers show a read-only view.
 
 It has light, dark and system themes, and it carries the name you gave it during setup. It runs entirely in your browser, with nothing to install and nothing uploaded. You can also open the same files in any notes app or editor that reads markdown.
 
@@ -174,7 +180,7 @@ chmod +x .githooks/pre-commit
 | `SETUP.md` | First-run setup; deletes itself and the template-maintainer files below when finished |
 | `MEMORY.md` | What your second brain remembers across sessions |
 | `ARCHIVE.md` | The historical record: completed work, read only on demand |
-| `Dashboard.html` | Your second brain as a page in your browser: dashboard, every file, search, and edits |
+| `Dashboard.html` | Your second brain as a page in your browser: today's tasks, a board, an inbox to triage, quick actions on Cmd+K, every file, search, and edits |
 | `AGENTS.md` | A one-line pointer to `CLAUDE.md` for AI tools that look for that name |
 | `98_Temp/`, `99_Archive/` | A holding folder for files with no clear home yet, and a folder for old files that are no longer current |
 | `00_Reference/Governance Rules.md` | Section ordering, size caps, and the rules for where content goes |

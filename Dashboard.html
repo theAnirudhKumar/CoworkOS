@@ -6,160 +6,216 @@
 <title>Workspace Dashboard</title>
 <style>
 :root{
-  --bg:#f6f5f2;--panel:#ffffff;--side:#fbfaf8;--ink:#1d1f23;--muted:#6b6f76;--line:#e6e3dd;
-  --accent:#3b5bdb;--accent-ink:#ffffff;--soft:#eef2ff;--warn:#b45309;--warnsoft:#fff3e0;--ok:#2f855a;--oksoft:#e8f5ee;
-  --chip:#f1efea;--code:#f3f1ec;--shadow:0 1px 2px rgba(0,0,0,.04);
+  --bg:#f3eee4;--panel:#fbf8f1;--side:#f3eee4;--ink:#201b15;--muted:#7f745f;--line:#d9d1c2;
+  --accent:#a8432d;--accent-ink:#fffaf2;--soft:#ebe2cf;--warn:#a8432d;--warnsoft:#f3ddd3;--ok:#4d6b3a;--oksoft:#e2e9d4;
+  --chip:#ebe2cf;--code:#ece4d3;--shadow:0 1px 0 rgba(0,0,0,.02);
+  --serif:"Iowan Old Style","Charter","Palatino Linotype",Georgia,serif;
+  --sans:-apple-system,"Segoe UI","Helvetica Neue",Arial,sans-serif;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --bg:#111317;--panel:#181b21;--side:#14161b;--ink:#e8eaee;--muted:#9aa1ad;--line:#2a2f38;
-    --accent:#7c93f2;--accent-ink:#0f1115;--soft:#1f2640;--warn:#f0a35e;--warnsoft:#33261a;--ok:#5fc48c;--oksoft:#16301f;
-    --chip:#22262e;--code:#1f232a;--shadow:none;
+    --bg:#1a1612;--panel:#231e18;--side:#1a1612;--ink:#efe7d8;--muted:#a39886;--line:#38312a;
+    --accent:#e4806a;--accent-ink:#1a1612;--soft:#2c251d;--warn:#e4806a;--warnsoft:#3a2620;--ok:#9dbd86;--oksoft:#26301f;
+    --chip:#2c251d;--code:#241f19;--shadow:none;
   }
 }
 :root[data-theme="dark"]{
-  --bg:#111317;--panel:#181b21;--side:#14161b;--ink:#e8eaee;--muted:#9aa1ad;--line:#2a2f38;
-  --accent:#7c93f2;--accent-ink:#0f1115;--soft:#1f2640;--warn:#f0a35e;--warnsoft:#33261a;--ok:#5fc48c;--oksoft:#16301f;
-  --chip:#22262e;--code:#1f232a;--shadow:none;
+  --bg:#1a1612;--panel:#231e18;--side:#1a1612;--ink:#efe7d8;--muted:#a39886;--line:#38312a;
+  --accent:#e4806a;--accent-ink:#1a1612;--soft:#2c251d;--warn:#e4806a;--warnsoft:#3a2620;--ok:#9dbd86;--oksoft:#26301f;
+  --chip:#2c251d;--code:#241f19;--shadow:none;
 }
 *{box-sizing:border-box}
 html,body{height:100%}
-body{margin:0;font:14px/1.5 -apple-system,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+body{margin:0;font:15px/1.5 var(--sans);background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
 button{font:inherit;color:inherit;cursor:pointer}
 a{color:var(--accent)}
-.app{display:grid;grid-template-columns:270px 1fr;height:100vh}
-aside{background:var(--side);border-right:1px solid var(--line);padding:16px 12px;overflow:auto}
-.brand{display:flex;align-items:center;gap:10px;font-weight:650;font-size:15px;margin:2px 4px 14px}
-.logo{width:28px;height:28px;border-radius:8px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-size:13px;font-weight:700;flex:none}
+::selection{background:var(--accent);color:var(--accent-ink)}
+.app{display:grid;grid-template-columns:240px 1fr;height:100vh}
+aside{background:var(--side);border-right:1px solid var(--line);padding:30px 22px;overflow:auto}
+.brand{display:flex;align-items:center;gap:10px;font:italic 22px var(--serif);margin:0 0 26px;cursor:pointer}
+.logo{display:none}
 .brand span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.search{width:100%;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:8px 10px;color:var(--ink);margin-bottom:12px;font:inherit}
-.nav button{display:flex;width:100%;gap:9px;align-items:center;padding:7px 9px;border:0;background:none;border-radius:7px;text-align:left}
-.nav button:hover{background:var(--chip)}
-.nav button.on{background:var(--soft);color:var(--accent);font-weight:600}
-.sec{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:16px 9px 6px}
-.tree{font-size:13.5px}
+.search{width:100%;background:transparent;border:0;border-bottom:1px solid var(--line);padding:6px 0;color:var(--ink);margin-bottom:18px;font:inherit;outline:none}
+.search:focus{border-bottom-color:var(--ink)}
+.nav button{display:flex;width:100%;gap:9px;align-items:center;padding:5px 0;border:0;background:none;text-align:left;color:var(--muted)}
+.nav button:hover{color:var(--ink)}
+.nav button.on{color:var(--accent);font-weight:650}
+.sec{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:26px 0 8px;font-weight:650}
+.tree{font-size:14px}
 .tree details{margin:0}
-.tree summary{list-style:none;padding:4px 8px;border-radius:6px;cursor:pointer;display:flex;align-items:center;gap:7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tree summary{list-style:none;padding:4px 0;cursor:pointer;display:flex;align-items:center;gap:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--muted)}
 .tree summary::-webkit-details-marker{display:none}
-.tree summary:hover,.tree .file:hover{background:var(--chip)}
-.tree .file{display:block;width:100%;text-align:left;border:0;background:none;padding:3px 8px;border-radius:6px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.tree .file.on{color:var(--accent);background:var(--soft)}
-.tree .kids{padding-left:14px}
-.dot{width:8px;height:8px;border-radius:2px;flex:none;display:inline-block}
-.badge{font-size:11px;padding:0 6px;border-radius:99px;background:var(--warnsoft);color:var(--warn);margin-left:auto}
-main{overflow:auto;padding:24px 32px 40px}
-.top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:18px;flex-wrap:wrap}
-h1{font-size:24px;margin:0 0 4px;line-height:1.25}
-.sub{color:var(--muted)}
+.tree summary:hover,.tree .file:hover{color:var(--ink)}
+.tree .file{display:block;width:100%;text-align:left;border:0;background:none;padding:3px 0;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:13.5px}
+.tree .file.on{color:var(--accent);font-weight:600}
+.tree .kids{padding-left:14px;border-left:1px solid var(--line);margin-left:3px}
+.dot{width:7px;height:7px;border-radius:50%;flex:none;display:inline-block}
+.badge{font-size:12px;color:var(--muted);margin-left:auto}
+main{overflow:auto;padding:34px 64px 80px}
+.wrapm{max-width:1120px}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:22px;flex-wrap:wrap}
+.date{font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+h1{font:400 38px/1.12 var(--serif);margin:4px 0 6px;letter-spacing:-.01em}
+h1 i{color:var(--accent)}
+.sub{color:var(--muted);font-size:14px}
 .actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.btn{border:1px solid var(--line);background:var(--panel);border-radius:8px;padding:7px 12px;font-weight:550}
-.btn:hover{border-color:var(--muted)}
-.btn.p{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
-.btn.sm{padding:3px 9px;font-size:12.5px;font-weight:500}
+.btn{border:1px solid var(--line);background:transparent;border-radius:4px;padding:6px 12px;font-weight:550;font-size:14px}
+.btn:hover{border-color:var(--ink)}
+.btn.p{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn.sm{padding:2px 9px;font-size:12.5px;font-weight:500}
 .btn:disabled{opacity:.5;cursor:default}
-.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--panel)}
-.seg button{border:0;background:none;padding:6px 10px;font-size:12.5px}
-.seg button.on{background:var(--soft);color:var(--accent);font-weight:600}
-.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:14px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;box-shadow:var(--shadow)}
-.stat .n{font-size:26px;font-weight:700}
-.stat .n small{font-size:14px;color:var(--muted);font-weight:500}
-.stat .l{color:var(--muted);font-size:13px}
-.bar{height:6px;background:var(--chip);border-radius:9px;overflow:hidden;margin-top:8px}
-.bar i{display:block;height:100%;background:var(--accent)}
-.bar.over i{background:var(--warn)}
-.grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:14px}
-h2{font-size:14px;margin:0 0 8px;display:flex;justify-content:space-between;gap:8px}
-h2 span{color:var(--muted);font-weight:500}
-.row{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-top:1px solid var(--line)}
+.kbd{font:12px ui-monospace,SFMono-Regular,Menlo,monospace;border:1px solid var(--line);border-radius:4px;padding:0 6px;color:var(--muted);margin-left:6px}
+.seg{display:inline-flex;gap:2px}
+.seg button{border:0;background:none;padding:4px 8px;font-size:12.5px;color:var(--muted);border-bottom:1px solid transparent}
+.seg button.on{color:var(--ink);border-bottom-color:var(--accent)}
+.stats{display:none}
+.card{background:none;border:0;border-top:1px solid var(--line);border-radius:0;padding:16px 0 22px;box-shadow:none}
+.grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:20px 64px}
+h2{font:400 24px/1.2 var(--serif);margin:0 0 4px;display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+h2 span{color:var(--muted);font:400 13px var(--sans)}
+.row{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--line)}
 .row:first-of-type{border-top:0}
 .row .body{flex:1;min-width:0}
-.tag{font-size:11px;padding:2px 7px;border-radius:99px;background:var(--chip);color:var(--muted);white-space:nowrap}
-.tag.w{background:var(--warnsoft);color:var(--warn)}
-.tag.g{background:var(--oksoft);color:var(--ok)}
+.tag{font-size:12px;padding:0;background:none;color:var(--muted);white-space:nowrap}
+.tag.w{color:var(--warn);font-weight:650}
+.tag.g{color:var(--ok);font-weight:650}
 .t{font-weight:560}
-.m{color:var(--muted);font-size:12.5px}
-.empty{color:var(--muted);font-size:13px;padding:6px 0}
+.m{color:var(--muted);font-size:13px}
+.empty{color:var(--muted);font-size:14px;padding:6px 0;font-style:italic;font-family:var(--serif)}
 .weekcard{margin-bottom:14px}
-.focus{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-bottom:12px}
-.focus .f{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--side)}
-.focus .f .t{font-weight:600}
-.focus .f .m{margin-top:4px}
-.days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}
-.day{border:1px solid var(--line);border-radius:10px;padding:8px;min-height:96px}
-.day.today{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
-.day .dh{font-size:12px;color:var(--muted);margin-bottom:6px;font-weight:600}
+.focus{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0 28px;margin-bottom:14px}
+.focus .f{border-top:1px solid var(--line);padding:10px 0}
+.focus .f .t{font:400 19px/1.3 var(--serif)}
+.focus .f .m{margin-top:3px}
+.days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:0}
+.day{border-top:1px solid var(--line);border-left:1px solid var(--line);padding:8px;min-height:96px}
+.day:first-child{border-left:0}
+.day.today{background:var(--soft)}
+.day .dh{font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;font-weight:650}
 .day.today .dh{color:var(--accent)}
-.blk{font-size:12px;border-radius:6px;padding:4px 6px;margin-bottom:4px;background:var(--soft);color:var(--ink);border-left:3px solid var(--accent);overflow-wrap:anywhere}
-.blk .tm{display:block;color:var(--muted);font-size:11px}
-.blk.due{background:var(--warnsoft);border-left-color:var(--warn)}
-.blk.fixed{background:var(--chip);border-left-color:var(--muted)}
-button.blk{display:block;width:100%;text-align:left;font:inherit;font-size:12px;border:0;border-left:3px solid var(--accent);cursor:grab}
+.blk{font-size:12.5px;padding:3px 0;margin-bottom:4px;color:var(--ink);border-left:2px solid var(--accent);padding-left:7px;overflow-wrap:anywhere}
+.blk .tm{display:block;color:var(--muted);font-size:11.5px}
+.blk.due{border-left-color:var(--warn)}
+.blk.fixed{border-left-color:var(--muted);color:var(--muted)}
+button.blk{display:block;width:100%;text-align:left;font:inherit;font-size:12.5px;border:0;border-left:2px solid var(--accent);background:none;cursor:grab}
 button.blk.due{border-left-color:var(--warn)}
 button.blk.sel{outline:2px solid var(--accent)}
 .day.over{background:var(--soft)}
 .movemenu{display:flex;flex-wrap:wrap;gap:4px;margin:2px 0 6px}
 .movemenu .btn{padding:2px 7px;font-size:11px}
-.goal{padding:8px 0;border-bottom:1px solid var(--line)}
-.goal:last-child{border-bottom:0}
-.goal .t{font-weight:600;display:flex;gap:8px;justify-content:space-between;align-items:baseline}
+.goal{padding:10px 0;border-top:1px solid var(--line)}
+.goal:first-of-type{border-top:0}
+.goal .t{font:400 19px var(--serif);display:flex;gap:8px;justify-content:space-between;align-items:baseline}
 .goal .m{margin-top:3px}
-.ws{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}
-.wsc{border:1px solid var(--line);border-radius:10px;padding:11px;background:none;text-align:left}
-.wsc:hover{border-color:var(--muted)}
-.wsc .nm{font-weight:600;display:flex;align-items:center;gap:7px}
-.doc{max-width:860px}
+.ws{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:0 24px}
+.wsc{border:0;border-top:1px solid var(--line);padding:10px 0;background:none;text-align:left}
+.wsc:hover .nm{color:var(--accent)}
+.wsc .nm{font:400 18px var(--serif);display:flex;align-items:center;gap:7px}
+.doc{max-width:820px}
 .doc .crumb{color:var(--muted);font-size:12.5px;margin-bottom:6px;word-break:break-all}
-.md h1{font-size:24px;margin:.2em 0 .5em}.md h2{font-size:18px;margin:1.4em 0 .5em;display:block}.md h3{font-size:15px;margin:1.2em 0 .4em}
+.md h1{font-size:34px;margin:.2em 0 .5em}.md h2{font-size:24px;margin:1.4em 0 .5em;display:block}.md h3{font:400 18px var(--serif);margin:1.2em 0 .4em}
 .md p{margin:.6em 0}.md ul,.md ol{padding-left:22px}.md li{margin:.25em 0}
-.md code{background:var(--code);padding:1px 5px;border-radius:4px;font-size:.92em}
-.md pre{background:var(--code);padding:12px;border-radius:8px;overflow:auto}.md pre code{background:none;padding:0}
+.md code{background:var(--code);padding:1px 5px;border-radius:3px;font-size:.92em}
+.md pre{background:var(--code);padding:12px;border-radius:4px;overflow:auto}.md pre code{background:none;padding:0}
 .md table{border-collapse:collapse;width:100%;margin:.8em 0;font-size:13.5px}
 .md th,.md td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
 .md th{background:var(--chip)}
 .md blockquote{margin:.8em 0;padding:4px 14px;border-left:3px solid var(--line);color:var(--muted)}
 .md hr{border:0;border-top:1px solid var(--line);margin:1.4em 0}
-textarea.editor{width:100%;min-height:65vh;font:13px/1.55 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:14px;resize:vertical}
+textarea.editor{width:100%;min-height:65vh;font:13px/1.55 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:4px;padding:14px;resize:vertical}
 .hit{padding:10px 0;border-top:1px solid var(--line)}.hit:first-child{border-top:0}
-.hit mark{background:var(--soft);color:var(--ink);padding:0 2px;border-radius:3px}
-.welcome{max-width:620px;margin:8vh auto;text-align:left}
-.welcome h1{font-size:28px}
+.hit mark{background:var(--soft);color:var(--ink);padding:0 2px}
+.welcome{max-width:600px;margin:9vh auto;text-align:left}
+.welcome h1{font-size:40px}
 .welcome ol{padding-left:20px}.welcome li{margin:6px 0}
-.note{background:var(--warnsoft);color:var(--warn);border-radius:10px;padding:10px 12px;font-size:13px;margin:12px 0}
-.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 14px;border-radius:9px;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none}
-.toast.show{opacity:1}
-dialog{border:1px solid var(--line);border-radius:14px;background:var(--panel);color:var(--ink);padding:22px;max-width:460px;width:calc(100% - 32px)}
-dialog::backdrop{background:rgba(0,0,0,.35)}
+.note{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--accent);padding:10px 14px;font-size:14px;margin:12px 0}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 14px;border-radius:4px;font-size:13.5px;opacity:0;transition:opacity .2s;pointer-events:none;display:flex;gap:14px;align-items:center;z-index:30}
+.toast.show{opacity:1;pointer-events:auto}
+.toast button{background:none;border:0;color:var(--bg);text-decoration:underline;padding:0;font-weight:650}
+dialog{border:1px solid var(--ink);border-radius:4px;background:var(--panel);color:var(--ink);padding:24px;max-width:480px;width:calc(100% - 32px);box-shadow:8px 8px 0 rgba(0,0,0,.12)}
+dialog::backdrop{background:rgba(20,16,10,.45)}
+dialog h2{font-size:26px;margin-bottom:6px}
+dialog label{display:block;margin:12px 0 4px;color:var(--muted);font-size:12.5px;letter-spacing:.06em;text-transform:uppercase}
 .names{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
-.names button{border:1px solid var(--line);background:var(--bg);border-radius:99px;padding:5px 12px}
-.names button.on{border-color:var(--accent);color:var(--accent);background:var(--soft)}
-.field{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit}
+.names button{border:1px solid var(--line);background:none;border-radius:4px;padding:5px 12px}
+.names button.on{border-color:var(--accent);color:var(--accent)}
+.field{width:100%;padding:8px 2px;border:0;border-bottom:1px solid var(--ink);background:transparent;color:var(--ink);font:inherit;outline:none;border-radius:0}
+select.field{padding:8px 0}
+textarea.field{border:1px solid var(--line);padding:8px;min-height:84px;resize:vertical}
+.presets{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.err{color:var(--warn);font-size:13px;margin-top:10px;min-height:1px}
 .menu{display:none}
-.board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;align-items:start}
-.col{background:var(--side);border:1px solid var(--line);border-radius:12px;padding:10px;min-height:150px}
-.col.over{background:var(--soft);border-color:var(--accent)}
-.col h3{font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin:0 0 8px;display:flex;justify-content:space-between}
-.tcard{background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:9px 10px;margin-bottom:8px;box-shadow:var(--shadow);cursor:grab}
+.board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;align-items:start}
+.col{background:none;border-top:2px solid var(--ink);padding:10px 0;min-height:150px}
+.col.over{background:var(--soft)}
+.col h3{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 10px;display:flex;justify-content:space-between;font-weight:650}
+.tcard{background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:9px 11px;margin-bottom:8px;cursor:grab}
 .tcard.dragging{opacity:.5}
 .tcard .tt{font-weight:560;overflow-wrap:anywhere}
 .tcard .tools{display:flex;gap:4px;margin-top:7px;flex-wrap:wrap;align-items:center}
-.tcard input[type=date]{font:inherit;font-size:12px;padding:2px 4px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink)}
-.chips{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0 0 12px}
+.tcard input[type=date]{font:inherit;font-size:12px;padding:2px 4px;border:1px solid var(--line);border-radius:3px;background:var(--bg);color:var(--ink)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0 0 14px}
 .chips select,.chips .field{width:auto}
 .dl{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
 .dl:first-of-type{border-top:0}
-dialog label{display:block;margin:10px 0 4px;color:var(--muted);font-size:12.5px}
+
+/* home */
+.capture{border-bottom:2px solid var(--ink);display:flex;align-items:baseline;gap:18px;padding:4px 0 8px;margin-bottom:34px}
+.capture input{flex:1;border:0;background:transparent;font:italic 24px var(--serif);color:var(--ink);outline:none;min-width:0}
+.capture input::placeholder{color:var(--muted);opacity:.7}
+.capture .qa{display:flex;gap:14px;font-size:13px;flex-wrap:wrap}
+.capture .qa button{border:0;background:none;color:var(--muted);border-bottom:1px solid var(--line);padding:0 0 1px}
+.capture .qa button:hover{color:var(--accent);border-bottom-color:var(--accent)}
+.cols{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:0 64px}
+.trow{display:flex;gap:14px;align-items:baseline;padding:11px 0;border-top:1px solid var(--line)}
+.trow .circle{width:17px;height:17px;border:1.5px solid var(--ink);border-radius:50%;flex:none;transform:translateY(3px);background:none;padding:0}
+.trow .circle:hover{background:var(--accent);border-color:var(--accent)}
+.trow .circle.s{background:linear-gradient(90deg,var(--ink) 50%,transparent 50%)}
+.trow .x{flex:1;font-size:17px;min-width:0;overflow-wrap:anywhere}
+.trow .w{font-size:12.5px;color:var(--muted);white-space:nowrap}
+.trow .d{font-size:12.5px;color:var(--accent);font-weight:650;white-space:nowrap}
+.trow .hov{display:none;gap:8px}
+.trow:hover .hov{display:flex}
+.trow .hov button{border:0;background:none;color:var(--muted);font-size:12.5px;padding:0;border-bottom:1px solid var(--line)}
+.trow .hov button:hover{color:var(--accent)}
+.fnum{display:flex;gap:16px;padding:12px 0;border-top:1px solid var(--line)}
+.fnum .n{font:400 36px/1 var(--serif);color:var(--accent);width:30px}
+.fnum .tt{font:400 19px/1.3 var(--serif)}
+.cap{display:flex;gap:12px;align-items:center;padding:10px 0;border-top:1px solid var(--line);font:400 16px var(--serif)}
+.cap .tx{flex:1;min-width:0;overflow-wrap:anywhere}
+.cap .acts{display:flex;gap:10px;font:12.5px var(--sans)}
+.cap .acts button{border:0;background:none;color:var(--accent);padding:0;border-bottom:1px solid transparent}
+.cap .acts button:hover{border-bottom-color:var(--accent)}
+.cap .acts .dim{color:var(--muted)}
+.bar{height:5px;background:var(--line);margin:8px 0 4px}
+.bar i{display:block;height:100%;background:var(--accent)}
+.more{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 64px;margin-top:10px}
+
+/* palette */
+#pal{position:fixed;inset:0;background:rgba(20,16,10,.5);display:none;align-items:flex-start;justify-content:center;padding-top:14vh;z-index:40}
+#pal.open{display:flex}
+.pbox{width:min(640px,calc(100% - 32px));background:var(--panel);border:1px solid var(--ink);border-radius:4px;box-shadow:10px 10px 0 rgba(0,0,0,.14);overflow:hidden}
+.pbox input{width:100%;border:0;border-bottom:1px solid var(--line);background:transparent;color:var(--ink);font:italic 22px var(--serif);padding:16px 20px;outline:none}
+.plist{max-height:50vh;overflow:auto;padding:6px 0}
+.ph{padding:10px 20px 4px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:650}
+.pit{display:flex;align-items:baseline;gap:12px;padding:8px 20px;cursor:pointer}
+.pit.on{background:var(--soft)}
+.pit .n{font-weight:560}
+.pit .d{color:var(--muted);font-size:13px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pit .k{font:12px ui-monospace,Menlo,monospace;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:0 6px}
+.pft{border-top:1px solid var(--line);padding:8px 20px;color:var(--muted);font-size:12.5px;display:flex;gap:18px}
 @media (max-width:860px){
-  .board{grid-template-columns:1fr}
   .app{grid-template-columns:1fr}
-  aside{display:none;position:fixed;inset:0 25% 0 0;z-index:5;box-shadow:0 0 40px rgba(0,0,0,.3)}
+  aside{display:none;position:fixed;inset:0 20% 0 0;z-index:5;box-shadow:0 0 40px rgba(0,0,0,.3)}
   aside.open{display:block}
   .menu{display:inline-block}
-  main{padding:16px}
-  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .grid{grid-template-columns:1fr}
+  main{padding:18px 18px 70px}
+  .grid,.cols,.more{grid-template-columns:1fr}
   .days{grid-template-columns:1fr}
-  .day{min-height:0}
+  .day{min-height:0;border-left:0}
+  .board{grid-template-columns:1fr}
+  h1{font-size:30px}
+  .capture{flex-wrap:wrap}
 }
 </style>
 </head>
@@ -167,9 +223,10 @@ dialog label{display:block;margin:10px 0 4px;color:var(--muted);font-size:12.5px
 <div class="app">
   <aside id="side">
     <div class="brand"><div class="logo" id="logo">W</div><span id="brandName">My Workspace</span></div>
+    <button class="btn" data-pal="1" style="width:100%;text-align:left;margin-bottom:14px;display:flex;justify-content:space-between">Quick actions <span class="kbd" id="kbdHint">Ctrl K</span></button>
     <input class="search" id="search" type="search" placeholder="Search all files" autocomplete="off">
     <div class="nav">
-      <button data-view="dashboard" class="on">Dashboard</button>
+      <button data-view="dashboard" class="on">Today</button>
       <button data-view="board">Board</button>
       <button data-view="inbox">Inbox<span class="badge" id="inboxBadge" hidden></span></button>
       <button data-view="projects">Projects</button>
@@ -178,7 +235,7 @@ dialog label{display:block;margin:10px 0 4px;color:var(--muted);font-size:12.5px
       <button data-open="MEMORY.md">Memory</button>
       <button data-view="notion">Notion</button>
     </div>
-    <div class="sec">Workstations</div>
+    <div class="sec">Areas</div>
     <div class="tree" id="wsTree"></div>
     <div class="sec">Workspace</div>
     <div class="tree" id="sysTree"></div>
@@ -186,7 +243,7 @@ dialog label{display:block;margin:10px 0 4px;color:var(--muted);font-size:12.5px
   <main id="main"></main>
 </div>
 <dialog id="nameDialog">
-  <h2 style="display:block;font-size:17px">Name your dashboard</h2>
+  <h2>Name your dashboard</h2>
   <div class="sub">Pick one of these, or write your own. You can change it later.</div>
   <div class="names" id="nameOptions"></div>
   <input class="field" id="nameInput" placeholder="Or type a name" maxlength="40">
@@ -196,19 +253,21 @@ dialog label{display:block;margin:10px 0 4px;color:var(--muted);font-size:12.5px
     <button class="btn p" id="nameSave">Save name</button>
   </div>
 </dialog>
-<dialog id="taskDialog">
-  <h2 style="display:block;font-size:17px" id="taskDlgTitle">New task</h2>
-  <label for="taskText">Task</label>
-  <input class="field" id="taskText" maxlength="200" autocomplete="off" placeholder="What needs doing?">
-  <label for="taskWs">Workstation</label>
-  <select class="field" id="taskWs"></select>
-  <label for="taskDue">Due date (optional)</label>
-  <input class="field" type="date" id="taskDue">
+<dialog id="formDialog">
+  <h2 id="formTitle"></h2>
+  <div class="sub" id="formIntro"></div>
+  <div id="formFields"></div>
+  <div class="err" id="formErr"></div>
   <div class="actions" style="justify-content:flex-end;margin-top:16px">
-    <button class="btn" id="taskCancel">Cancel</button>
-    <button class="btn p" id="taskSave">Add task</button>
+    <button class="btn" id="formCancel" type="button">Cancel</button>
+    <button class="btn p" id="formSave" type="button">Save</button>
   </div>
 </dialog>
+<div id="pal"><div class="pbox">
+  <input id="palInput" placeholder="Do something, or go somewhere" autocomplete="off" spellcheck="false">
+  <div class="plist" id="palList"></div>
+  <div class="pft"><span>&uarr;&darr; choose</span><span>&crarr; run</span><span>esc close</span><span style="margin-left:auto" id="palNote"></span></div>
+</div></div>
 <div class="toast" id="toast"></div>
 <script>
 (function(){
@@ -217,7 +276,11 @@ dialog label{display:block;margin:10px 0 4px;color:var(--muted);font-size:12.5px
 /* ---------- small helpers ---------- */
 var $ = function(id){ return document.getElementById(id); };
 function esc(s){ return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];}); }
-function toast(msg){ var t=$("toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(toast._t); toast._t=setTimeout(function(){t.classList.remove("show");},2600); }
+function toast(msg,act){
+  var t=$("toast"); t.innerHTML=""; var sp=document.createElement("span"); sp.textContent=msg; t.appendChild(sp);
+  if(act){ var b=document.createElement("button"); b.textContent=act.label; b.onclick=function(){ t.classList.remove("show"); act.fn(); }; t.appendChild(b); }
+  t.classList.add("show"); clearTimeout(toast._t); toast._t=setTimeout(function(){ t.classList.remove("show"); },act?9000:2600);
+}
 var TZ=null; /* the user's time zone from Core Memory, when one is recorded */
 function tzOpt(o){ o=o||{}; if(TZ) o.timeZone=TZ; return o; }
 function todayISO(){ try{ return new Intl.DateTimeFormat("en-CA",tzOpt({year:"numeric",month:"2-digit",day:"2-digit"})).format(new Date()); }catch(e){ var d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); } }
@@ -311,8 +374,10 @@ async function writeFile(path, text, expectMtime){
     var disk=await cur.text();
     if(disk!==rec.text) throw new Error("CHANGED");
   }
+  var before=rec.text;
   var w=await rec.handle.createWritable(); await w.write(text); await w.close();
   var f=await rec.handle.getFile(); rec.text=text; rec.mtime=f.lastModified;
+  if(S.txn) S.txn.push({path:path,before:before,after:text});
 }
 
 /* ---------- reading the workspace ---------- */
@@ -466,9 +531,9 @@ function setView(v, path){
   $("side").classList.remove("open");
   render();
 }
-function header(title, sub){
-  return '<div class="top"><div><button class="btn sm menu" id="menuBtn">Menu</button><h1>'+title+'</h1><div class="sub">'+sub+'</div></div>'+
-    '<div class="actions">'+themeSwitch()+(S.loadedAt&&S.canWrite?'<button class="btn p" data-newtask="1">+ Task</button>':'')+(S.loadedAt?'<button class="btn" id="refreshBtn">Refresh</button>':'')+'</div></div>';
+function header(title, sub, dateLine){
+  return '<div class="top"><div><button class="btn sm menu" id="menuBtn">Menu</button>'+(dateLine?'<div class="date">'+dateLine+'</div>':'')+'<h1>'+title+'</h1>'+(sub?'<div class="sub">'+sub+'</div>':'')+'</div>'+
+    '<div class="actions">'+themeSwitch()+(S.loadedAt?'<button class="btn" data-pal="1">Quick actions <span class="kbd">'+kbdLabel()+'</span></button><button class="btn" id="refreshBtn">Refresh</button>':'')+'</div></div>';
 }
 function greeting(){ var h=new Date().getHours(); try{ h=parseInt(new Intl.DateTimeFormat("en-GB",tzOpt({hour:"2-digit",hourCycle:"h23"})).format(new Date()),10); }catch(e){} return h<12?"Good morning":h<18?"Good afternoon":"Good evening"; }
 
@@ -490,14 +555,11 @@ function weekCard(M){
   var end=W.start?isoAdd(W.start,6):null; W.blocks.concat(W.fixed).forEach(function(b){ if(end && b.date>end) end=b.date; });
   var current=W.start && W.start<=isoAdd(t,6) && end>=t;
   var start=t;
-  var h='<div class="card weekcard"><h2>This week <span>'+(W.start?'plan for the week of '+esc(W.start):'from MEMORY.md')+'</span></h2>';
+  var h='<div class="card weekcard"><h2>The week ahead <span>'+(W.start?'plan for the week of '+esc(W.start):'from MEMORY.md')+'</span></h2>';
   if(!has){
     h+='<div class="empty">No plan yet. Say "plan my week" to your AI and it proposes focus outcomes and time blocks around your calendar.</div>';
   } else if(!current){
     h+='<div class="note">This plan is from the week of '+esc(W.start||"an earlier week")+'. Say "plan my week" to make this week\'s.</div>';
-  }
-  if(has && current && W.focus.length){
-    h+='<div class="focus">'+W.focus.map(function(f,i){ return '<div class="f"><div class="t">'+(i+1)+'. '+esc(f.text)+'</div>'+(f.plan?'<div class="m">'+esc(f.plan)+'</div>':'')+'</div>'; }).join("")+'</div>';
   }
   var days=[]; for(var i=0;i<7;i++) days.push(isoAdd(start,i));
   h+='<div class="days">'+days.map(function(d){
@@ -542,49 +604,64 @@ async function moveItem(ref,day){
   else { if(!/^\s*-\s*\[[ \/>]\].*\(due\s+\d{4}-\d{2}-\d{2}\)/i.test(line)){ toast("That task moved. Refresh and try again."); return; } nl=line.replace(/(\(due\s+)\d{4}-\d{2}-\d{2}/i,"$1"+day); }
   if(nl===line){ render(); return; }
   lines[idx]=nl;
-  try{ await writeFile(path, lines.join("\n"), rec.mtime); toast("Moved to "+dayLabel(day)+"."+(kind==="b"?" Your calendar is unchanged.":"")); render(); }
-  catch(e){ handleWriteError(e); }
+  await run("Moved to "+dayLabel(day)+"."+(kind==="b"?" Your calendar is unchanged.":""), async function(){ await writeFile(path, lines.join("\n"), rec.mtime); });
 }
 
+function numWord(n){ var w=["No","One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten"]; return n<=10?w[n]:String(n); }
+function todayRow(t,M){
+  var ref=taskRef(t), over=t.due&&t.due<M.today, lbl=over?"overdue":(t.due===M.today?"today":(t.due?shortDay(t.due):(t.st==="/"?"started":"")));
+  var circle=S.canWrite?'<button class="circle'+(t.st==="/"?" s":"")+'" data-task="'+esc(ref)+'" title="Mark done"></button>':'<span class="circle'+(t.st==="/"?" s":"")+'"></span>';
+  return '<div class="trow">'+circle+'<div class="x">'+esc(t.text)+'</div><span class="w">'+esc(t.ws)+'</span>'+(lbl?'<span class="'+(over?"d":"w")+'">'+esc(lbl)+'</span>':'')+
+    (S.canWrite?'<span class="hov"><button data-snooze="'+esc(ref)+'|1">+1 day</button><button data-snooze="'+esc(ref)+'|7">+1 week</button></span>':'')+'</div>';
+}
+function capRow(x,idx){
+  var meta=[x.date,x.phone?"from your phone":""].filter(Boolean).join(" \u00b7 ");
+  return '<div class="cap"><div class="tx">'+esc(x.text)+(meta?'<div class="m" style="font-family:var(--sans)">'+esc(meta)+'</div>':'')+'</div>'+(S.canWrite?'<div class="acts"><button data-trg="task|'+idx+'">Task</button><button data-trg="decision|'+idx+'">Decision</button><button data-trg="note|'+idx+'">Note</button><button data-trg="defer|'+idx+'">Defer</button><button class="dim" data-trg="drop|'+idx+'">Drop</button></div>':'')+'</div>';
+}
 function renderDashboard(){
-  var M=model(), title=M.dashName||"My Workspace";
-  var wsNames=Object.keys(M.ws).sort();
-  var greet=greeting()+(M.userName?", "+esc(M.userName):"");
+  var M=model(), t=M.today, W=M.week;
+  var today=M.tasks.filter(function(x){ return (x.due && x.due<=t) || x.st==="/"; });
+  today.sort(function(a,b){ var ao=a.due&&a.due<t?0:a.due===t?1:2, bo=b.due&&b.due<t?0:b.due===t?1:2; return (ao-bo) || ((a.due||"9")<(b.due||"9")?-1:1); });
+  var later=M.tasks.filter(function(x){ return x.st!=="/" && x.due && x.due>t && x.due<=M.weekEnd; }).sort(function(a,b){ return a.due<b.due?-1:1; });
+  var overdue=today.filter(function(x){ return x.due && x.due<t; }).length, n=today.length;
   var dateStr; try{ dateStr=new Date().toLocaleDateString(undefined,tzOpt({weekday:"long",day:"numeric",month:"long"})); }catch(e){ dateStr=new Date().toLocaleDateString(); }
-  var nFiles=Object.keys(S.files).length;
-  var memPct=Math.min(100,Math.round(M.memLines/150*100));
-  var h=header(greet, esc(dateStr)+". Read from "+nFiles+" files in "+esc(S.folderName||"your workspace")+", "+ago(S.loadedAt)+"."+(S.canWrite?"":" Read-only in this browser."));
+  var line2=n? numWord(n)+(n===1?" thing matters ":" things matter ")+"<i>today</i>." : "Nothing is due <i>today</i>.";
+  var h=header(greeting()+(M.userName?", "+esc(M.userName):"")+".<br>"+line2, S.canWrite?"":"Read-only in this browser. Open it in Chrome or Edge to save changes.", esc(dateStr));
   if(!M.hasMemory) h+='<div class="note">No MEMORY.md was found at the top of this folder. Choose the folder that holds CLAUDE.md and MEMORY.md.</div>';
-  h+='<div class="stats">'+
-    stat(M.tasks.filter(function(t){ return t.due && t.due<=M.weekEnd; }).length,"Tasks due in the next 7 days")+stat(M.projects.length,"Active projects")+stat(M.open.length,"Deferred open items")+stat(M.inbox.length,"Quick captures in your inbox")+'</div>';
-  h+=weekCard(M);
-  h+='<div class="grid">';
-  h+='<div class="card"><h2>Next actions <span>'+M.tasks.length+' open'+(M.done?' &middot; '+M.done+' done':'')+' &middot; <a href="#" data-view="board">Open the board</a></span></h2>'+(M.tasks.length?M.tasks.slice(0,8).map(function(t){
-      var over=t.due && t.due<M.today, soon=t.due && !over && t.due<=M.weekEnd;
-      return '<div class="row">'+(S.canWrite?'<button class="btn sm" data-task="'+esc(t.path)+'|'+t.line+'" title="Mark done">&#10003;</button>':'')+'<div class="body"><div class="t">'+esc(t.text)+'</div><div class="m">'+esc(t.ws)+(t.st==="/"?" &middot; started":t.st===">"?" &middot; waiting":"")+'</div></div>'+(t.due?'<span class="tag'+(over||soon?" w":"")+'">'+(over?"overdue, ":"")+esc(t.due)+'</span>':'')+'</div>';
-    }).join("")+(M.tasks.length>8?'<div class="m" style="padding-top:6px">and '+(M.tasks.length-8)+' more in your workstations</div>':''):'<div class="empty">No open tasks. Tell your AI what you need to do, with a date, and it lands here.</div>')+'</div>';
-  h+='<div class="card"><h2>Inbox <span>quick captures</span></h2>'+(S.canWrite?'<form id="captureForm" style="display:flex;gap:8px;margin-bottom:6px"><input class="field" id="captureInput" placeholder="Jot something down" autocomplete="off"><button class="btn p" type="submit">Add</button></form>':'')+(M.inbox.length?M.inbox.slice(-5).reverse().map(function(x){
-      return '<div class="row"><div class="body"><div class="t">'+esc(x.text)+'</div>'+((x.date||x.phone)?'<div class="m">'+esc([x.date,x.phone?"from your phone":""].filter(Boolean).join(" \u00b7 "))+'</div>':'')+'</div></div>';
-    }).join(""):'<div class="empty">Empty. The weekly review files every capture, so this stays short.</div>')+'</div>';
+  if(S.canWrite) h+='<form id="captureForm" class="capture"><input id="captureInput" placeholder="Write it down, press Enter\u2026" autocomplete="off"><div class="qa"><button type="button" data-act="task">Task</button><button type="button" data-act="decision">Decision</button><button type="button" data-act="remember">Remember</button><button type="button" data-act="article">Article</button><button type="button" data-act="note">Note</button></div></form>';
+  h+='<div class="cols"><div>';
+  h+='<h2>Today <span>'+(overdue?overdue+' overdue, ':'')+n+' to do</span></h2>'+(n?today.map(function(x){ return todayRow(x,M); }).join(""):'<div class="empty">Nothing due. A good day to plan the week or sort the inbox.</div>');
+  if(later.length) h+='<h2 style="margin-top:30px">Later this week <span>'+later.length+'</span></h2>'+later.map(function(x){ return todayRow(x,M); }).join("");
+  h+='</div><div>';
+  var end=W.start?isoAdd(W.start,6):null; W.blocks.concat(W.fixed).forEach(function(b){ if(end && b.date>end) end=b.date; });
+  var current=W.start && W.start<=isoAdd(t,6) && end>=t;
+  h+='<h2>This week <span>'+(W.start&&current?'week of '+esc(shortDay(W.start)):'')+'</span></h2>';
+  if(current && W.focus.length) h+=W.focus.map(function(f,i){ return '<div class="fnum"><div class="n">'+(i+1)+'</div><div><div class="tt">'+esc(f.text)+'</div>'+(f.plan?'<div class="m">'+esc(f.plan)+'</div>':'')+'</div></div>'; }).join("");
+  else h+='<div class="empty">No plan for this week yet.'+(S.canWrite?' Press <span class="kbd">w</span> to set the week.':'')+'</div>';
   h+=goalsCard(M);
-  h+='<div class="card"><h2>Active projects <span>from MEMORY.md</span></h2>'+(M.projects.length?M.projects.map(function(e){
+  h+='<div class="card" style="border-top:2px solid var(--ink);margin-top:18px"><h2>Inbox <span>'+M.inbox.length+' to sort'+(M.inbox.length>5?' &middot; <a href="#" data-view="inbox">see all</a>':'')+'</span></h2>'+(M.inbox.length?M.inbox.slice(-5).reverse().map(function(x,i){ return capRow(x,M.inbox.length-1-i); }).join(""):'<div class="empty">Empty. Everything is filed.</div>')+'</div>';
+  h+='</div></div>';
+  h+=weekCard(M);
+  h+='<div class="more">';
+  h+='<div class="card"><h2>Active projects <span>'+(S.canWrite?'<a href="#" data-act="project">new</a> &middot; <a href="#" data-act="projupd">update</a> &middot; <a href="#" data-act="projdone">finish</a>':'from MEMORY.md')+'</span></h2>'+(M.projects.length?M.projects.map(function(e){
       var d=daysSince(e.date), quiet=d!==null && d>14;
-      return '<div class="row">'+(e.date?'<span class="tag'+(quiet?" w":"")+'">'+(quiet?d+" days quiet":esc(e.date))+'</span>':'')+'<div class="body"><div class="t">'+esc(e.title)+'</div>'+(e.detail?'<div class="m">'+esc(e.detail)+'</div>':'')+'</div></div>';
-    }).join(""):'<div class="empty">Nothing here yet. Projects appear as you work, under Active Projects in MEMORY.md.</div>')+'</div>';
-  h+='<div class="card"><h2>Deferred <span>Open Items</span></h2>'+(M.open.length?M.open.map(function(e){
-      return '<div class="row"><span class="tag w">Open</span><div class="body"><div class="t">'+esc(e.title)+'</div>'+(e.detail?'<div class="m">'+esc(e.detail)+'</div>':'')+'</div>'+
+      return '<div class="row"><div class="body"><div class="t">'+esc(e.title)+'</div>'+(e.detail?'<div class="m">'+esc(e.detail)+'</div>':'')+'</div>'+(e.date?'<span class="tag'+(quiet?" w":"")+'">'+(quiet?d+" days quiet":esc(e.date))+'</span>':'')+'</div>';
+    }).join(""):'<div class="empty">Nothing here yet. Projects appear as you work.</div>')+'</div>';
+  h+='<div class="card"><h2>Deferred <span>'+(S.canWrite?'<a href="#" data-act="defer">add</a>':'Open Items')+'</span></h2>'+(M.open.length?M.open.map(function(e){
+      return '<div class="row"><div class="body"><div class="t">'+esc(e.title)+'</div>'+(e.detail?'<div class="m">'+esc(e.detail)+'</div>':'')+'</div>'+
         (S.canWrite?'<button class="btn sm" data-done="'+e.line+'" title="Mark as done and remove it from Open Items">Done</button>':'')+'</div>';
     }).join(""):'<div class="empty">Nothing deferred. Anything you put off lands here.</div>')+'</div>';
-  h+='<div class="card"><h2>Workstations <span>'+wsNames.length+'</span></h2>'+(wsNames.length?'<div class="ws">'+wsNames.map(function(n,i){
+  var wsNames=Object.keys(M.ws).sort();
+  h+='<div class="card"><h2>Areas <span>'+(S.canWrite?'<a href="#" data-act="area">new area</a>':wsNames.length)+'</span></h2>'+(wsNames.length?'<div class="ws">'+wsNames.map(function(n,i){
       var w=M.ws[n]; return '<button class="wsc" data-ws="'+esc(n)+'"><div class="nm"><span class="dot" style="background:'+COLORS[i%COLORS.length]+'"></span>'+esc(n)+'</div><div class="m">'+w.files.length+' files, '+(ago(w.latest)||"no dates")+'</div></button>';
-    }).join("")+'</div>':'<div class="empty">No workstations yet. Ask your AI tool to create one, or finish first-run setup.</div>')+'</div>';
-  h+='<div class="card"><h2>Workspace health</h2>'+health(M).join("")+'</div>';
+    }).join("")+'</div>':'<div class="empty">No areas yet. Create one, or finish first-run setup.</div>')+'</div>';
+  h+='<div class="card"><h2>Workspace health <span>'+(S.canWrite?'<a href="#" data-act="review">record the weekly review</a>':'')+'</span></h2>'+health(M).join("")+'</div>';
   h+='<div class="card"><h2>Scheduled tasks <span>from MEMORY.md</span></h2>'+(M.sched.length?M.sched.map(function(e){ return '<div class="row"><div class="body"><div class="t">'+esc(e.title)+'</div>'+(e.detail?'<div class="m">'+esc(e.detail)+'</div>':'')+'</div></div>'; }).join(""):'<div class="empty">No scheduled tasks recorded.</div>')+'</div>';
   h+='<div class="card"><h2>Latest handoffs <span>chat-context</span></h2>'+(M.handoffs.length?M.handoffs.slice(-4).reverse().map(function(r){
-      return '<div class="row"><span class="tag">'+esc(r.ws)+'</span><div class="body"><div class="t">'+esc(r.topic)+'</div><div class="m">'+esc(r.date)+'</div></div>'+(S.files[r.file]?'<button class="btn sm" data-open="'+esc(r.file)+'">Open</button>':'')+'</div>';
+      return '<div class="row"><div class="body"><div class="t">'+esc(r.topic)+'</div><div class="m">'+esc(r.ws)+' &middot; '+esc(r.date)+'</div></div>'+(S.files[r.file]?'<button class="btn sm" data-open="'+esc(r.file)+'">Open</button>':'')+'</div>';
     }).join(""):'<div class="empty">No open handoffs. Say "hand off this chat" to save one.</div>')+'</div>';
   h+='</div>';
-  $("main").innerHTML=h;
+  $("main").innerHTML='<div class="wrapm">'+h+'</div>';
 }
 function stat(n,l){ return '<div class="card stat"><div class="n">'+n+'</div><div class="l">'+l+'</div></div>'; }
 function health(M){
@@ -677,8 +754,7 @@ async function editLine(ref, fn, okMsg){
   if(line===undefined || !/^\s*-\s*\[[ \/>xX]\]/.test(line)){ toast("That task moved. Refresh and try again."); return false; }
   var nl=fn(line);
   if(nl===null) lines.splice(r.idx,1); else if(nl===line) return false; else lines[r.idx]=nl;
-  try{ await writeFile(r.path, lines.join("\n"), rec.mtime); if(okMsg) toast(okMsg); render(); return true; }
-  catch(e){ handleWriteError(e); return false; }
+  return run(okMsg||"Updated.", async function(){ await writeFile(r.path, lines.join("\n"), rec.mtime); });
 }
 function setState(ref,ch){ return editLine(ref,function(l){ return l.replace(/\[[ \/>xX]\]/,"["+ch+"]"); }, ch==="x"?"Done. The weekly review clears finished tasks.":null); }
 function setDue(ref,date){
@@ -696,21 +772,7 @@ async function dropTask(ref){
 }
 async function addTask(ws,text,due){
   text=text.trim().replace(/[\r\n]+/g," "); if(!text) throw new Error("Write the task first.");
-  var path=ws+"/MEMORY.md", rec=S.files[path]; if(!rec) throw new Error(ws+" has no MEMORY.md yet.");
-  var entry="- [ ] "+text+(due?" (due "+due+")":"");
-  var lines=rec.text.split("\n"), h=lines.findIndex(function(l){ return /^##\s+Next Actions\s*$/.test(l); });
-  if(h<0){
-    var ld=lines.findIndex(function(l){ return /^##\s+Linked Docs/i.test(l); });
-    if(ld>=0){ var at=ld; while(at>0 && (!lines[at-1].trim() || /^---\s*$/.test(lines[at-1]))) at--; lines.splice(at,ld-at,"","## Next Actions","",entry,"","---",""); }
-    else { while(lines.length && !lines[lines.length-1].trim()) lines.pop(); lines.push("","## Next Actions","",entry,""); }
-  }
-  else {
-    var end=h+1; while(end<lines.length && !/^##\s/.test(lines[end])) end++;
-    var noneAt=-1; for(var i=h+1;i<end;i++) if(/^\(none yet\)\s*$/.test(lines[i])) noneAt=i;
-    if(noneAt>=0) lines[noneAt]=entry;
-    else { var ins=end; while(ins>h+1 && (!lines[ins-1].trim() || /^---\s*$/.test(lines[ins-1]))) ins--; lines.splice(ins,0,entry); }
-  }
-  await writeFile(path, lines.join("\n"), rec.mtime);
+  await appendEntry(ws+"/MEMORY.md","Next Actions","- [ ] "+text+(due?" (due "+due+")":""));
 }
 async function removeCapture(cap){
   var rec=S.files[cap.path]; if(!rec) throw new Error("CHANGED");
@@ -718,28 +780,9 @@ async function removeCapture(cap){
   lines.splice(cap.line,1); await writeFile(cap.path, lines.join("\n"), rec.mtime);
 }
 function wsWithMemory(M){ return Object.keys(M.ws).filter(function(n){ return S.files[n+"/MEMORY.md"]; }).sort(); }
-function openTaskDialog(o){
-  o=o||{}; var M=model(), names=wsWithMemory(M);
-  if(!names.length){ toast("No workstation with a MEMORY.md yet. Create one first."); return; }
-  var pick=o.ws||store.get("cw-last-ws")||names[0]; if(names.indexOf(pick)<0) pick=names[0];
-  $("taskWs").innerHTML=names.map(function(n){ return '<option value="'+esc(n)+'"'+(n===pick?" selected":"")+'>'+esc(n)+'</option>'; }).join("");
-  $("taskText").value=o.text||""; $("taskDue").value=o.due||""; S.cap=o.cap||null;
-  $("taskDlgTitle").textContent=o.cap?"Turn this capture into a task":"New task";
-  $("taskSave").textContent=o.cap?"Make task":"Add task";
-  $("taskDialog").showModal(); setTimeout(function(){ $("taskText").focus(); },30);
-}
-async function saveTaskDialog(){
-  var ws=$("taskWs").value, text=$("taskText").value, due=$("taskDue").value, cap=S.cap;
-  try{
-    await addTask(ws,text,due);
-    if(cap) await removeCapture(cap);
-    store.set("cw-last-ws",ws); $("taskDialog").close();
-    toast("Added to "+ws+(cap?" and cleared from your inbox.":".")); render();
-  }catch(e){ if(e && /Write the task/.test(e.message)) toast(e.message); else { $("taskDialog").close(); handleWriteError(e); } }
-}
 async function dropCapture(cap){
   if(!confirm("Remove this capture?\n\n"+cap.text)) return;
-  try{ await removeCapture(cap); toast("Capture removed."); render(); }catch(e){ handleWriteError(e); }
+  await run("Capture removed.", function(){ return removeCapture(cap); });
 }
 
 function taskCard(t){
@@ -749,7 +792,7 @@ function taskCard(t){
     h+='<div class="tools">';
     if(i>0) h+='<button class="btn sm" data-ref="'+esc(ref)+'" data-to="'+ORDER[i-1]+'" title="Move to '+STATES[ORDER[i-1]]+'">&larr;</button>';
     if(i<ORDER.length-1) h+='<button class="btn sm" data-ref="'+esc(ref)+'" data-to="'+ORDER[i+1]+'" title="Move to '+STATES[ORDER[i+1]]+'">&rarr;</button>';
-    if(t.st!=="x") h+='<input type="date" value="'+esc(t.due||"")+'" data-due="'+esc(ref)+'" title="Due date">';
+    if(t.st!=="x") h+='<button class="btn sm" data-snooze="'+esc(ref)+'|1" title="Push to tomorrow">+1d</button><button class="btn sm" data-snooze="'+esc(ref)+'|7" title="Push a week">+1w</button><input type="date" value="'+esc(t.due||"")+'" data-due="'+esc(ref)+'" title="Due date">';
     h+='<button class="btn sm" data-tdrop="'+esc(ref)+'" title="Remove this task">&times;</button></div>';
   } else if(t.due) h+='<div class="m">due '+esc(t.due)+'</div>';
   return h+'</div>';
@@ -767,12 +810,10 @@ function renderBoard(){
   $("main").innerHTML=h;
 }
 function renderInbox(){
-  var M=model(), h=header("Inbox","Quick captures from every source. Turn each one into a task, or drop it, so this stays empty.");
-  h+='<div class="card">'+(S.canWrite?'<form id="captureForm" style="display:flex;gap:8px;margin-bottom:8px"><input class="field" id="captureInput" placeholder="Jot something down" autocomplete="off"><button class="btn p" type="submit">Add</button></form>':'')+
-  (M.inbox.length?M.inbox.slice().reverse().map(function(x,i){
-    return '<div class="row"><div class="body"><div class="t">'+esc(x.text)+'</div><div class="m">'+esc([x.date,x.phone?"from your phone":""].filter(Boolean).join(" · "))+'</div></div>'+(S.canWrite?'<button class="btn sm" data-captotask="'+(M.inbox.length-1-i)+'">Make task</button><button class="btn sm" data-capdrop="'+(M.inbox.length-1-i)+'">Drop</button>':'')+'</div>';
-  }).join(""):'<div class="empty">Empty. Nothing is waiting to be filed.</div>')+'</div>';
-  $("main").innerHTML=h;
+  var M=model(), h=header("Inbox","Quick captures from every source. Turn each one into a task, a decision, a note or a deferral, or drop it, so this stays empty.");
+  h+='<div class="card">'+(S.canWrite?'<form id="captureForm" class="capture" style="margin-bottom:10px"><input id="captureInput" placeholder="Write it down, press Enter\u2026" autocomplete="off"></form>':'')+
+  (M.inbox.length?M.inbox.slice().reverse().map(function(x,i){ return capRow(x,M.inbox.length-1-i); }).join(""):'<div class="empty">Empty. Nothing is waiting to be filed.</div>')+'</div>';
+  $("main").innerHTML='<div class="wrapm">'+h+'</div>';
 }
 function renderProjects(){
   var M=model(), h=header("Projects","Active Projects from MEMORY.md. A project is a result with an end, so finished ones leave this list.");
@@ -857,39 +898,15 @@ async function markDone(lineIndex){
   if(!line || !/^\s*-\s+/.test(line)) { toast("That item moved. Refresh and try again."); return; }
   if(!confirm("Mark this as done and remove it from Open Items in MEMORY.md?\n\n"+line.replace(/^\s*-\s+/,""))) return;
   lines.splice(lineIndex,1);
-  try{ await writeFile("MEMORY.md", lines.join("\n"), rec.mtime); toast("Done. Removed from Open Items."); render(); }
-  catch(e){ handleWriteError(e); }
+  await run("Done. Removed from Open Items.", async function(){ await writeFile("MEMORY.md", lines.join("\n"), rec.mtime); });
 }
-async function toggleTask(ref){
-  var k=ref.lastIndexOf("|"), path=ref.slice(0,k), idx=parseInt(ref.slice(k+1),10), rec=S.files[path];
-  if(!rec) return;
-  var lines=rec.text.split("\n"), line=lines[idx];
-  if(!line || !/^\s*-\s*\[[ \/>]\]/.test(line)){ toast("That task moved. Refresh and try again."); return; }
-  lines[idx]=line.replace(/\[[ \/>]\]/,"[x]");
-  try{ await writeFile(path, lines.join("\n"), rec.mtime); toast("Done. The weekly review clears finished tasks."); render(); }
-  catch(e){ handleWriteError(e); }
-}
-async function capture(text){
-  text=text.trim().replace(/[\r\n]+/g," "); if(!text) return;
-  var path="98_Temp/Inbox.md", rec=S.files[path], entry="- ["+todayISO()+"] "+text;
-  try{
-    if(!rec){
-      if(!S.canWrite || !S.dir) throw new Error("This browser opened a read-only copy.");
-      var folder=await S.dir.getDirectoryHandle("98_Temp",{create:true});
-      var fh=await folder.getFileHandle("Inbox.md",{create:true});
-      var body="# Inbox\n\nQuick captures, one dated line each, newest at the bottom.\n\n"+entry+"\n";
-      var w=await fh.createWritable(); await w.write(body); await w.close();
-      var f=await fh.getFile(); S.files[path]={text:body,mtime:f.lastModified,handle:fh};
-    } else {
-      var t=rec.text.replace(/\s*$/,"")+"\n"+entry+"\n";
-      await writeFile(path, t, rec.mtime);
-    }
-    toast("Captured to your inbox."); render();
-  }catch(e){ handleWriteError(e); }
-}
+async function toggleTask(ref){ return setState(ref,"x"); }
 function handleWriteError(e){
-  if(e && e.message==="CHANGED") toast("This file changed on disk since it was read. Refresh, then try again. Nothing was overwritten.");
-  else toast("Could not save: "+(e&&e.message||e));
+  var m=e&&e.message;
+  if(m==="CANCELLED") return;
+  if(m==="CHANGED") toast("This file changed on disk since it was read. Refresh, then try again. Nothing was overwritten.");
+  else if(m==="EXISTS") toast("A file with that name already exists.");
+  else toast("Could not save: "+(m||e));
 }
 
 var NAME_IDEAS=["Atlas","Basecamp","Compass","Mission Control","North Star","Headquarters","The Desk"];
@@ -924,19 +941,404 @@ async function saveName(name){
   render();
 }
 
+
+/* ---------- undo, creating files, and editing sections ---------- */
+async function run(label, fn){
+  S.txn=[];
+  var ok=true;
+  try{ await fn(); }catch(e){ ok=false; handleWriteError(e); }
+  var t=S.txn; S.txn=null; render();
+  if(ok) toast(label, t.length?{label:"Undo",fn:function(){ undoTxn(t); }}:null);
+  return ok;
+}
+async function undoTxn(t){
+  try{
+    for(var i=t.length-1;i>=0;i--){
+      var e=t[i];
+      if(e.created){ try{ await e.parent.removeEntry(e.name); }catch(x){} delete S.files[e.path]; continue; }
+      if(e.createdDir){ try{ await e.parent.removeEntry(e.name); }catch(x){} continue; }
+      var rec=S.files[e.path]; if(!rec) continue;
+      var cur=await rec.handle.getFile(), disk=await cur.text();
+      if(disk!==e.after){ toast("Not undone: "+e.path+" has changed since."); return; }
+      var w=await rec.handle.createWritable(); await w.write(e.before); await w.close();
+      var f=await rec.handle.getFile(); rec.text=e.before; rec.mtime=f.lastModified;
+    }
+    render(); toast("Undone.");
+  }catch(err){ handleWriteError(err); }
+}
+async function ensureDir(parts){
+  var d=S.dir;
+  for(var i=0;i<parts.length;i++){
+    try{ d=await d.getDirectoryHandle(parts[i]); }
+    catch(e){ var nd=await d.getDirectoryHandle(parts[i],{create:true}); if(S.txn) S.txn.push({createdDir:true,parent:d,name:parts[i]}); d=nd; }
+  }
+  return d;
+}
+async function createFile(path,text){
+  if(!S.canWrite || !S.dir) throw new Error("This browser opened a read-only copy.");
+  if(S.files[path]) throw new Error("EXISTS");
+  var parts=path.split("/"), name=parts.pop(), d=await ensureDir(parts);
+  var fh=await d.getFileHandle(name,{create:true}), w=await fh.createWritable(); await w.write(text); await w.close();
+  var f=await fh.getFile(); S.files[path]={ text:text, mtime:f.lastModified, handle:fh };
+  if(S.txn) S.txn.push({created:true,path:path,parent:d,name:name});
+}
+function reEsc(s){ return s.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"); }
+function sectionBounds(lines,heading){
+  var re=new RegExp("^##\\s+"+reEsc(heading)+"\\s*$","i"), h=lines.findIndex(function(l){ return re.test(l); });
+  if(h<0) return null; var end=h+1; while(end<lines.length && !/^##\s/.test(lines[end])) end++; return {h:h,end:end};
+}
+function trimTail(lines,from,floor){ var at=from; while(at>floor && (!lines[at-1].trim() || /^---\s*$/.test(lines[at-1]))) at--; return at; }
+function appendToSection(lines,heading,entry){
+  var b=sectionBounds(lines,heading);
+  if(!b){
+    var ld=lines.findIndex(function(l){ return /^##\s+Linked Docs/i.test(l); });
+    if(ld>=0){ var at=trimTail(lines,ld,0); lines.splice(at,ld-at,"","## "+heading,"",entry,"","---",""); }
+    else { while(lines.length && !lines[lines.length-1].trim()) lines.pop(); lines.push("","## "+heading,"",entry,""); }
+    return lines;
+  }
+  var none=-1; for(var i=b.h+1;i<b.end;i++) if(/^\((?:none yet|not planned yet)[^)]*\)\s*$/i.test(lines[i])) none=i;
+  if(none>=0){ lines[none]=entry; return lines; }
+  var ins=trimTail(lines,b.end,b.h+1); lines.splice(ins,0,entry); return lines;
+}
+async function appendEntry(path,heading,entry){
+  var rec=S.files[path]; if(!rec) throw new Error(path+" is not in this workspace.");
+  await writeFile(path, appendToSection(rec.text.split("\n"),heading,entry).join("\n"), rec.mtime);
+}
+function slug(s){ var x=String(s).toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"").slice(0,48); return x||"note"; }
+function oneLine(s){ return String(s).replace(/[\r\n]+/g," ").replace(/\s+/g," ").trim(); }
+function endDot(s){ s=oneLine(s); return /[.!?]$/.test(s)?s:s+"."; }
+function mondayOf(iso){ var p=iso.split("-"), d=new Date(Date.UTC(+p[0],+p[1]-1,+p[2])), k=(d.getUTCDay()+6)%7; return isoAdd(iso,-k); }
+function nextDow(iso,dow){ var p=iso.split("-"), d=new Date(Date.UTC(+p[0],+p[1]-1,+p[2])), add=(dow-d.getUTCDay()+7)%7; if(!add) add=7; return isoAdd(iso,add); }
+function shortDay(d){ try{ var p=d.split("-"); return new Date(Date.UTC(+p[0],+p[1]-1,+p[2],12)).toLocaleDateString(undefined,{weekday:"short",day:"numeric",month:"short",timeZone:"UTC"}); }catch(e){ return d; } }
+function datePresets(none){
+  var t=todayISO(), out=[{label:"Today",value:t},{label:"Tomorrow",value:isoAdd(t,1)}], fr=nextDow(t,5), mo=nextDow(t,1);
+  if(fr>isoAdd(t,1)) out.push({label:shortDay(fr),value:fr});
+  out.push({label:"Next Mon",value:mo});
+  if(none) out.push({label:"No date",value:""});
+  return out;
+}
+
+/* ---------- forms ---------- */
+var FORM=null;
+function fieldHtml(f){
+  var id="f_"+f.id, h='<label for="'+id+'">'+esc(f.label)+(f.optional?' <span style="text-transform:none;letter-spacing:0">(optional)</span>':'')+'</label>';
+  if(f.type==="select") h+='<select class="field" id="'+id+'">'+f.options.map(function(o){ var v=typeof o==="string"?o:o.value, l=typeof o==="string"?o:o.label; return '<option value="'+esc(v)+'"'+(v===f.value?" selected":"")+'>'+esc(l)+'</option>'; }).join("")+'</select>';
+  else if(f.type==="textarea") h+='<textarea class="field" id="'+id+'" placeholder="'+esc(f.placeholder||"")+'">'+esc(f.value||"")+'</textarea>';
+  else h+='<input class="field" id="'+id+'" type="'+(f.type||"text")+'" value="'+esc(f.value||"")+'" placeholder="'+esc(f.placeholder||"")+'" autocomplete="off">';
+  if(f.presets) h+='<div class="presets">'+f.presets.map(function(p){ return '<button type="button" class="btn sm" data-preset="'+id+'" data-val="'+esc(p.value)+'">'+esc(p.label)+'</button>'; }).join("")+'</div>';
+  return h;
+}
+function openForm(o){
+  FORM=o; $("formTitle").textContent=o.title; $("formIntro").textContent=o.intro||"";
+  $("formFields").innerHTML=o.fields.map(fieldHtml).join(""); $("formErr").textContent=""; $("formSave").textContent=o.submit||"Save";
+  $("formDialog").showModal();
+  var first=$("formFields").querySelector("input,select,textarea"); if(first) setTimeout(function(){ first.focus(); },30);
+}
+async function submitForm(){
+  var o=FORM, v={}; if(!o) return;
+  for(var i=0;i<o.fields.length;i++){ var f=o.fields[i]; v[f.id]=($("f_"+f.id).value||"").trim(); if(!f.optional && !v[f.id]){ $("formErr").textContent="Fill in: "+f.label+"."; $("f_"+f.id).focus(); return; } }
+  $("formDialog").close();
+  var ok=await run(o.done||"Saved.", async function(){ await o.onSubmit(v); if(o.cap) await removeCapture(o.cap); });
+  if(ok && o.after) o.after(v);
+}
+function areaOptions(M,withRoot){
+  var names=wsWithMemory(M); if(withRoot) names=["Root"].concat(names);
+  return names;
+}
+function needAreas(M){ var n=wsWithMemory(M); if(!n.length){ toast("Create an area first: use New area."); return null; } return n; }
+function lastWs(names,pref){ var p=pref||store.get("cw-last-ws"); return names.indexOf(p)>=0?p:names[0]; }
+
+/* ---------- the quick actions ---------- */
+function aCapture(o){
+  openForm({ title:"Capture a thought", intro:"One line, straight to your inbox. Filing can wait for the weekly review.", submit:"Capture", done:"Captured to your inbox.",
+    fields:[{id:"text",label:"Thought",placeholder:"What is on your mind?"}],
+    onSubmit:function(v){ return captureLine(v.text); } });
+}
+function aTask(o){
+  o=o||{}; var M=model(), names=needAreas(M); if(!names) return;
+  openForm({ title:o.cap?"Turn this capture into a task":"New task", submit:o.cap?"Make task":"Add task", cap:o.cap, done:"Task added.",
+    fields:[{id:"text",label:"Task",value:o.text||"",placeholder:"What needs doing?"},{id:"ws",label:"Area",type:"select",options:names,value:lastWs(names,o.ws)},{id:"due",label:"Due",type:"date",optional:true,presets:datePresets(true)}],
+    onSubmit:async function(v){ store.set("cw-last-ws",v.ws); await addTask(v.ws,v.text,v.due); } });
+}
+function aDecision(o){
+  o=o||{}; var M=model(), names=needAreas(M); if(!names) return;
+  openForm({ title:o.cap?"Log this as a decision":"Log a decision", intro:"Saved to the area's Key Decisions, so your AI knows what was decided and why.", cap:o.cap, done:"Decision logged.",
+    fields:[{id:"text",label:"The decision",value:o.text||"",placeholder:"Chose the oak worktop"},{id:"why",label:"Why",optional:true,placeholder:"Because it fits the budget"},{id:"ws",label:"Area",type:"select",options:names,value:lastWs(names,o.ws)}],
+    onSubmit:async function(v){ store.set("cw-last-ws",v.ws); var t=oneLine(v.text).replace(/[.!?]+$/,""); await appendEntry(v.ws+"/MEMORY.md","Key Decisions","- ["+todayISO()+"] \""+t.replace(/"/g,"'")+"\""+(v.why?" - "+endDot(v.why):".")); } });
+}
+function aRemember(o){
+  o=o||{};
+  openForm({ title:"Remember this", intro:"A lasting fact or preference, saved to Core Memory in MEMORY.md.", cap:o.cap, done:"Added to Core Memory.",
+    fields:[{id:"text",label:"What to remember",value:o.text||"",placeholder:"I prefer morning calls"}],
+    onSubmit:function(v){ return appendEntry("MEMORY.md","Core Memory","- ["+todayISO()+"] "+endDot(v.text)); } });
+}
+async function addResourceRow(clPath,rel,readWhen){
+  var rec=S.files[clPath]; if(!rec) return;
+  var lines=rec.text.split("\n"), row="| "+rel+" | "+oneLine(readWhen).replace(/\|/g,"/")+" |", b=sectionBounds(lines,"Resources");
+  if(b){
+    var last=-1; for(var i=b.h+1;i<b.end;i++) if(/^\|/.test(lines[i])) last=i;
+    if(last>=0) lines.splice(last+1,0,row);
+    else { var at=trimTail(lines,b.end,b.h+1); lines.splice(at,0,"","| Resource | Read when... |","| :--- | :--- |",row); }
+  } else {
+    var anchor=lines.findIndex(function(l){ return /^##\s+(Workflow|Editorial Rules)\s*$/i.test(l); });
+    var block=["## Resources","","| Resource | Read when... |","| :--- | :--- |",row,""];
+    if(anchor>=0) lines.splice(anchor,0,block.join("\n"),""); else { while(lines.length && !lines[lines.length-1].trim()) lines.pop(); lines.push("",block.join("\n")); }
+  }
+  await writeFile(clPath, lines.join("\n"), rec.mtime);
+}
+function aArticle(o){
+  o=o||{}; var M=model(), names=needAreas(M); if(!names) return;
+  openForm({ title:"Save an article", intro:"Saves the point, not the pile: a short note, not a full copy.", submit:"Save note", cap:o.cap, done:"Saved as a note.",
+    fields:[{id:"title",label:"Title",value:o.text||""},{id:"ws",label:"Area",type:"select",options:names,value:lastWs(names,o.ws)},{id:"why",label:"Why you saved it",placeholder:"Helps with the pricing page"},
+      {id:"points",label:"Key points, one per line, five at most",type:"textarea",placeholder:"The most useful point first"},{id:"source",label:"Source",placeholder:"A link, or title and date"},{id:"use",label:"Use it for",optional:true,placeholder:"When pricing comes up again"}],
+    onSubmit:async function(v){
+      store.set("cw-last-ws",v.ws);
+      var pts=v.points.split("\n").map(oneLine).filter(Boolean).slice(0,5);
+      if(!pts.length) throw new Error("Add at least one key point.");
+      var base=todayISO()+"-"+slug(v.title), path=v.ws+"/Resources/"+base+".md", n=2; while(S.files[path]){ path=v.ws+"/Resources/"+base+"-"+n+".md"; n++; }
+      var body="# "+oneLine(v.title)+"\n\n**Why it was saved:** "+endDot(v.why)+"\n\n## Key points\n\n"+pts.map(function(p,i){ return "- "+(i===0?"**"+p+"**":p); }).join("\n")+"\n\n*Figures and claims are the source's own and were not checked.*\n\n**Source:** "+oneLine(v.source)+"\n\n**Use it for:** "+(v.use?endDot(v.use):"Bring it back when this area comes up.")+"\n";
+      await createFile(path,body);
+      await addResourceRow(v.ws+"/CLAUDE.md","Resources/"+path.split("/").pop(), v.use||oneLine(v.title));
+    } });
+}
+function aNote(o){
+  o=o||{}; var M=model(), names=needAreas(M); if(!names) return;
+  var made=null;
+  openForm({ title:o.cap?"Turn this capture into a note":"New note", intro:"Creates a dated markdown file in the area and opens it for writing.", submit:"Create note", cap:o.cap, done:"Note created.",
+    fields:[{id:"title",label:"Title",value:o.text||""},{id:"ws",label:"Area",type:"select",options:names,value:lastWs(names,o.ws)}],
+    onSubmit:async function(v){
+      store.set("cw-last-ws",v.ws);
+      var base=todayISO()+"-"+slug(v.title), path=v.ws+"/"+base+".md", n=2; while(S.files[path]){ path=v.ws+"/"+base+"-"+n+".md"; n++; }
+      await createFile(path,"# "+oneLine(v.title)+"\n\n"); made=path;
+    },
+    after:function(){ if(made){ setView("file",made); S.editing=true; renderFile(); } } });
+}
+function aProject(o){
+  var M=model(), names=areaOptions(M,true);
+  openForm({ title:"New project", intro:"A project is a result with an end, such as \"kitchen renovated\". It goes under Active Projects.", done:"Project added.",
+    fields:[{id:"name",label:"Project",placeholder:"Launch the studio site"},{id:"ws",label:"Area",type:"select",options:names,value:lastWs(names)},{id:"status",label:"Where it stands",placeholder:"Copy approved, waiting on photos"}],
+    onSubmit:function(v){ return appendEntry("MEMORY.md","Active Projects","- ["+todayISO()+"] \""+oneLine(v.name).replace(/"/g,"'")+"\" - "+v.ws+" - "+endDot(v.status)); } });
+}
+function projOptions(M){ return M.projects.map(function(e){ return {value:String(e.line),label:e.title}; }); }
+function aProjectUpdate(o){
+  var M=model(); if(!M.projects.length){ toast("No active projects yet."); return; }
+  openForm({ title:"Update a project", intro:"Changes its status line and sets its last-active date to today.", done:"Project updated.",
+    fields:[{id:"p",label:"Project",type:"select",options:projOptions(M)},{id:"status",label:"Where it stands now"}],
+    onSubmit:async function(v){
+      var rec=S.files["MEMORY.md"], lines=rec.text.split("\n"), idx=parseInt(v.p,10), e=model().projects.filter(function(x){ return x.line===idx; })[0];
+      if(!e || lines[idx]!==e.raw) throw new Error("CHANGED");
+      var parts=e.detail.split(" - "), area=parts.length>1?parts[0]:"";
+      lines[idx]="- ["+todayISO()+"] \""+e.title.replace(/"/g,"'")+"\""+" - "+(area?area+" - ":"")+endDot(v.status);
+      await writeFile("MEMORY.md",lines.join("\n"),rec.mtime);
+    } });
+}
+async function archiveEntry(text){
+  var rec=S.files["ARCHIVE.md"]; if(!rec) throw new Error("ARCHIVE.md is not in this workspace.");
+  var t=todayISO(), p=t.split("-"), mon=mondayOf(t), mp=mon.split("-");
+  var MN=["January","February","March","April","May","June","July","August","September","October","November","December"];
+  var monthH="## "+MN[+p[1]-1]+" "+p[0], weekH="### Week of "+MN[+mp[1]-1]+" "+(+mp[2]), entry="- ["+t+"] "+text;
+  var lines=rec.text.split("\n"), mi=lines.indexOf(monthH);
+  if(mi>=0){
+    var mEnd=mi+1; while(mEnd<lines.length && !/^##\s/.test(lines[mEnd])) mEnd++;
+    var wi=-1; for(var i=mi+1;i<mEnd;i++) if(lines[i]===weekH){ wi=i; break; }
+    if(wi>=0){ var at=wi+1; while(at<mEnd && (!lines[at].trim() || /^\*.*\*\s*$/.test(lines[at]))) at++; lines.splice(at,0,entry); }
+    else lines.splice(mi+1,0,"",weekH,"","*Weeks start on Monday; the heading carries that Monday's date.*","",entry);
+  } else {
+    var first=lines.findIndex(function(l){ return /^##\s+\[?[A-Z][A-Za-z]+(?: [A-Za-z]+)* (?:\d{4}|Year)\]?\s*$/.test(l); });
+    var block=[monthH,"",weekH,"","*Weeks start on Monday; the heading carries that Monday's date.*","",entry,"","---",""];
+    if(first>=0) lines.splice(first,0,block.join("\n")); else { while(lines.length && !lines[lines.length-1].trim()) lines.pop(); lines.push("","---","",block.join("\n")); }
+  }
+  await writeFile("ARCHIVE.md",lines.join("\n"),rec.mtime);
+}
+function aProjectDone(o){
+  var M=model(); if(!M.projects.length){ toast("No active projects to finish."); return; }
+  openForm({ title:"Finish a project", intro:"Removes it from Active Projects and adds one line to ARCHIVE.md.", submit:"Finish it", done:"Project finished and archived.",
+    fields:[{id:"p",label:"Project",type:"select",options:projOptions(M)},{id:"what",label:"What came of it",placeholder:"Launched, and the first ten leads came in"}],
+    onSubmit:async function(v){
+      var rec=S.files["MEMORY.md"], lines=rec.text.split("\n"), idx=parseInt(v.p,10), e=model().projects.filter(function(x){ return x.line===idx; })[0];
+      if(!e || lines[idx]!==e.raw) throw new Error("CHANGED");
+      await archiveEntry("Finished \""+e.title.replace(/"/g,"'")+"\". "+endDot(v.what));
+      lines.splice(idx,1); await writeFile("MEMORY.md",lines.join("\n"),rec.mtime);
+    } });
+}
+function setWeekBody(lines,body){
+  var b=sectionBounds(lines,"This Week");
+  if(!b){ lines=appendToSection(lines,"This Week","x"); b=sectionBounds(lines,"This Week"); }
+  var italic=null; for(var i=b.h+1;i<b.end;i++) if(/^\*.*\*\s*$/.test(lines[i])){ italic=lines[i]; break; }
+  var tailAt=trimTail(lines,b.end,b.h+1), hadRule=lines.slice(tailAt,b.end).some(function(l){ return /^---\s*$/.test(l); });
+  var inner=[""].concat(italic?[italic,""]:[],body,[""],hadRule?["---",""]:[]);
+  lines.splice.apply(lines,[b.h+1,b.end-(b.h+1)].concat(inner));
+  return lines;
+}
+function aWeek(o){
+  var M=model(), mon=mondayOf(M.today), f=[{id:"wk",label:"Week of (a Monday)",type:"date",value:mon}];
+  for(var i=1;i<=3;i++){ f.push({id:"f"+i,label:"Outcome "+i,optional:i>1,placeholder:i===1?"Send the Q4 proposal":""}); f.push({id:"i"+i,label:"If it gets hard, then...",optional:true,placeholder:"I ask for the numbers by Wednesday"}); }
+  openForm({ title:"Set the week", intro:"Up to three outcomes with an if-then plan each. Replaces the plan in This Week.", submit:"Save the plan", done:"This week is planned.", fields:f,
+    onSubmit:async function(v){
+      var cur=model(); if((cur.week.focus.length||cur.week.blocks.length) && !confirm("Replace the current plan in This Week?")) throw new Error("CANCELLED");
+      var body=["Week of: "+v.wk+"."]; for(var k=1;k<=3;k++) if(v["f"+k]){ body.push("- Focus: "+oneLine(v["f"+k])); if(v["i"+k]) body.push("- If-then: "+oneLine(v["i"+k])); }
+      var rec=S.files["MEMORY.md"]; await writeFile("MEMORY.md", setWeekBody(rec.text.split("\n"),body).join("\n"), rec.mtime);
+    } });
+}
+function aBlock(o){
+  var M=model(), names=wsWithMemory(M), t=M.today;
+  openForm({ title:"Add a time block", intro:"Added to This Week. It changes your plan, not an event already on a calendar.", done:"Time block added.",
+    fields:[{id:"day",label:"Day",type:"date",value:t,presets:datePresets(false)},{id:"from",label:"From",type:"time",value:"09:00"},{id:"to",label:"To",type:"time",value:"10:00"},{id:"what",label:"What",placeholder:"Write the proposal"},{id:"ws",label:"Area",type:"select",options:[""].concat(names),optional:true}],
+    onSubmit:async function(v){
+      if(v.to<=v.from) throw new Error("The end time must be after the start.");
+      var rec=S.files["MEMORY.md"], lines=rec.text.split("\n"), b=sectionBounds(lines,"This Week"), hasWeek=b && lines.slice(b.h,b.end).some(function(l){ return /Week of:/i.test(l); });
+      var entry="- Block: "+v.day+" "+v.from+"-"+v.to+" "+oneLine(v.what)+(v.ws?" ("+v.ws+")":"");
+      if(!hasWeek){ lines=setWeekBody(lines,["Week of: "+mondayOf(v.day)+".",entry]); }
+      else lines=appendToSection(lines,"This Week",entry);
+      await writeFile("MEMORY.md",lines.join("\n"),rec.mtime);
+    } });
+}
+function aDefer(o){
+  o=o||{};
+  openForm({ title:"Defer something", intro:"Open Items hold what you put off on purpose, so it stays visible.", cap:o.cap, done:"Added to Open Items.",
+    fields:[{id:"what",label:"What is deferred",value:o.text||""},{id:"why",label:"Why, and what is lost by waiting",optional:true}],
+    onSubmit:function(v){ return appendEntry("MEMORY.md","Open Items","- ["+todayISO()+"] \""+oneLine(v.what).replace(/[.!?]+$/,"").replace(/"/g,"'")+"\""+(v.why?" - "+endDot(v.why):".")); } });
+}
+async function aReview(){
+  await run("Weekly review recorded for today.", async function(){
+    var rec=S.files["MEMORY.md"]; if(!rec) throw new Error("MEMORY.md is not in this workspace.");
+    var lines=rec.text.split("\n"), b=sectionBounds(lines,"Scheduled Tasks"), entry="- Weekly review, root, weekly, last run ["+todayISO()+"].", at=-1;
+    if(b) for(var i=b.h+1;i<b.end;i++) if(/weekly review/i.test(lines[i]) && /^\s*-/.test(lines[i])) at=i;
+    if(at>=0) lines[at]=entry; else lines=appendToSection(lines,"Scheduled Tasks",entry);
+    await writeFile("MEMORY.md",lines.join("\n"),rec.mtime);
+  });
+}
+function aArea(){
+  openForm({ title:"New area", intro:"Creates a folder with CLAUDE.md and MEMORY.md and adds it to the Routing Map.", submit:"Create area", done:"Area created.",
+    fields:[{id:"name",label:"Name",placeholder:"Money"},{id:"covers",label:"What it covers",placeholder:"budgets, bills, savings and subscriptions"}],
+    onSubmit:async function(v){
+      var name=oneLine(v.name); if(/[\/\\:*?"<>|]/.test(name) || /^\./.test(name)) throw new Error("Use letters, numbers and spaces in the name.");
+      if(S.files[name+"/CLAUDE.md"] || Object.keys(S.files).some(function(p){ return p.split("/")[0].toLowerCase()===name.toLowerCase(); })) throw new Error("There is already a folder called "+name+".");
+      var covers=oneLine(v.covers).replace(/[.]+$/,"");
+      await createFile(name+"/CLAUDE.md","# CLAUDE.md\n\n---\n\n## Identity\n\nYou are the "+name.toLowerCase()+" workstation. Route here for "+covers+".\n\n## Workflow\n\n1. Ask what the user wants help with in this area, and add steps here as a pattern repeats.\n");
+      await createFile(name+"/MEMORY.md","# "+name+" Memory\n\n## Next Actions\n\n(none yet)\n\n## People\n\n(none yet)\n\n## Key Decisions\n\n(none yet)\n");
+      var rec=S.files["CLAUDE.md"]; if(!rec) return;
+      var lines=rec.text.split("\n"), b=sectionBounds(lines,"Routing Map"), row="| "+name+" | Asks about "+covers.replace(/\|/g,"/")+". |";
+      if(!b){ lines=lines.concat(["","## Routing Map","","| Workstation | Route here when the user... |","| :--- | :--- |",row,""]); }
+      else { var last=-1; for(var i=b.h+1;i<b.end;i++) if(/^\|/.test(lines[i])) last=i; if(last>=0) lines.splice(last+1,0,row); else lines.splice(trimTail(lines,b.end,b.h+1),0,"","| Workstation | Route here when the user... |","| :--- | :--- |",row); }
+      await writeFile("CLAUDE.md",lines.join("\n"),rec.mtime);
+    } });
+}
+function copyText(text,msg){
+  var done=function(){ toast(msg||"Copied."); };
+  if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done,function(){ toast("Could not copy. Select and copy by hand."); });
+  else toast("Could not copy in this browser.");
+}
+function briefText(){
+  var M=model(), t=M.today, lines=["# "+shortDay(t)];
+  var over=M.tasks.filter(function(x){ return x.due && x.due<t; }), today=M.tasks.filter(function(x){ return x.due===t; }), started=M.tasks.filter(function(x){ return x.st==="/"; });
+  function list(a){ return a.map(function(x){ return "- "+x.text+" ("+x.ws+")"; }); }
+  if(over.length){ lines.push("","Overdue:"); lines.push.apply(lines,list(over)); }
+  if(today.length){ lines.push("","Due today:"); lines.push.apply(lines,list(today)); }
+  if(started.length){ lines.push("","Started:"); lines.push.apply(lines,list(started)); }
+  if(M.week.focus.length){ lines.push("","This week's focus:"); M.week.focus.forEach(function(f,i){ lines.push((i+1)+". "+f.text); }); }
+  if(M.inbox.length) lines.push("","Inbox: "+M.inbox.length+" capture"+(M.inbox.length>1?"s":"")+" to sort.");
+  return lines.join("\n")+"\n";
+}
+function aCopyBrief(){ copyText(briefText(),"Today's brief copied. Paste it into your AI chat."); }
+function copyPhrase(p){ return function(){ copyText(p,"Copied \""+p+"\". Paste it into your AI chat."); }; }
+async function captureLine(text){
+  text=oneLine(text); if(!text) return;
+  var path="98_Temp/Inbox.md", rec=S.files[path], entry="- ["+todayISO()+"] "+text;
+  if(!rec) await createFile(path,"# Inbox\n\nQuick captures, one per line in the form `- [YYYY-MM-DD] the thought`, newest at the bottom.\n\n---\n\n"+entry+"\n");
+  else await writeFile(path, rec.text.replace(/\s*$/,"")+"\n"+entry+"\n", rec.mtime);
+}
+async function capture(text){ if(!oneLine(text)) return; await run("Captured to your inbox.", function(){ return captureLine(text); }); }
+async function snoozeTask(ref,days){
+  var r=splitRef(ref), rec=S.files[r.path], line=rec&&rec.text.split("\n")[r.idx]; if(!line) return;
+  var m=line.match(/\(due\s+(\d{4}-\d{2}-\d{2})\)/i), t=todayISO(), base=(m&&m[1]>t)?m[1]:t;
+  await setDue(ref,isoAdd(base,days));
+}
+
+var ACTIONS=[
+  {id:"capture",key:"c",name:"Capture a thought",desc:"to your inbox",run:aCapture,w:1},
+  {id:"task",key:"t",name:"New task",desc:"to an area, with a due date",run:aTask,w:1},
+  {id:"decision",key:"d",name:"Log a decision",desc:"to an area's Key Decisions",run:aDecision,w:1},
+  {id:"remember",key:"m",name:"Remember this",desc:"to Core Memory",run:aRemember,w:1},
+  {id:"article",key:"a",name:"Save an article",desc:"as a short note in an area",run:aArticle,w:1},
+  {id:"note",key:"n",name:"New note",desc:"a dated file in an area",run:aNote,w:1},
+  {id:"project",key:"p",name:"New project",desc:"to Active Projects",run:aProject,w:1},
+  {id:"projupd",name:"Update a project",desc:"change its status, refresh its date",run:aProjectUpdate,w:1},
+  {id:"projdone",name:"Finish a project",desc:"move it to ARCHIVE.md",run:aProjectDone,w:1},
+  {id:"week",key:"w",name:"Set the week",desc:"outcomes and if-then plans in This Week",run:aWeek,w:1},
+  {id:"block",key:"b",name:"Add a time block",desc:"to this week's plan",run:aBlock,w:1},
+  {id:"defer",key:"o",name:"Defer something",desc:"to Open Items",run:aDefer,w:1},
+  {id:"review",key:"r",name:"Record the weekly review",desc:"as done today",run:aReview,w:1},
+  {id:"area",name:"New area",desc:"a folder, its files and a Routing Map row",run:aArea,w:1},
+  {id:"copybrief",name:"Copy today's brief",desc:"to paste into your AI chat",run:aCopyBrief},
+  {id:"c1",name:"Copy: start my day",desc:"a phrase for your AI chat",run:copyPhrase("start my day")},
+  {id:"c2",name:"Copy: plan my week",desc:"a phrase for your AI chat",run:copyPhrase("plan my week")},
+  {id:"c3",name:"Copy: wrap up my day",desc:"a phrase for your AI chat",run:copyPhrase("wrap up my day")},
+  {id:"c4",name:"Copy: weekly review",desc:"a phrase for your AI chat",run:copyPhrase("weekly review")}
+];
+function openAction(id,opts){ var a=ACTIONS.filter(function(x){ return x.id===id; })[0]; if(!a) return; if(a.w && !S.canWrite){ toast("This browser opened a read-only copy. Open the dashboard in Chrome or Edge to save changes."); return; } a.run(opts); }
+
+/* ---------- the command palette (Cmd+K or Ctrl+K) ---------- */
+var PAL={open:false,items:[],sel:0};
+var IS_MAC=/Mac|iPhone|iPad/.test(navigator.platform||navigator.userAgent||"");
+function kbdLabel(){ return IS_MAC?"⌘K":"Ctrl K"; }
+function palItems(q){
+  var M=S.loadedAt?model():null, items=[];
+  ACTIONS.forEach(function(a){ if(a.w && !S.canWrite) return; items.push({g:"Quick actions",n:a.name,d:a.desc,k:a.key||"",run:function(){ a.run(); }}); });
+  if(M){
+    [["Today","dashboard"],["Board","board"],["Inbox","inbox"],["Projects","projects"],["Goals","goals"],["All files","files"],["Notion","notion"]].forEach(function(v){ items.push({g:"Go to",n:v[0],d:"view",run:function(){ setView(v[1]); }}); });
+    items.push({g:"Go to",n:"MEMORY.md",d:"root memory",run:function(){ setView("file","MEMORY.md"); }});
+    items.push({g:"Go to",n:"CLAUDE.md",d:"root instructions and Routing Map",run:function(){ setView("file","CLAUDE.md"); }});
+    Object.keys(M.ws).sort().forEach(function(n){ items.push({g:"Go to",n:n,d:"area page",run:function(){ S.wsName=n; setView("ws"); }}); });
+    items.push({g:"Other",n:"Switch theme",d:"light, dark or system",run:function(){ var order=["light","dark","system"]; themeMode=order[(order.indexOf(themeMode)+1)%3]; applyTheme(themeMode); toast("Theme: "+themeMode); }});
+    items.push({g:"Other",n:"Read the folder again",d:"refresh",run:function(){ refresh(); }});
+  }
+  var terms=q.toLowerCase().split(/\s+/).filter(Boolean);
+  if(terms.length){
+    items=items.filter(function(it){ var h=(it.n+" "+it.d+" "+it.g).toLowerCase(); return terms.every(function(t){ return h.indexOf(t)>=0; }); });
+    items.forEach(function(it){ var n=it.n.toLowerCase(); it.s=n.indexOf(terms[0])===0?0:n.indexOf(terms[0])>=0?1:2; });
+    items.sort(function(a,b){ return a.s-b.s; });
+    if(q.length>=2 && M){ Object.keys(S.files).sort().filter(function(p){ var l=p.toLowerCase(); return terms.every(function(t){ return l.indexOf(t)>=0; }); }).slice(0,8).forEach(function(p){ items.push({g:"Files",n:p.split("/").pop(),d:p,run:function(){ setView("file",p); }}); }); }
+  } else {
+    var gs={"Quick actions":0,"Go to":1,"Other":2}; items=items.filter(function(it){ return it.g!=="Go to" || it.n.indexOf(".md")<0; });
+    items.sort(function(a,b){ return gs[a.g]-gs[b.g]; });
+  }
+  return items.slice(0,40);
+}
+function palRender(){
+  var h="", last="";
+  PAL.items.forEach(function(it,i){
+    if(it.g!==last){ h+='<div class="ph">'+esc(it.g)+'</div>'; last=it.g; }
+    h+='<div class="pit'+(i===PAL.sel?" on":"")+'" data-pi="'+i+'"><span class="n">'+esc(it.n)+'</span><span class="d">'+esc(it.d||"")+'</span>'+(it.k?'<span class="k">'+esc(it.k)+'</span>':'')+'</div>';
+  });
+  $("palList").innerHTML=h||'<div class="empty" style="padding:14px 20px">Nothing matches. Try another word.</div>';
+  var on=$("palList").querySelector(".pit.on"); if(on && on.scrollIntoView) on.scrollIntoView({block:"nearest"});
+}
+function openPalette(){
+  if($("formDialog").open || $("nameDialog").open) return;
+  PAL.open=true; $("pal").classList.add("open"); $("palInput").value=""; PAL.items=palItems(""); PAL.sel=0; palRender(); $("palInput").focus();
+  $("palNote").textContent=S.canWrite?"saves straight to your files":"read-only in this browser";
+}
+function closePalette(){ PAL.open=false; $("pal").classList.remove("open"); $("palInput").blur(); }
+function runPal(i){ var it=PAL.items[i]; if(!it) return; closePalette(); setTimeout(function(){ it.run(); },0); }
+
 /* ---------- events ---------- */
 document.addEventListener("click", function(ev){
   var t=ev.target.closest("button, a"); if(!t) return;
   if(t.dataset.themeBtn){ themeMode=t.dataset.themeBtn; applyTheme(themeMode); return; }
-  if(t.dataset.newtask){ ev.preventDefault(); openTaskDialog({ws:t.dataset.newtask==="1"?null:t.dataset.newtask}); return; }
+  if(t.dataset.act){ ev.preventDefault(); openAction(t.dataset.act); return; }
+  if(t.dataset.newtask){ ev.preventDefault(); openAction("task",{ws:t.dataset.newtask==="1"?null:t.dataset.newtask}); return; }
+  if(t.dataset.pal){ openPalette(); return; }
+  if(t.dataset.snooze){ var sp=t.dataset.snooze, sk=sp.lastIndexOf("|"); snoozeTask(sp.slice(0,sk),parseInt(sp.slice(sk+1),10)); return; }
+  if(t.dataset.trg){ var tp=t.dataset.trg.split("|"), cp=model().inbox[parseInt(tp[1],10)]; if(!cp) return; if(tp[0]==="drop") dropCapture(cp); else openAction(tp[0],{text:cp.text,cap:cp}); return; }
+  if(t.dataset.preset){ var pe=$(t.dataset.preset); if(pe) pe.value=t.dataset.val; return; }
+  if(t.id==="formCancel"){ $("formDialog").close(); return; }
+  if(t.id==="formSave"){ submitForm(); return; }
   if(t.dataset.ws){ S.wsName=t.dataset.ws; setView("ws"); return; }
   if(t.dataset.to!==undefined && t.dataset.ref){ setState(t.dataset.ref,t.dataset.to); return; }
   if(t.dataset.tdrop){ dropTask(t.dataset.tdrop); return; }
-  if(t.dataset.captotask!==undefined){ var cp=model().inbox[parseInt(t.dataset.captotask,10)]; if(cp) openTaskDialog({text:cp.text,cap:cp}); return; }
-  if(t.dataset.capdrop!==undefined){ var cd=model().inbox[parseInt(t.dataset.capdrop,10)]; if(cd) dropCapture(cd); return; }
   if(t.dataset.csv){ var tb=notionTables(model()).filter(function(x){ return x.name===t.dataset.csv; })[0]; if(tb){ download(tb.name+".csv",csv(tb.rows)); toast("Downloaded "+tb.name+".csv"); } return; }
-  if(t.id==="taskCancel"){ $("taskDialog").close(); return; }
-  if(t.id==="taskSave"){ saveTaskDialog(); return; }
+
   if(t.id==="openBtn"){ openWithPicker(); return; }
   if(t.id==="refreshBtn"){ refresh(); return; }
   if(t.id==="menuBtn"){ $("side").classList.toggle("open"); return; }
@@ -974,6 +1376,31 @@ document.addEventListener("submit",function(ev){ if(ev.target.id==="captureForm"
 var searchTimer; $("search").addEventListener("input",function(e){ var q=e.target.value.trim(); clearTimeout(searchTimer); searchTimer=setTimeout(function(){ if(!S.loadedAt) return; if(q.length<2){ if(S.view==="search") setView("dashboard"); return; } renderSearch(q); },150); });
 document.addEventListener("keydown",function(e){ if(e.key==="/" && document.activeElement.tagName!=="INPUT" && document.activeElement.tagName!=="TEXTAREA"){ e.preventDefault(); $("search").focus(); } });
 
+document.addEventListener("keydown",function(e){
+  var k=e.key;
+  if((e.metaKey||e.ctrlKey) && !e.altKey && !e.shiftKey && String(k).toLowerCase()==="k"){ e.preventDefault(); if(PAL.open) closePalette(); else if(S.loadedAt) openPalette(); return; }
+  if(PAL.open){
+    if(k==="Escape"){ e.preventDefault(); closePalette(); }
+    else if(k==="ArrowDown"){ e.preventDefault(); PAL.sel=Math.min(PAL.items.length-1,PAL.sel+1); palRender(); }
+    else if(k==="ArrowUp"){ e.preventDefault(); PAL.sel=Math.max(0,PAL.sel-1); palRender(); }
+    else if(k==="Enter"){ e.preventDefault(); runPal(PAL.sel); }
+    return;
+  }
+  if($("formDialog").open){
+    if(k==="Enter" && e.target.tagName==="TEXTAREA"){ if(e.metaKey||e.ctrlKey){ e.preventDefault(); submitForm(); } }
+    else if(k==="Enter" && e.target.tagName!=="BUTTON"){ e.preventDefault(); submitForm(); }
+    return;
+  }
+  if(!S.loadedAt || e.metaKey || e.ctrlKey || e.altKey || S.editing || $("nameDialog").open) return;
+  var ae=document.activeElement, tag=ae&&ae.tagName; if(tag==="INPUT"||tag==="TEXTAREA"||tag==="SELECT"||(ae&&ae.isContentEditable)) return;
+  var a=ACTIONS.filter(function(x){ return x.key===k; })[0]; if(a && S.canWrite){ e.preventDefault(); openAction(a.id); }
+});
+$("palInput").addEventListener("input",function(e){ PAL.items=palItems(e.target.value.trim()); PAL.sel=0; palRender(); });
+$("palList").addEventListener("click",function(e){ var it=e.target.closest(".pit"); if(it) runPal(parseInt(it.dataset.pi,10)); });
+$("palList").addEventListener("mousemove",function(e){ var it=e.target.closest(".pit"); if(it){ var i=parseInt(it.dataset.pi,10); if(i!==PAL.sel){ PAL.sel=i; var on=$("palList").querySelector(".pit.on"); if(on) on.classList.remove("on"); it.classList.add("on"); } } });
+$("pal").addEventListener("mousedown",function(e){ if(e.target===$("pal")) closePalette(); });
+$("kbdHint").textContent=kbdLabel();
+
 /* hidden folder input for browsers without the folder picker */
 var input=document.createElement("input"); input.type="file"; input.id="folderInput"; input.multiple=true; input.setAttribute("webkitdirectory",""); input.style.display="none";
 input.addEventListener("change",function(){ if(input.files.length) loadFromInput(input.files); });
@@ -989,7 +1416,7 @@ function afterLoad(){
 var _model=model; model=function(){ var m=_model(); if(!m.dashName && store.get("cw-name")) m.dashName=store.get("cw-name"); return m; };
 
 /* hook for automated checks: load files without a folder picker */
-window.CoworkDashboard={ loadFiles:function(map,opts){ S.files={}; Object.keys(map).forEach(function(k){ var v=map[k]; S.files[k]= typeof v==="string"? {text:v,mtime:Date.now(),handle:null} : v; }); S.folderName=(opts&&opts.name)||"workspace"; S.canWrite=!!(opts&&opts.canWrite); S.dir=null; S.loadedAt=Date.now(); afterLoad(); }, state:S };
+window.CoworkDashboard={ openAction:function(id,o){ return openAction(id,o); }, model:function(){ return model(); }, loadFiles:function(map,opts){ S.files={}; Object.keys(map).forEach(function(k){ var v=map[k]; S.files[k]= typeof v==="string"? {text:v,mtime:Date.now(),handle:null} : v; }); S.folderName=(opts&&opts.name)||"workspace"; S.canWrite=!!(opts&&opts.canWrite); S.dir=(opts&&opts.dir)||null; S.loadedAt=Date.now(); afterLoad(); }, state:S };
 
 render();
 })();

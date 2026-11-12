@@ -4,6 +4,23 @@ All notable changes to this template are documented here. Format follows [Keep a
 
 ## [Unreleased]
 
+## [1.7.0] - 2026-11-12
+
+The dashboard gets a designed look and a command palette. Press Cmd+K (Ctrl+K on Windows and Linux) to do things and go places without leaving the keyboard.
+
+### Added
+- Command palette on Cmd+K or Ctrl+K: type to run a quick action, jump to a view, an area or any file. Arrow keys choose, Enter runs, Esc closes.
+- Quick actions that save straight to the files: capture a thought, new task with due-date presets, log a decision (to the area's Key Decisions), remember this (to Core Memory), save an article as a short note with a row in the area's Resources table, new note, new project, update a project, finish a project (moves it to ARCHIVE.md), set the week, add a time block, defer something (to Open Items), record the weekly review, new area (folder, CLAUDE.md, MEMORY.md and a Routing Map row), and copy today's brief or a phrase for your AI chat.
+- Single-key shortcuts for the common actions when no field is focused: `c`, `t`, `d`, `m`, `a`, `n`, `p`, `w`, `b`, `o`, `r`.
+- Undo for a few seconds after any edit, including edits across several files, and for files an action created.
+- Inbox triage: each capture can become a task, a decision, a note or a deferral in the area you pick, or be dropped.
+- Snooze buttons (+1 day, +1 week) on today's tasks and on board cards.
+
+### Changed
+- A new "paper" look: serif headings, one accent colour, rules instead of boxed cards, and a date-and-greeting header with a write-it-down line. The home view now leads with Today, this week's outcomes, your goals and the inbox. Light and dark themes both follow it.
+- The home view no longer shows the four stat tiles.
+- Screenshots in the README show the new look.
+
 ## [1.6.0] - 2026-11-10
 
 The dashboard becomes a command center you work in, and links to Notion for people who prefer it.
