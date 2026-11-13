@@ -24,6 +24,10 @@ Sections, in this order:
 
 `<Workstation>/Resources/` holds notes saved for later in this area, such as a distilled article or a summary of a document. Create it the first time something needs to go in it, and follow rule 26 in 00_Reference/File Creation Rules.md for what a saved note looks like.
 
+### 4. A folder map, once the workstation has several folders
+
+When a workstation grows past a few folders, add a table to its index note, the note named exactly like the workstation folder. Give it two columns, "Folder" and "What is inside", with one row per folder and a plain sentence for each. A session reads the table to find the right folder without opening them all. Do not create a separate index file, since the index note already does that job. The weekly review checks the table against the folders that exist and proposes corrections.
+
 ## After creating the workstation
 
 Add a row to the Routing Map in root CLAUDE.md, describing when to route here in plain language, so future sessions load it automatically.

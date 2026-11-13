@@ -39,4 +39,12 @@ quoted, so the change can be found and undone.
 
 ## Entries
 
-*None yet. The first substantive change to root CLAUDE.md goes here.*
+## [2026-11-13] Rulebooks table and Global Conventions folder
+
+**Added:** a "Rulebooks" subsection under the Routing Protocol, with a table of tool, rulebook and when to read it. A line in the 00_Reference/ entry of the MECE list saying its Global Conventions folder holds one rulebook per connected tool. A row in the Memory & Governance table for 00_Reference/Global Conventions/Global Conventions.md.
+
+**Why:** rules for each connected tool were heading for root CLAUDE.md, which every session reads in full. A separate rulebook per tool keeps root CLAUDE.md short and loads only what a task needs.
+
+**Scope:** the structure only. The one rulebook shipped is a sample that the user replaces. It does not change any existing rule.
+
+**Backup:** none, since the change went through a pull request with a diff (issue #64).
